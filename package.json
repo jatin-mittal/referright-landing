@@ -1,5 +1,5 @@
 {
-  "name": "referright-landing",
+  "name": "rightrefer-landing",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -12,6 +12,13 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.2.3"
+    "@astrojs/react": "6.0.2",
+    "@astrojs/sitemap": "3.7.3",
+    "@remotion/player": "4.1.0-alpha9",
+    "astro": "7.2.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "remotion": "4.1.0-alpha9",
+    "simple-icons": "16.28.0"
   }
 }

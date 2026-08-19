@@ -1,0 +1,58 @@
+---
+export interface Testimonial {
+	name: string;
+	role: string;
+	quote: string;
+	initials: string;
+	accent: 'blue' | 'orange' | 'sage' | 'plum';
+}
+
+interface Props {
+	batches: Testimonial[][];
+	metric: number;
+}
+
+const { batches, metric } = Astro.props;
+---
+
+<div class="community-proof">
+	<div class="beta-metric reveal" data-beta-metric data-count={metric}>
+		<div class="beta-metric-orbit" aria-hidden="true"><span></span><span></span></div>
+		<p class="eyebrow">Private beta snapshot</p>
+		<p class="beta-metric-number"><span data-count-value>0</span><sup>+</sup></p>
+		<p class="beta-metric-label">people successfully referred during the beta program</p>
+	</div>
+
+	<div class="testimonial-panel reveal">
+		<div
+			class="testimonial-stage"
+			data-motion="testimonials"
+			data-motion-state="paused"
+			aria-label="RightRefer community feedback"
+		>
+			{
+				batches.map((batch, batchIndex) => (
+					<div class:list={['testimonial-lane', batchIndex % 2 === 1 && 'testimonial-lane-reverse']}>
+						<div class="testimonial-track" data-testimonial-track>
+							{[...batch, ...batch].map((testimonial, cardIndex) => (
+								<article
+									class={`testimonial-card testimonial-card-${testimonial.accent}`}
+									aria-hidden={cardIndex >= batch.length ? 'true' : undefined}
+								>
+									<div class="testimonial-person">
+										<span class="testimonial-avatar" aria-hidden="true">{testimonial.initials}</span>
+										<span>
+											<strong>{testimonial.name}</strong>
+											<small>{testimonial.role}</small>
+										</span>
+									</div>
+									<blockquote>“{testimonial.quote}”</blockquote>
+								</article>
+							))}
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</div>

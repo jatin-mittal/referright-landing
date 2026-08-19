@@ -1,0 +1,35 @@
+---
+interface Props {
+	eyebrow: string;
+	title: string;
+	copy?: string;
+	headingId: string;
+	align?: 'left' | 'center';
+	theme?: 'light' | 'dark';
+	class?: string;
+}
+
+const {
+	eyebrow,
+	title,
+	copy,
+	headingId,
+	align = 'left',
+	theme = 'light',
+	class: className = '',
+} = Astro.props;
+
+const hasCopySlot = Astro.slots.has('copy');
+---
+
+<div class:list={['section-intro', `section-intro-${align}`, `section-intro-${theme}`, className]}>
+	<p class="eyebrow">{eyebrow}</p>
+	<h2 id={headingId}>{title}</h2>
+	{
+		(copy || hasCopySlot) && (
+			<p class="section-intro-copy">
+				{hasCopySlot ? <slot name="copy" /> : copy}
+			</p>
+		)
+	}
+</div>

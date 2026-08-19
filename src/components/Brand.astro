@@ -1,0 +1,39 @@
+---
+interface Props {
+	href?: string;
+	class?: string;
+	label?: string;
+	inverse?: boolean;
+	split?: boolean;
+}
+
+const {
+	href = '#top',
+	class: className = '',
+	label = 'RightRefer home',
+	inverse = false,
+	split = false,
+} = Astro.props;
+---
+
+{
+	split ? (
+		<span class:list={['brand', inverse && 'brand-inverse', className]}>
+			<span class="brand-logo-home" data-brand-logo-home>
+				<a class="brand-mark" href={href} aria-label={`${label} logo`} data-brand-logo>
+					<img src="/rightrefer-logo.png" alt="" />
+				</a>
+			</span>
+			<a class="brand-wordmark" href={href} aria-label={label}>
+				<span class="brand-right">Right</span><span class="brand-refer">Refer</span>
+			</a>
+		</span>
+	) : (
+		<a class:list={['brand', inverse && 'brand-inverse', className]} href={href} aria-label={label}>
+			<span class="brand-mark" aria-hidden="true">
+				<img src="/rightrefer-logo.png" alt="" />
+			</span>
+			<span class="brand-wordmark"><span class="brand-right">Right</span><span class="brand-refer">Refer</span></span>
+		</a>
+	)
+}

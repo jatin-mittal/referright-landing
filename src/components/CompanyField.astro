@@ -1,0 +1,67 @@
+---
+import {
+	siAirbnb,
+	siApple,
+	siAtlassian,
+	siCisco,
+	siDropbox,
+	siFigma,
+	siGithub,
+	siGoogle,
+	siIntel,
+	siMeta,
+	siNetflix,
+	siNvidia,
+	siPaypal,
+	siSpotify,
+	siStripe,
+	siUber,
+	siZoom,
+} from 'simple-icons';
+
+const companies = [
+	{ name: 'Google', icon: siGoogle },
+	{ name: 'Atlassian', icon: siAtlassian },
+	{ name: 'Uber', icon: siUber, wordmark: true },
+	{ name: 'Meta', icon: siMeta },
+	{ name: 'Netflix', icon: siNetflix },
+	{ name: 'Spotify', icon: siSpotify },
+	{ name: 'Airbnb', icon: siAirbnb },
+	{ name: 'Figma', icon: siFigma },
+	{ name: 'NVIDIA', icon: siNvidia },
+	{ name: 'GitHub', icon: siGithub },
+	{ name: 'PayPal', icon: siPaypal },
+	{ name: 'Stripe', icon: siStripe },
+	{ name: 'Zoom', icon: siZoom },
+	{ name: 'Dropbox', icon: siDropbox },
+	{ name: 'Cisco', icon: siCisco },
+	{ name: 'Intel', icon: siIntel },
+	{ name: 'Apple', icon: siApple },
+];
+---
+
+<div
+	class="company-field"
+	data-company-field
+	data-motion-state="idle"
+	aria-label="Example companies with opportunities people may follow"
+>
+	<div class="company-spawn-zones" aria-hidden="true">
+		<span></span><span></span><span></span><span></span>
+	</div>
+	{
+		companies.map((company, index) => (
+			<div
+				class:list={['company-logo-card', company.wordmark && 'company-logo-card-wordmark']}
+				data-company-card
+				data-company-index={index}
+				style={`--brand-color:#${company.icon.hex}`}
+			>
+				<svg viewBox="0 0 24 24" role="img" aria-label={`${company.name} logo`}>
+					<path d={company.icon.path}></path>
+				</svg>
+				{!company.wordmark && <span>{company.name}</span>}
+			</div>
+		))
+	}
+</div>
