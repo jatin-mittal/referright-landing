@@ -1,6 +1,6 @@
 @font-face {
 	font-family: 'Louize';
-	src: url('/Louize.ttf') format('truetype');
+	src: url('/Louize.woff2') format('woff2');
 	font-style: normal;
 	font-weight: 100 900;
 	font-display: swap;
@@ -612,8 +612,8 @@ svg {
 
 .company-field {
 	position: relative;
-	height: 440px;
-	max-width: 1080px;
+	height: 590px;
+	max-width: 1180px;
 	margin-inline: auto;
 	overflow: visible;
 	border: 0;
@@ -631,8 +631,8 @@ svg {
 
 .company-spawn-zones span {
 	position: absolute;
-	width: 38%;
-	height: 30%;
+	width: 42%;
+	height: 38%;
 	border: 0;
 	border-radius: 30px;
 	background: transparent;
@@ -990,7 +990,6 @@ svg {
 }
 
 .path-card {
-	--path-image: url('/path-seeker.jpeg');
 	position: relative;
 	display: grid;
 	min-height: 370px;
@@ -1009,15 +1008,16 @@ svg {
 		box-shadow 220ms ease;
 }
 
-.path-card::before {
+.path-card-image {
 	position: absolute;
 	z-index: -2;
 	inset: -5px;
-	background-image: var(--path-image);
-	background-position: center;
-	background-size: cover;
-	content: '';
+	width: calc(100% + 10px);
+	max-width: none;
+	height: calc(100% + 10px);
 	filter: blur(var(--path-image-blur)) saturate(var(--path-image-saturation));
+	object-fit: cover;
+	object-position: center;
 	opacity: var(--path-image-opacity);
 	transform: scale(1.025);
 	transition:
@@ -1043,16 +1043,15 @@ svg {
 }
 
 .path-card-giver {
-	--path-image: url('/path-giver.jpeg');
 	--path-glow: #dbeaf0;
 }
 
-.path-card-seeker::before {
-	background-position: 43% center;
+.path-card-seeker .path-card-image {
+	object-position: 43% center;
 }
 
-.path-card-giver::before {
-	background-position: 58% center;
+.path-card-giver .path-card-image {
+	object-position: 58% center;
 }
 
 .path-card:hover {
@@ -1061,12 +1060,12 @@ svg {
 	transform: translateY(-4px);
 }
 
-.path-card:hover::before {
+.path-card:hover .path-card-image {
 	filter: blur(max(0px, calc(var(--path-image-blur) - 0.25px))) saturate(var(--path-image-saturation));
 	transform: scale(1.04);
 }
 
-.path-card > * {
+.path-card > :not(.path-card-image) {
 	position: relative;
 	z-index: 1;
 }
@@ -1675,7 +1674,9 @@ svg {
 	}
 
 	.company-field {
-		height: 470px;
+		width: calc(100% + 24px);
+		height: 840px;
+		margin-inline: -12px;
 	}
 
 	.company-spawn-zones {
@@ -1683,8 +1684,8 @@ svg {
 	}
 
 	.company-spawn-zones span {
-		width: 43%;
-		height: 28%;
+		width: 46%;
+		height: 42%;
 		border-radius: 22px;
 	}
 

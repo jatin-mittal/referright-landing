@@ -44,9 +44,9 @@ Avoid:
 | Animated product stories | `src/components/remotion/RightReferScenes.tsx` |
 | Remotion lifecycle and responsive selection | `src/components/remotion/RemotionPlayer.tsx` |
 | Metadata and global asset loading | `src/layouts/BaseLayout.astro` |
-| Primary logo | `public/rightrefer-logo.png` |
-| Typeface | `public/Louize.ttf` |
-| Hero media | `public/hero-hands.mp4`, `public/hero-hands-poster.jpeg` |
+| Primary logo | `public/rightrefer-logo.webp` |
+| Typeface | `public/Louize.woff2` |
+| Hero media | `public/hero-hands.mp4`, `public/hero-hands-poster.webp` |
 
 The site uses handwritten CSS rather than a CSS framework. New work should reuse existing custom properties and selectors before introducing new visual values.
 
@@ -63,7 +63,7 @@ Always write the product name as **RightRefer**:
 
 ### 3.2 Logo
 
-Use `/rightrefer-logo.png`, which contains the transparent RightRefer symbol.
+Use `/rightrefer-logo.webp`, which contains the transparent RightRefer symbol.
 
 Logo rules:
 
@@ -174,7 +174,7 @@ All text uses the self-hosted **Louize** typeface:
 ```css
 @font-face {
   font-family: 'Louize';
-  src: url('/Louize.ttf') format('truetype');
+  src: url('/Louize.woff2') format('woff2');
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
@@ -394,7 +394,7 @@ Use Simple Icons only for company marks, not for general interface chrome.
 ### 10.1 Media treatment
 
 - Video: `/hero-hands.mp4`.
-- Poster/reduced-motion frame: `/hero-hands-poster.jpeg`.
+- Poster/reduced-motion frame: `/hero-hands-poster.webp`.
 - `object-fit: cover`.
 - Opacity `0.72`.
 - `saturate(0.62) contrast(1.08)`.
@@ -660,8 +660,8 @@ Shared card treatment:
 - `--color-surface`.
 - Radius `--radius-lg`.
 - Default border.
-- Seeker image: `/path-seeker.jpeg`.
-- Referrer image: `/path-giver.jpeg`.
+- Seeker image: `/path-seeker.webp`.
+- Referrer image: `/path-giver.webp`.
 - Background-image opacity: `0.75`.
 - Matching `blur(1px)` and saturation `0.905`.
 - Warm directional overlay at `0.495` opacity keeps all content readable.
@@ -1055,10 +1055,11 @@ Before public launch:
 
 | Asset | Purpose |
 | --- | --- |
-| `/rightrefer-logo.png` | Transparent RightRefer symbol and favicon |
-| `/Louize.ttf` | Site-wide variable typeface |
+| `/rightrefer-logo.webp` | Transparent RightRefer symbol |
+| `/favicon.png` | Right-sized browser icon |
+| `/Louize.woff2` | Site-wide variable typeface |
 | `/hero-hands.mp4` | Hero background video |
-| `/hero-hands-poster.jpeg` | Hero loading and reduced-motion frame |
+| `/hero-hands-poster.webp` | Hero loading and reduced-motion frame |
 | `/gmail-icon.svg` | Gmail product-story mark |
 | `/microsoft-logo.svg` | Microsoft product-story mark |
 | Simple Icons package | Example company marks |

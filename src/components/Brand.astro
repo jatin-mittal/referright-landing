@@ -21,7 +21,7 @@ const {
 		<span class:list={['brand', inverse && 'brand-inverse', className]}>
 			<span class="brand-logo-home" data-brand-logo-home>
 				<a class="brand-mark" href={href} aria-label={`${label} logo`} data-brand-logo>
-					<img src="/rightrefer-logo.png" alt="" />
+					<img src="/rightrefer-logo.webp" alt="" width="256" height="248" />
 				</a>
 			</span>
 			<a class="brand-wordmark" href={href} aria-label={label}>
@@ -31,7 +31,7 @@ const {
 	) : (
 		<a class:list={['brand', inverse && 'brand-inverse', className]} href={href} aria-label={label}>
 			<span class="brand-mark" aria-hidden="true">
-				<img src="/rightrefer-logo.png" alt="" />
+				<img src="/rightrefer-logo.webp" alt="" width="256" height="248" loading="lazy" />
 			</span>
 			<span class="brand-wordmark"><span class="brand-right">Right</span><span class="brand-refer">Refer</span></span>
 		</a>

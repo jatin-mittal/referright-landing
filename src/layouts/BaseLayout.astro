@@ -1,4 +1,5 @@
 ---
+import Analytics from '@vercel/analytics/astro';
 import '../styles/global.css';
 
 interface Props {
@@ -22,9 +23,9 @@ const socialImage = new URL('/og-image.png', canonicalUrl);
 		<meta name="color-scheme" content="light" />
 
 		<link rel="canonical" href={canonicalUrl} />
-		<link rel="icon" type="image/png" href="/rightrefer-logo.png" />
-		<link rel="preload" as="image" href="/hero-hands-poster.jpeg" fetchpriority="high" />
-		<link rel="preload" href="/Louize.ttf" as="font" type="font/ttf" crossorigin />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link rel="preload" as="image" href="/hero-hands-poster.webp" type="image/webp" fetchpriority="high" />
+		<link rel="preload" href="/Louize.woff2" as="font" type="font/woff2" crossorigin />
 
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="RightRefer" />
@@ -52,6 +53,7 @@ const socialImage = new URL('/og-image.png', canonicalUrl);
 				description,
 			})}
 		/>
+		<Analytics />
 	</head>
 	<body>
 		<a class="skip-link" href="#main-content">Skip to content</a>

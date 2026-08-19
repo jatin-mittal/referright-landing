@@ -79,11 +79,10 @@ const testimonialBatches: Testimonial[][] = [
 				<video
 					class="hero-video"
 					data-hero-video
-					autoplay
 					muted
 					playsinline
-					preload="metadata"
-					poster="/hero-hands-poster.jpeg"
+					preload="none"
+					poster="/hero-hands-poster.webp"
 				>
 					<source src="/hero-hands.mp4" type="video/mp4" />
 				</video>
@@ -171,6 +170,15 @@ const testimonialBatches: Testimonial[][] = [
 
 				<div class="path-grid">
 					<article class="path-card path-card-seeker reveal">
+						<img
+							class="path-card-image"
+							src="/path-seeker.webp"
+							alt=""
+							width="1100"
+							height="614"
+							loading="lazy"
+							decoding="async"
+						/>
 						<div class="path-card-top">
 							<span class="path-number">01</span>
 						</div>
@@ -192,6 +200,15 @@ const testimonialBatches: Testimonial[][] = [
 					</article>
 
 					<article class="path-card path-card-giver reveal">
+						<img
+							class="path-card-image"
+							src="/path-giver.webp"
+							alt=""
+							width="1100"
+							height="614"
+							loading="lazy"
+							decoding="async"
+						/>
 						<div class="path-card-top">
 							<span class="path-number">02</span>
 						</div>
@@ -321,8 +338,6 @@ const testimonialBatches: Testimonial[][] = [
 						pause: () => heroVideo.pause(),
 						reduce: () => {
 							heroVideo.pause();
-							heroVideo.currentTime = 0;
-							heroVideo.removeAttribute('autoplay');
 						},
 					}
 				: null;
@@ -454,16 +469,16 @@ const testimonialBatches: Testimonial[][] = [
 				[1, 3, 5, 7, 10, 12, 14, 16],
 			];
 			const desktopZones = [
-				[[14, 20], [12, 18]], [[28, 32], [25, 29]],
-				[[68, 72], [25, 29]], [[80, 86], [12, 18]],
-				[[14, 20], [82, 88]], [[28, 32], [71, 75]],
-				[[68, 72], [71, 75]], [[80, 86], [82, 88]],
+				[[11, 18], [9, 14]], [[30, 34], [31, 34]],
+				[[66, 70], [31, 34]], [[82, 89], [9, 14]],
+				[[11, 18], [86, 91]], [[30, 34], [66, 69]],
+				[[66, 70], [66, 69]], [[82, 89], [86, 91]],
 			];
 			const mobileZones = [
-				[[28, 32], [8, 13]], [[28, 32], [25, 29]],
-				[[68, 72], [25, 29]], [[68, 72], [8, 13]],
-				[[28, 32], [87, 92]], [[28, 32], [71, 75]],
-				[[68, 72], [71, 75]], [[68, 72], [87, 92]],
+				[[31, 33], [7, 9]], [[31, 33], [27, 29]],
+				[[67, 69], [37, 39]], [[67, 69], [17, 19]],
+				[[31, 33], [91, 93]], [[31, 33], [71, 73]],
+				[[67, 69], [61, 63]], [[67, 69], [81, 83]],
 			];
 			let cycle = 0;
 			let timer = 0;
