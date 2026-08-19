@@ -35,13 +35,20 @@
 	--shell: min(1180px, calc(100vw - 56px));
 	--motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
 	--hero-logo-size: 53.68px;
-	--hero-brand-font-size: 2.186rem;
-	--hero-brand-width: 310px;
+	--hero-brand-font-size: 52px;
+	--hero-brand-width: 390px;
+	--hero-brand-lift: 110px;
 	--hero-cta-font-size: 1.913rem;
 	--hero-cta-width: 250px;
 	--hero-cta-height: 78px;
 	--hero-control-spread: 45px;
 	--hero-control-color: var(--color-primary);
+	--path-image-opacity: 0.75;
+	--path-overlay-opacity: 0.495;
+	--path-image-blur: 1px;
+	--path-image-saturation: 0.905;
+	--company-fade-duration: 1200ms;
+	--company-size-scale: 1.7;
 }
 
 * {
@@ -242,8 +249,9 @@ svg {
 	top: 16px;
 	right: 20px;
 	display: grid;
-	grid-template-columns: var(--hero-logo-size) var(--hero-cta-width);
-	height: var(--hero-cta-height);
+	grid-template-columns: var(--hero-logo-size);
+	width: var(--hero-logo-size);
+	height: var(--hero-logo-size);
 	align-items: center;
 	gap: 6px;
 	padding: 0;
@@ -324,7 +332,7 @@ svg {
 	justify-self: center;
 	place-items: stretch;
 	position: relative;
-	top: calc(var(--hero-control-spread) * -1);
+	top: calc(var(--hero-brand-lift) * -1);
 	animation: hero-enter 650ms 40ms var(--motion-ease) both;
 }
 
@@ -355,8 +363,10 @@ svg {
 
 .brand-morph .brand-wordmark {
 	color: var(--hero-control-color);
+	font-family: var(--font-body);
 	font-size: var(--hero-brand-font-size);
 	font-weight: 900;
+	letter-spacing: -0.04em;
 }
 
 .brand-morph .brand-refer,
@@ -378,6 +388,7 @@ svg {
 	border-radius: 16px;
 	background: transparent;
 	box-shadow: none;
+	will-change: transform;
 }
 
 .hero-cta-slot {
@@ -389,14 +400,6 @@ svg {
 	top: var(--hero-control-spread);
 }
 
-.floating-cta-slot {
-	display: grid;
-	width: var(--hero-cta-width);
-	height: var(--hero-cta-height);
-	place-items: stretch;
-	pointer-events: none;
-}
-
 .floating-cta {
 	width: 100%;
 	height: 100%;
@@ -405,17 +408,6 @@ svg {
 	gap: 8px;
 	transform-origin: top left;
 	pointer-events: auto;
-}
-
-.floating-cta-slot .floating-cta {
-	padding-inline: 12px;
-	border: 0;
-	border-radius: 17px;
-	background: transparent;
-	box-shadow: none;
-	color: var(--hero-control-color);
-	font-size: var(--hero-cta-font-size);
-	font-weight: 900;
 }
 
 /* Hero */
@@ -518,12 +510,12 @@ svg {
 }
 
 .hero-copy {
-	max-width: 610px;
+	max-width: 680px;
 	margin: 0;
-	color: rgb(23 18 15 / 88%);
-	font-size: 1rem;
-	font-weight: 550;
-	line-height: 1.72;
+	color: rgb(23 18 15 / 92%);
+	font-size: 1.12rem;
+	font-weight: 600;
+	line-height: 1.66;
 	text-shadow: 0 2px 18px rgb(255 247 237 / 88%);
 	animation: hero-enter 700ms 230ms var(--motion-ease) both;
 }
@@ -552,8 +544,7 @@ svg {
 	animation: cta-arrow-nudge 1.8s ease-in-out infinite;
 }
 
-.hero-cta-slot .floating-cta:hover,
-.floating-cta-slot .floating-cta:hover {
+.hero-cta-slot .floating-cta:hover {
 	background: color-mix(in srgb, var(--hero-control-color) 8%, transparent);
 	box-shadow: none;
 }
@@ -667,6 +658,37 @@ svg {
 	bottom: 0;
 }
 
+.company-field-caption {
+	position: absolute;
+	z-index: 4;
+	top: 50%;
+	left: 50%;
+	display: grid;
+	width: min(250px, calc(100% - 96px));
+	gap: 5px;
+	padding: 16px 20px;
+	border: 1px solid rgb(43 99 129 / 12%);
+	border-radius: 19px;
+	background: rgb(255 253 249 / 80%);
+	box-shadow: 0 18px 48px rgb(18 56 79 / 8%);
+	text-align: center;
+	transform: translate(-50%, -50%);
+	backdrop-filter: blur(14px);
+}
+
+.company-field-caption span {
+	color: var(--color-ink-muted);
+	font-size: 0.74rem;
+}
+
+.company-field-caption strong {
+	font-family: var(--font-display);
+	font-size: 1.26rem;
+	font-weight: 550;
+	letter-spacing: -0.035em;
+	line-height: 1.1;
+}
+
 .company-logo-card {
 	position: absolute;
 	z-index: 3;
@@ -682,16 +704,22 @@ svg {
 	box-shadow: none;
 	opacity: 0;
 	pointer-events: none;
-	transform: translate(-50%, -50%) scale(0.94);
+	transform: translate(-50%, -50%) scale(calc(var(--company-size-scale) * 0.94));
 	transition:
-		opacity 620ms var(--motion-ease) var(--field-delay, 0ms),
+		opacity var(--company-fade-duration) var(--motion-ease),
 		filter 220ms ease;
 }
 
 .company-logo-card.is-active {
 	opacity: 1;
 	pointer-events: auto;
-	animation: company-float 6.4s ease-in-out infinite;
+	animation: company-float 5.4s ease-in-out infinite;
+}
+
+.company-logo-card.is-active.is-leaving {
+	opacity: 0;
+	pointer-events: none;
+	animation-play-state: paused;
 }
 
 .company-logo-card svg {
@@ -962,6 +990,7 @@ svg {
 }
 
 .path-card {
+	--path-image: url('/path-seeker.jpeg');
 	position: relative;
 	display: grid;
 	min-height: 370px;
@@ -973,6 +1002,7 @@ svg {
 	border: 1px solid var(--color-border);
 	border-radius: var(--radius-lg);
 	background: var(--color-surface);
+	isolation: isolate;
 	transition:
 		border-color 220ms ease,
 		transform 220ms ease,
@@ -981,24 +1011,64 @@ svg {
 
 .path-card::before {
 	position: absolute;
-	right: -115px;
-	bottom: -155px;
-	width: 350px;
-	height: 350px;
-	border-radius: 50%;
-	background: radial-gradient(circle, var(--path-glow, var(--color-primary-tint)), transparent 68%);
+	z-index: -2;
+	inset: -5px;
+	background-image: var(--path-image);
+	background-position: center;
+	background-size: cover;
 	content: '';
-	opacity: 0.65;
+	filter: blur(var(--path-image-blur)) saturate(var(--path-image-saturation));
+	opacity: var(--path-image-opacity);
+	transform: scale(1.025);
+	transition:
+		filter 260ms ease,
+		opacity 260ms ease,
+		transform 360ms var(--motion-ease);
+}
+
+.path-card::after {
+	position: absolute;
+	z-index: -1;
+	inset: 0;
+	background:
+		linear-gradient(
+			90deg,
+			rgb(255 253 249 / 96%) 0%,
+			rgb(255 253 249 / 91%) 48%,
+			rgb(255 253 249 / 70%) 100%
+		),
+		radial-gradient(circle at 88% 112%, var(--path-glow, var(--color-primary-tint)), transparent 48%);
+	content: '';
+	opacity: var(--path-overlay-opacity);
 }
 
 .path-card-giver {
+	--path-image: url('/path-giver.jpeg');
 	--path-glow: #dbeaf0;
+}
+
+.path-card-seeker::before {
+	background-position: 43% center;
+}
+
+.path-card-giver::before {
+	background-position: 58% center;
 }
 
 .path-card:hover {
 	border-color: #d5c6b2;
 	box-shadow: var(--shadow-soft);
 	transform: translateY(-4px);
+}
+
+.path-card:hover::before {
+	filter: blur(max(0px, calc(var(--path-image-blur) - 0.25px))) saturate(var(--path-image-saturation));
+	transform: scale(1.04);
+}
+
+.path-card > * {
+	position: relative;
+	z-index: 1;
 }
 
 .path-card-top {
@@ -1012,30 +1082,6 @@ svg {
 	font-family: var(--font-mono);
 	font-size: 0.72rem;
 	letter-spacing: 0.11em;
-}
-
-.path-icon {
-	display: grid;
-	width: 52px;
-	height: 52px;
-	place-items: center;
-	border-radius: 50%;
-	background: var(--color-primary-tint);
-	color: var(--color-primary);
-}
-
-.path-card-giver .path-icon {
-	background: #dbeaf0;
-	color: var(--color-blue-700);
-}
-
-.path-icon svg {
-	width: 26px;
-	fill: none;
-	stroke: currentColor;
-	stroke-linecap: round;
-	stroke-linejoin: round;
-	stroke-width: 1.45;
 }
 
 .path-label {
@@ -1075,25 +1121,6 @@ svg {
 .section-intro-copy strong {
 	color: var(--color-ink);
 	font-weight: 750;
-}
-
-.path-highlights {
-	position: relative;
-	z-index: 1;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 7px;
-	margin-top: 17px;
-}
-
-.path-highlights span {
-	padding: 6px 9px;
-	border: 1px solid var(--color-border);
-	border-radius: 999px;
-	background: rgb(255 255 255 / 62%);
-	color: var(--color-ink-muted);
-	font-size: 0.7rem;
-	font-weight: 700;
 }
 
 /* Remotion product stories */
@@ -1447,10 +1474,10 @@ svg {
 @keyframes company-float {
 	0%,
 	100% {
-		transform: translate(-50%, -50%) translateY(0) scale(1);
+		transform: translate(-50%, -50%) translateY(0) scale(var(--company-size-scale));
 	}
 	50% {
-		transform: translate(-50%, -50%) translateY(-7px) scale(1);
+		transform: translate(-50%, -50%) translateY(-7px) scale(var(--company-size-scale));
 	}
 }
 
@@ -1526,8 +1553,9 @@ svg {
 	:root {
 		--shell: calc(100% - 32px);
 		--hero-logo-size: 45.6px;
-		--hero-brand-font-size: 2rem;
-		--hero-brand-width: 265px;
+		--hero-brand-font-size: 52px;
+		--hero-brand-width: min(340px, calc(100vw - 32px));
+		--hero-brand-lift: 110px;
 		--hero-cta-font-size: 1.756rem;
 		--hero-cta-width: 210px;
 		--hero-cta-height: 68px;
@@ -1540,9 +1568,9 @@ svg {
 	.floating-action-cluster {
 		top: 12px;
 		right: 12px;
-		grid-template-columns: var(--hero-logo-size) var(--hero-cta-width);
-		height: var(--hero-cta-height);
-		gap: 4px;
+		grid-template-columns: var(--hero-logo-size);
+		width: var(--hero-logo-size);
+		height: var(--hero-logo-size);
 		padding: 0;
 	}
 
@@ -1555,21 +1583,6 @@ svg {
 		width: var(--hero-logo-size);
 		height: var(--hero-logo-size);
 		border-radius: 13px;
-	}
-
-	.floating-cta-slot {
-		width: var(--hero-cta-width);
-		height: var(--hero-cta-height);
-	}
-
-	.floating-cta-slot .floating-cta {
-		padding-inline: 12px;
-		border-radius: 15px;
-		font-size: var(--hero-cta-font-size);
-	}
-
-	.floating-cta-slot .floating-cta svg {
-		width: 14px;
 	}
 
 	.hero-content {
@@ -1617,8 +1630,9 @@ svg {
 	}
 
 	.hero-copy {
-		max-width: 440px;
-		font-size: 0.92rem;
+		max-width: 360px;
+		font-size: 1.02rem;
+		line-height: 1.65;
 	}
 
 	.hero-video {
@@ -1674,6 +1688,15 @@ svg {
 		border-radius: 22px;
 	}
 
+	.company-field-caption {
+		width: min(210px, calc(100% - 80px));
+		padding: 14px 16px;
+	}
+
+	.company-field-caption strong {
+		font-size: 1.08rem;
+	}
+
 	.company-logo-card {
 		min-width: 102px;
 		gap: 7px;
@@ -1727,6 +1750,17 @@ svg {
 
 	.path-card {
 		height: auto;
+	}
+
+	.path-card::after {
+		background:
+			linear-gradient(
+				90deg,
+				rgb(255 253 249 / 97%) 0%,
+				rgb(255 253 249 / 93%) 54%,
+				rgb(255 253 249 / 78%) 100%
+			),
+			radial-gradient(circle at 88% 112%, var(--path-glow, var(--color-primary-tint)), transparent 48%);
 	}
 
 	.testimonial-lane {
@@ -1815,19 +1849,15 @@ svg {
 
 @media (max-width: 340px) {
 	:root {
-		--hero-brand-font-size: 1.86rem;
-		--hero-brand-width: 250px;
+		--hero-brand-font-size: 46px;
+		--hero-brand-width: calc(100vw - 24px);
 		--hero-cta-font-size: 1.64rem;
 		--hero-cta-width: 195px;
 	}
 
 	.floating-action-cluster {
 		right: 8px;
-		grid-template-columns: var(--hero-logo-size) var(--hero-cta-width);
-	}
-
-	.floating-action-cluster .floating-cta {
-		padding-inline: 12px;
+		grid-template-columns: var(--hero-logo-size);
 	}
 }
 

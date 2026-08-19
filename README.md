@@ -42,7 +42,8 @@ Seeker and giver buttons append `intent=seeker` or `intent=giver` to the configu
 - The transparent RightRefer mark is served from `public/rightrefer-logo.png` and used as the favicon.
 - The site-wide Louize typeface is self-hosted from `public/Louize.ttf`.
 - The hero uses the optimized `public/hero-hands.mp4` video once, holds on its final frame, and uses `hero-hands-poster.jpeg` as its loading and reduced-motion frame.
-- On scroll, only the hero logo and Get Started CTA dock at the top-right; the enlarged RightRefer wordmark remains in the hero.
+- As the hero scrolls away, only the logo moves continuously toward the far-right dock; scrolling backward returns it beside the wordmark. The wordmark and Get Started CTA remain in the hero.
+- The Built for both sides cards use `public/path-seeker.jpeg` and `public/path-giver.jpeg` as blurred, overlaid background imagery.
 - Company logos are rendered from the CC0-licensed Simple Icons package. They remain the property of their respective owners and do not imply affiliation.
 - The Gmail and Microsoft marks used in the product stories are served from `public/gmail-icon.svg` and `public/microsoft-logo.svg`; usage must follow their respective brand guidelines.
 - Product-story animations use three client-visible Remotion Player islands: the timely-opportunity email, the connected referral journey, and optional appreciation. Players pause when offscreen.

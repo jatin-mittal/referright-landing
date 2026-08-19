@@ -6,7 +6,7 @@ import RemotionPlayer from '../components/remotion/RemotionPlayer';
 import SectionIntro from '../components/SectionIntro.astro';
 import TestimonialStage, { type Testimonial } from '../components/TestimonialStage.astro';
 
-const pageTitle = 'RightRefer — The right referral, at the right time';
+const pageTitle = 'RightRefer, The right referral, at the right time';
 const pageDescription =
 	'Follow the companies you care about, discover relevant openings, and connect through thoughtful job referrals.';
 
@@ -71,7 +71,6 @@ const testimonialBatches: Testimonial[][] = [
 <BaseLayout title={pageTitle} description={pageDescription}>
 	<div class="floating-action-cluster" data-action-cluster>
 		<div class="floating-brand-slot" data-brand-dock></div>
-		<div class="floating-cta-slot" data-cta-dock></div>
 	</div>
 
 	<main id="main-content">
@@ -151,7 +150,7 @@ const testimonialBatches: Testimonial[][] = [
 				>
 					<span slot="copy">
 						Send a referral request completely free. Add an optional coffee thank-you only if it
-						feels right—<strong>it may improve your chances of receiving a referral</strong>, but it
+						feels right, <strong>it may improve your chances of receiving a referral</strong>, but it
 						never guarantees one.
 					</span>
 				</SectionIntro>
@@ -174,25 +173,15 @@ const testimonialBatches: Testimonial[][] = [
 					<article class="path-card path-card-seeker reveal">
 						<div class="path-card-top">
 							<span class="path-number">01</span>
-							<span class="path-icon" aria-hidden="true">
-								<svg viewBox="0 0 32 32">
-									<circle cx="13" cy="13" r="7"></circle>
-									<path d="m18.5 18.5 6 6M13 9.5v7M9.5 13h7"></path>
-								</svg>
-							</span>
 						</div>
 						<div>
 							<p class="path-label">If you are looking</p>
 							<h3>Ask for help, warmly.</h3>
 							<p>
 								Send a referral request completely free. Add an optional coffee thank-you only if
-								it feels right—<strong>it may improve your chances of receiving a referral</strong>,
+								it feels right, <strong>it may improve your chances of receiving a referral</strong>,
 								but it never guarantees one.
 							</p>
-							<div class="path-highlights">
-								<span>Free by default</span>
-								<span>Optional appreciation</span>
-							</div>
 						</div>
 						<a class="text-link" href={seekerUrl} data-track="card-find-referral">
 							Start your search
@@ -205,22 +194,11 @@ const testimonialBatches: Testimonial[][] = [
 					<article class="path-card path-card-giver reveal">
 						<div class="path-card-top">
 							<span class="path-number">02</span>
-							<span class="path-icon" aria-hidden="true">
-								<svg viewBox="0 0 32 32">
-									<circle cx="12" cy="11" r="5"></circle>
-									<circle cx="22.5" cy="14" r="3.5"></circle>
-									<path d="M4 26c.8-5 3.5-7.5 8-7.5s7.2 2.5 8 7.5M19.5 20c3.9 0 6.3 2 7 6"></path>
-								</svg>
-							</span>
 						</div>
 						<div>
 							<p class="path-label">If you can help</p>
 							<h3>Become part of someone’s next chapter.</h3>
 							<p>Review who is asking and why, then decide freely. One thoughtful introduction can become part of someone’s career journey.</p>
-							<div class="path-highlights">
-								<span>Decide independently</span>
-								<span>Help with context</span>
-							</div>
 						</div>
 						<a class="text-link" href={giverUrl} data-track="card-give-referral">
 							Offer a referral
@@ -237,7 +215,7 @@ const testimonialBatches: Testimonial[][] = [
 			<div class="section-shell">
 				<SectionIntro
 					eyebrow="Signal, not noise"
-					title="Apply the moment it matters, not after it is gone."
+					title="Apply when it matters. Get notified for every role."
 					copy="A relevant role reaches you while the application window is still fresh, with the context and referral path ready."
 					headingId="signal-title"
 					align="center"
@@ -368,76 +346,41 @@ const testimonialBatches: Testimonial[][] = [
 		const brandLogoHome = document.querySelector('[data-brand-logo-home]');
 		const brandHome = document.querySelector('[data-brand-home]');
 		const brandDock = document.querySelector('[data-brand-dock]');
-		const cta = document.querySelector('[data-floating-cta]');
-		const ctaHome = document.querySelector('[data-cta-home]');
-		const ctaDock = document.querySelector('[data-cta-dock]');
 		const actionCluster = document.querySelector('[data-action-cluster]');
-		const dockAnimations = new Map<HTMLElement, Animation>();
-		let actionDocked = false;
-		let clusterTimer = 0;
+		let dockFrame = 0;
 
-		const moveDockable = (
-			element: HTMLElement,
-			target: HTMLElement,
-			docked: boolean,
-			duration: number,
-			animate = true,
-		) => {
-			const first = element.getBoundingClientRect();
-			target.appendChild(element);
-			element.dataset.docked = String(docked);
-			const last = element.getBoundingClientRect();
-
-			dockAnimations.get(element)?.cancel();
-			if (!animate || reducedMotion) return;
-
-			const deltaX = first.left - last.left;
-			const deltaY = first.top - last.top;
-			const scaleX = first.width / Math.max(last.width, 1);
-			const scaleY = first.height / Math.max(last.height, 1);
-
-			const animation = element.animate(
-				[
-					{ transform: `translate(${deltaX}px, ${deltaY}px) scale(${scaleX}, ${scaleY})` },
-					{ transform: 'translate(0, 0) scale(1, 1)' },
-				],
-				{
-					duration,
-					easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-					fill: 'both',
-				},
-			);
-			dockAnimations.set(element, animation);
-			animation.addEventListener('finish', () => {
-				animation.cancel();
-				dockAnimations.delete(element);
-			});
-		};
-
-		const syncActions = (animate = true) => {
+		const syncActions = () => {
 			if (
 				!(brandLogo instanceof HTMLElement) ||
 				!(brandLogoHome instanceof HTMLElement) ||
 				!(brandHome instanceof HTMLElement) ||
 				!(brandDock instanceof HTMLElement) ||
-				!(cta instanceof HTMLElement) ||
-				!(ctaHome instanceof HTMLElement) ||
-				!(ctaDock instanceof HTMLElement) ||
 				!(actionCluster instanceof HTMLElement)
 			) return;
 
-			const homeTop = brandHome.getBoundingClientRect().top;
-			const shouldDock = actionDocked ? homeTop < 88 : homeTop < 24;
-			if (shouldDock === actionDocked) return;
+			const logoSize = brandLogoHome.getBoundingClientRect().width;
+			const dockTop = innerWidth <= 700 ? 12 : 16;
+			const homeDocumentTop = brandLogoHome.getBoundingClientRect().top + scrollY;
+			const heroDocumentBottom = (heroRoot?.getBoundingClientRect().bottom ?? innerHeight) + scrollY;
+			const startScroll = homeDocumentTop - dockTop;
+			const endScroll = Math.max(startScroll + 1, heroDocumentBottom - dockTop - logoSize);
+			const progress = Math.min(1, Math.max(0, (scrollY - startScroll) / (endScroll - startScroll)));
 
-			actionDocked = shouldDock;
-			window.clearTimeout(clusterTimer);
-			if (shouldDock) actionCluster.classList.add('is-active');
-			moveDockable(brandLogo, shouldDock ? brandDock : brandLogoHome, shouldDock, 480, animate);
-			moveDockable(cta, shouldDock ? ctaDock : ctaHome, shouldDock, 430, animate);
-			if (!shouldDock) {
-				clusterTimer = window.setTimeout(() => actionCluster.classList.remove('is-active'), animate ? 500 : 0);
+			if (progress <= 0.002) {
+				if (brandLogo.parentElement !== brandLogoHome) brandLogoHome.appendChild(brandLogo);
+				brandLogo.style.removeProperty('transform');
+				brandLogo.dataset.docked = 'false';
+				actionCluster.classList.remove('is-active');
+				return;
 			}
+
+			if (brandLogo.parentElement !== brandDock) brandDock.appendChild(brandLogo);
+			actionCluster.classList.add('is-active');
+			const dockRect = brandDock.getBoundingClientRect();
+			const homeLeft = brandLogoHome.getBoundingClientRect().left;
+			const translateX = (homeLeft - dockRect.left) * (1 - progress);
+			brandLogo.style.transform = `translate3d(${translateX}px, 0, 0)`;
+			brandLogo.dataset.docked = progress >= 0.998 ? 'true' : 'transitioning';
 		};
 
 		if (
@@ -445,19 +388,18 @@ const testimonialBatches: Testimonial[][] = [
 			brandLogoHome instanceof HTMLElement &&
 			brandHome instanceof HTMLElement &&
 			brandDock instanceof HTMLElement &&
-			cta instanceof HTMLElement &&
-			ctaHome instanceof HTMLElement &&
-			ctaDock instanceof HTMLElement &&
 			actionCluster instanceof HTMLElement
 		) {
-			actionDocked = brandHome.getBoundingClientRect().top < 24;
-			if (actionDocked) {
-				actionCluster.classList.add('is-active');
-				moveDockable(brandLogo, brandDock, true, 0, false);
-				moveDockable(cta, ctaDock, true, 0, false);
-			}
-			window.addEventListener('scroll', () => syncActions(true), { passive: true });
-			window.addEventListener('resize', () => syncActions(false), { passive: true });
+			const requestDockSync = () => {
+				if (dockFrame) return;
+				dockFrame = requestAnimationFrame(() => {
+					dockFrame = 0;
+					syncActions();
+				});
+			};
+			syncActions();
+			window.addEventListener('scroll', requestDockSync, { passive: true });
+			window.addEventListener('resize', requestDockSync, { passive: true });
 		}
 
 		const revealItems = document.querySelectorAll('.reveal');
@@ -512,57 +454,76 @@ const testimonialBatches: Testimonial[][] = [
 				[1, 3, 5, 7, 10, 12, 14, 16],
 			];
 			const desktopZones = [
-				[16, 18], [33, 31],
-				[67, 31], [84, 18],
-				[16, 82], [33, 69],
-				[67, 69], [84, 82],
+				[[14, 20], [12, 18]], [[28, 32], [25, 29]],
+				[[68, 72], [25, 29]], [[80, 86], [12, 18]],
+				[[14, 20], [82, 88]], [[28, 32], [71, 75]],
+				[[68, 72], [71, 75]], [[80, 86], [82, 88]],
 			];
 			const mobileZones = [
-				[20, 12], [32, 28],
-				[68, 28], [80, 12],
-				[20, 88], [32, 72],
-				[68, 72], [80, 88],
+				[[28, 32], [8, 13]], [[28, 32], [25, 29]],
+				[[68, 72], [25, 29]], [[68, 72], [8, 13]],
+				[[28, 32], [87, 92]], [[28, 32], [71, 75]],
+				[[68, 72], [71, 75]], [[68, 72], [87, 92]],
 			];
 			let cycle = 0;
 			let timer = 0;
+			const fadeDuration = 1200;
+			const visibleGap = 1500;
+			let running = false;
+			const randomBetween = ([minimum, maximum]: number[]) =>
+				minimum + Math.random() * (maximum - minimum);
 
-			const render = (index: number) => {
+			const render = (index: number, animate = false) => {
 				cards.forEach((card) => {
-					card.classList.remove('is-active');
+					card.classList.remove('is-active', 'is-leaving');
 					card.setAttribute('aria-hidden', 'true');
 				});
 
 				const mobile = innerWidth <= 700;
 				const zones = mobile ? mobileZones : desktopZones;
-				orders[index]?.forEach((cardIndex, positionIndex) => {
-					const card = cards[cardIndex];
-					const position = zones[positionIndex];
-					if (!card || !position) return;
-					card.style.setProperty('--field-x', `${position[0]}%`);
-					card.style.setProperty('--field-y', `${position[1]}%`);
-					card.style.setProperty('--field-delay', `${positionIndex * 55}ms`);
-					card.classList.add('is-active');
-					card.setAttribute('aria-hidden', 'false');
-				});
+				const activate = () => {
+					orders[index]?.forEach((cardIndex, positionIndex) => {
+						const card = cards[cardIndex];
+						const zone = zones[positionIndex];
+						if (!card || !zone) return;
+						card.style.setProperty('--field-x', `${randomBetween(zone[0]).toFixed(2)}%`);
+						card.style.setProperty('--field-y', `${randomBetween(zone[1]).toFixed(2)}%`);
+						card.classList.add('is-active');
+						card.setAttribute('aria-hidden', 'false');
+					});
+				};
+				if (animate) requestAnimationFrame(activate);
+				else activate();
 				cycle = index;
 			};
 
 			const schedule = () => {
 				window.clearTimeout(timer);
+				cards.forEach((card) => card.classList.remove('is-leaving'));
 				timer = window.setTimeout(() => {
-					render((cycle + 1) % orders.length);
-					schedule();
-				}, 4700);
+					cards
+						.filter((card) => card.classList.contains('is-active'))
+						.forEach((card) => card.classList.add('is-leaving'));
+					timer = window.setTimeout(() => {
+						render((cycle + 1) % orders.length, true);
+						if (running) schedule();
+					}, fadeDuration);
+				}, fadeDuration + visibleGap);
 			};
 
 			render(0);
 			companyController = {
-				play: schedule,
+				play: () => {
+					running = true;
+					schedule();
+				},
 				pause: () => {
+					running = false;
 					window.clearTimeout(timer);
-					render(cycle);
+					cards.forEach((card) => card.classList.remove('is-leaving'));
 				},
 				reduce: () => {
+					running = false;
 					window.clearTimeout(timer);
 					render(0);
 				},

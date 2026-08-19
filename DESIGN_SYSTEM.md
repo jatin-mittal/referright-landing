@@ -200,18 +200,17 @@ The display, body, and mono variables currently resolve to the same font. Their 
 | Path-card H3 | `clamp(2.05rem, 3.35vw, 3rem)` | Display weight | Tight leading |
 | Closing H2 | `clamp(2.7rem, 4.5vw, 4.2rem)` | Display weight | Tight leading |
 | Beta metric | `clamp(4.8rem, 8vw, 7.4rem)` | Display emphasis | Compact |
-| Hero body | `1rem` | `550` | `1.72` |
+| Hero body | `1.12rem` desktop / `1.02rem` mobile | `600` | `1.66` |
 | Section body | About `0.98rem` | Normal/medium | `1.72` |
 | Buttons | `0.84rem` base | `700` | Compact |
-| Hero wordmark | `2.186rem` desktop / `2rem` mobile | `900` | Single line |
-| Hero/docked CTA | `1.913rem` desktop / `1.756rem` mobile | `900` | Single line |
+| Hero wordmark | `52px` desktop/mobile, `46px` at ≤340px | `900` | Louize, no underline |
+| Hero CTA | `1.913rem` desktop / `1.756rem` mobile | `900` | Remains in hero |
 | Eyebrows/labels | `0.7rem–0.78rem` | `700` | Uppercase, `0.09em–0.15em` tracking |
 
 Mobile adjustments:
 
 - Hero H1 becomes `clamp(2.95rem, 13vw, 3.8rem)`.
-- Hero copy becomes `0.92rem`.
-- Hero/docked controls use a `1.1rem` base before scale.
+- Hero copy becomes `1.02rem`.
 
 ### 5.3 Typography rules
 
@@ -467,7 +466,7 @@ Use `hero-enter`:
 - Includes a vertical line animated top-to-bottom over `2s`.
 - Hidden on mobile.
 
-## 11. Logo and CTA dock
+## 11. Scroll-linked logo dock
 
 The site creates a persistent-header effect without a visible navigation container.
 
@@ -475,58 +474,52 @@ The site creates a persistent-header effect without a visible navigation contain
 
 - The hero brand is split into a logo link and a separate wordmark link.
 - A logo-home placeholder preserves the wordmark position when the logo leaves.
-- The hero slots contain the live logo and CTA.
-- Empty fixed top-right slots act as docking targets.
-- JavaScript physically reparents only the logo and CTA between slots.
+- The hero contains the live logo, wordmark, and CTA.
+- An empty fixed far-right slot acts as the logo docking target.
+- JavaScript physically reparents only the logo.
 - The wordmark remains in the hero and scrolls naturally with that section.
+- The Get Started CTA remains in the hero and scrolls naturally with it.
 - The outer fixed cluster remains visually transparent.
 
-### 11.2 FLIP motion
+### 11.2 Scroll-linked motion
 
-The transition:
+The logo transition is scrubbed directly by scroll position:
 
-1. Captures the element’s first rectangle.
-2. Appends it to the target slot.
-3. Captures the last rectangle.
-4. Animates translation and scale back to zero/one.
+1. The logo remains beside the wordmark until its natural position reaches the top dock line.
+2. It is then pinned at the top and moves horizontally toward the far-right slot.
+3. It reaches the final far-right position by the end of the hero.
+4. Scrolling backward reverses the exact path.
+5. At the start boundary it reattaches to its home placeholder with a small fractional-pixel snap tolerance.
 
-Durations:
-
-- Logo: `480ms`.
-- CTA: `430ms`.
-- Easing: `cubic-bezier(0.16, 1, 0.3, 1)`.
-
-Dock thresholds use hysteresis:
-
-- Dock when the home slot moves above about `24px`.
-- Return when it moves below about `88px`.
-
-This prevents scroll-boundary flicker.
+Updates are batched through `requestAnimationFrame`. Do not replace this with a threshold-triggered one-time animation; the position must remain proportional to hero scroll progress in both directions.
 
 ### 11.3 Final dimensions
 
 Desktop base:
 
 - Logo: `53.68px`.
-- Hero wordmark: `2.186rem`.
-- Hero brand area: `310px`.
+- Hero wordmark: `52px`.
+- Hero brand area: `390px`.
+- Hero brand lift: `110px`.
 - CTA: `1.913rem`, `250px × 78px`.
 
 Mobile base:
 
 - Logo: `45.6px`, matching its previous mobile size.
-- Hero wordmark: `2rem`.
-- Hero brand area: `265px`.
+- Hero wordmark: `52px`.
+- Hero brand area: `min(340px, calc(100vw - 32px))`.
+- Hero brand lift: `110px`.
 - CTA: `1.756rem`, `210px × 68px`.
 
-Very narrow screens at `340px` reduce only wordmark/CTA sizing and width; the logo remains unchanged.
+Very narrow screens at `340px` reduce the wordmark to `46px`; the logo remains unchanged.
 
 Related properties:
 
 ```css
 --hero-logo-size: 53.68px;
---hero-brand-font-size: 2.186rem;
---hero-brand-width: 310px;
+--hero-brand-font-size: 52px;
+--hero-brand-width: 390px;
+--hero-brand-lift: 110px;
 --hero-cta-font-size: 1.913rem;
 --hero-cta-width: 250px;
 --hero-cta-height: 78px;
@@ -561,10 +554,10 @@ The component currently exposes `light` and `dark` theme classes without impleme
 
 - Height `440px` desktop and `470px` mobile.
 - Completely transparent background.
-- No border, radius treatment, dotted grid, glow, or center caption.
+- No outer border, radius treatment, dotted grid, or glow.
 - The pale-blue section background remains visible through the visualization.
 
-Only company names and logos should be visible inside the positioning area.
+Company names/logos and one restrained center caption are visible inside the positioning area.
 
 ### 13.2 Spawn zones
 
@@ -581,18 +574,35 @@ Rules:
 - Their backgrounds and borders must remain invisible.
 - Show exactly eight companies at a time.
 - Place exactly two companies in each quadrant.
+- Randomize each company within a safe sub-range of its assigned logical slot.
 - Prevent clipping and overlap.
 
 ### 13.3 Company cards
 
 - Positioned absolutely using `--field-x`, `--field-y`, and `--field-delay`.
-- Fade and scale into position over about `620ms`.
-- Float vertically by approximately `7px` over `6.4s`.
+- Fade and scale into position over about `480ms`.
+- Float vertically by approximately `7px` over `5.4s`.
 - Use authentic company SVG marks and brand colors from Simple Icons.
 - Use transparent cards with no border or shadow so only the logo and company name remain visible.
 - Resting saturation `0.78`; hover saturation `1.2`.
 
-The set rotates every `4.7s`. Desktop and mobile coordinates are deterministic and separate.
+The default cycle is a `480ms` fade-in, `2600ms` fully visible gap, and `480ms` fade-out before the next randomized set. Desktop and mobile use separate bounded random ranges that preserve two companies per quadrant and keep the center caption clear.
+
+Temporary review controls currently expose:
+
+- Shared fade-in/fade-out duration: `100–1800ms`.
+- Fully visible time gap between fades: `200–7000ms`.
+- Company item scale: `70–170%`.
+
+The controls persist through `sessionStorage`. After final values are approved, lock them into CSS/JavaScript and remove the tuner markup, styles, listeners, and storage keys.
+
+### 13.4 Center caption
+
+- Text: “Opportunities move. RightRefer keeps you close.”
+- Positioned at the true center.
+- Warm translucent surface, subtle border and broad low-opacity shadow.
+- `backdrop-filter: blur(14px)`.
+- Company randomization ranges must prevent overlap with it.
 
 ## 14. Community proof and testimonials
 
@@ -650,7 +660,12 @@ Shared card treatment:
 - `--color-surface`.
 - Radius `--radius-lg`.
 - Default border.
-- Soft decorative radial glow bleeding from the lower-right.
+- Seeker image: `/path-seeker.jpeg`.
+- Referrer image: `/path-giver.jpeg`.
+- Background-image opacity: `0.75`.
+- Matching `blur(1px)` and saturation `0.905`.
+- Warm directional overlay at `0.495` opacity keeps all content readable.
+- Soft decorative radial glow remains below the overlay.
 - Hover lift `translateY(-4px)`.
 - Hover border `#d5c6b2`.
 - Hover shadow `--shadow-soft`.
@@ -660,11 +675,7 @@ Semantic variants:
 - **Candidate/seeker:** orange accent and `--color-primary-tint` glow.
 - **Referrer/giver:** blue-700 accent and `#dbeaf0` glow.
 
-Highlight tags use:
-
-- Pill radius.
-- Translucent white background.
-- Compact text.
+Do not add decorative top-right icons or highlight pills to these cards. The imagery, copy, step number, and one text CTA provide the complete hierarchy.
 
 Do not use red/green to distinguish candidate and referrer roles; orange/blue is the established pair.
 
@@ -851,12 +862,12 @@ This is the default for entrances, lifts, morphing controls, and polished state 
 | Motion | Timing | Purpose |
 | --- | --- | --- |
 | Hero entrance | `650–700ms`, staggered | Establish reading order |
-| Dock FLIP | `430–480ms` | Move only the logo and CTA while preserving visual identity |
+| Logo scroll scrub | Entire remaining hero scroll | Move only the logo continuously to/from the far right |
 | CTA arrow nudge | `1.8s` loop | Signal forward action |
 | Scroll cue | `2s` loop | Indicate more content below |
-| Company fade/position | About `620ms` | Smooth company rotation |
-| Company float | `6.4s` loop | Add calm ambient motion |
-| Company set rotation | Every `4.7s` | Maintain variety |
+| Company fade/position | About `480ms` | Smooth company rotation |
+| Company float | `5.4s` loop | Add calm ambient motion |
+| Company set rotation | Every `3.6s` | Maintain variety and random placement |
 | Testimonial lanes | `25s` linear loop | Show community breadth |
 | Metric count | `1050ms` | Emphasize proof |
 | Closing field orbit | `18s` loop | Ambient depth |
@@ -929,7 +940,7 @@ At each viewport verify:
 - No clipped text, cards, logos, or controls.
 - No company collisions.
 - Product stories remain understandable.
-- Docked logo and CTA fit while the wordmark remains in the hero.
+- Far-right logo fits while the wordmark and CTA remain in the hero.
 - Tap targets remain usable.
 
 ## 22. Accessibility
@@ -1164,7 +1175,8 @@ Each section should answer one primary question. Do not place several unrelated 
 - [ ] Checked at `390 × 844`.
 - [ ] Checked at `320 × 720`.
 - [ ] No horizontal overflow.
-- [ ] Docked logo and CTA fit at all widths without moving the wordmark.
+- [ ] Logo moves continuously with hero scroll and reverses to its exact home position.
+- [ ] CTA remains in the hero at all widths.
 - [ ] Text, logos, and company cards are not clipped.
 
 ### Accessibility
