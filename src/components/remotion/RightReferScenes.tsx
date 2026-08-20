@@ -913,3 +913,502 @@ export const AppreciationScene = () => {
 		</AbsoluteFill>
 	);
 };
+
+export const MobileSignalScene = () => {
+	const frame = useCurrentFrame();
+	const opened = frame >= 58;
+	const notificationOpacity = interpolate(frame, [48, 61], [1, 0], clamp);
+	const notificationReveal = reveal(frame, 12, 10);
+	const detailReveal = reveal(frame, 58, 10);
+
+	return (
+		<AbsoluteFill style={{ padding: 14, background: colors.blue100, fontFamily: font, color: colors.ink }}>
+			<Card style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', borderRadius: 24, background: '#fff' }}>
+				<div
+					style={{
+						display: 'flex',
+						height: 50,
+						alignItems: 'center',
+						justifyContent: 'space-between',
+						padding: '0 17px',
+						borderBottom: '1px solid #e5e8ea',
+						background: '#f8fafb',
+					}}
+				>
+					<div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+						<GmailLogo size={27} />
+						<strong style={{ fontSize: 16 }}>Inbox</strong>
+					</div>
+					<Avatar initials="JM" color={colors.blue900} size={30} />
+				</div>
+
+				<div style={{ position: 'absolute', inset: '50px 0 0', background: colors.blue50 }}>
+					<div
+						style={{
+							position: 'absolute',
+							inset: 18,
+							display: 'grid',
+							alignContent: 'center',
+							...notificationReveal,
+							opacity: notificationOpacity * (notificationReveal.opacity as number),
+						}}
+					>
+						<p
+							style={{
+								margin: 0,
+								color: colors.orange,
+								fontSize: 11,
+								fontWeight: 800,
+								letterSpacing: '.09em',
+								textTransform: 'uppercase',
+							}}
+						>
+							New role alert
+						</p>
+						<h3 style={{ margin: '9px 0 16px', fontFamily: display, fontSize: 30, fontWeight: 500, lineHeight: 1.02 }}>
+							A strong-fit role just opened.
+						</h3>
+						<div
+							style={{
+								padding: 17,
+								border: `1px solid ${colors.blue200}`,
+								borderRadius: 18,
+								background: '#fff',
+								boxShadow: '0 18px 42px rgba(18,56,79,.1)',
+							}}
+						>
+							<div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+								<MicrosoftLogo size={39} />
+								<div>
+									<strong style={{ display: 'block', fontSize: 17 }}>Product Manager</strong>
+									<span style={{ color: colors.muted, fontSize: 12 }}>Microsoft · Posted 18 min ago</span>
+								</div>
+							</div>
+							<p style={{ margin: '15px 0 0', color: colors.muted, fontSize: 13, lineHeight: 1.5 }}>
+								You are seeing it while the application window is still fresh.
+							</p>
+						</div>
+						<div
+							style={{
+								display: 'flex',
+								height: 48,
+								alignItems: 'center',
+								justifyContent: 'center',
+								marginTop: 16,
+								borderRadius: 999,
+								background: colors.orange,
+								color: '#fff',
+								fontSize: 14,
+								fontWeight: 800,
+								...pop(frame, 31),
+							}}
+						>
+							Open role alert
+						</div>
+					</div>
+
+					<div
+						style={{
+							position: 'absolute',
+							inset: 0,
+							padding: 18,
+							background: '#fff',
+							...detailReveal,
+							opacity: opened ? detailReveal.opacity : 0,
+						}}
+					>
+						<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
+							<Pill tone="orange" style={{ fontSize: 11, padding: '7px 10px' }}>Posted 18 min ago</Pill>
+							<span style={{ color: colors.muted, fontSize: 11 }}>Job ID R6565XX98</span>
+						</div>
+						<div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginTop: 14 }}>
+							<MicrosoftLogo size={38} />
+							<h3 style={{ margin: 0, fontFamily: display, fontSize: 29, fontWeight: 500, lineHeight: 1.02 }}>
+								Product Manager at Microsoft
+							</h3>
+						</div>
+						<p style={{ margin: '15px 0 0', color: colors.muted, fontSize: 14, lineHeight: 1.5 }}>
+							This role matches your background, and a referral path is already available.
+						</p>
+						<div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, marginTop: 14, ...reveal(frame, 91, 7) }}>
+							<Pill tone="blue" style={{ fontSize: 11, padding: '7px 9px' }}>Strong experience match</Pill>
+							<Pill tone="green" style={{ fontSize: 11, padding: '7px 9px' }}>Early application</Pill>
+						</div>
+						<div
+							style={{
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'space-between',
+								marginTop: 14,
+								padding: '12px 13px',
+								border: `1px solid ${colors.blue200}`,
+								borderRadius: 15,
+								background: colors.blue50,
+								...reveal(frame, 121, 7),
+							}}
+						>
+							<div style={{ display: 'flex' }}>
+								{[
+									['AK', colors.blue900],
+									['NV', colors.orange],
+									['RS', colors.blue700],
+								].map(([initials, color], index) => (
+									<span key={initials} style={{ marginLeft: index === 0 ? 0 : -7 }}>
+										<Avatar initials={initials} color={color} size={30} />
+									</span>
+								))}
+							</div>
+							<div style={{ textAlign: 'right' }}>
+								<strong style={{ display: 'block', fontSize: 12 }}>3 referrers available</strong>
+								<span style={{ color: colors.muted, fontSize: 10 }}>Choose who fits your request</span>
+							</div>
+						</div>
+						<div
+							style={{
+								display: 'flex',
+								height: 48,
+								alignItems: 'center',
+								justifyContent: 'center',
+								marginTop: 14,
+								borderRadius: 999,
+								background: colors.orange,
+								color: '#fff',
+								fontSize: 14,
+								fontWeight: 800,
+								boxShadow: '0 14px 30px rgba(196,58,0,.2)',
+								...pop(frame, 153),
+							}}
+						>
+							View referrers
+						</div>
+					</div>
+				</div>
+			</Card>
+		</AbsoluteFill>
+	);
+};
+
+export const MobileJourneyScene = () => {
+	const frame = useCurrentFrame();
+	const stage = frame < 76 ? 0 : frame < 145 ? 1 : 2;
+	const stageStarts = [12, 76, 145];
+	const stages = ['Follow', 'Choose', 'Track'];
+	const firstSelected = frame >= 102;
+	const secondSelected = frame >= 120;
+
+	return (
+		<AbsoluteFill style={{ padding: 14, background: colors.blue100, fontFamily: font, color: colors.ink }}>
+			<Card style={{ width: '100%', height: '100%', padding: 18, overflow: 'hidden', borderRadius: 24 }}>
+				<div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto 1fr auto', alignItems: 'center', gap: 7 }}>
+					{stages.map((label, index) => (
+						<div key={label} style={{ display: 'contents' }}>
+							<div style={{ display: 'grid', justifyItems: 'center', gap: 5 }}>
+								<span
+									style={{
+										display: 'grid',
+										width: 30,
+										height: 30,
+										placeItems: 'center',
+										borderRadius: '50%',
+										background: stage >= index ? colors.orange : colors.blue100,
+										color: stage >= index ? '#fff' : colors.blue700,
+										fontSize: 12,
+										fontWeight: 800,
+									}}
+								>
+									{index + 1}
+								</span>
+								<strong style={{ color: stage >= index ? colors.ink : colors.muted, fontSize: 10 }}>{label}</strong>
+							</div>
+							{index < stages.length - 1 && (
+								<span
+									style={{ height: 2, marginBottom: 17, borderRadius: 999, background: stage > index ? colors.orange : colors.blue100 }}
+								/>
+							)}
+						</div>
+					))}
+				</div>
+
+				<div style={{ height: 'calc(100% - 58px)', marginTop: 14 }}>
+					{stage === 0 && (
+						<div
+							style={{
+								height: '100%',
+								display: 'grid',
+								alignContent: 'center',
+								padding: 18,
+								border: `1px solid ${colors.border}`,
+								borderRadius: 19,
+								background: '#fff',
+								...reveal(frame, stageStarts[0], 10),
+							}}
+						>
+							<Pill tone="blue" style={{ justifySelf: 'start', fontSize: 11 }}>Step 1</Pill>
+							<div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 18 }}>
+								<MicrosoftLogo size={48} />
+								<div>
+									<h3 style={{ margin: 0, fontFamily: display, fontSize: 31, fontWeight: 500 }}>Follow Microsoft</h3>
+									<span style={{ color: colors.muted, fontSize: 12 }}>Stay close to roles you want.</span>
+								</div>
+							</div>
+							<p style={{ margin: '20px 0 0', color: colors.muted, fontSize: 14, lineHeight: 1.55 }}>
+								RightRefer watches for relevant openings and alerts you while they are fresh.
+							</p>
+							<div
+								style={{
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'space-between',
+									marginTop: 21,
+									padding: '14px 15px',
+									borderRadius: 15,
+									background: frame >= 38 ? '#e4f0e7' : colors.blue50,
+								}}
+							>
+								<strong style={{ color: frame >= 38 ? colors.success : colors.blue700, fontSize: 13 }}>
+									{frame >= 38 ? 'Following' : 'Follow company'}
+								</strong>
+								<span
+									style={{
+										position: 'relative',
+										width: 43,
+										height: 24,
+										borderRadius: 999,
+										background: frame >= 38 ? colors.success : colors.blue200,
+									}}
+								>
+									<i
+										style={{
+											position: 'absolute',
+											top: 3,
+											left: frame >= 38 ? 22 : 3,
+											width: 18,
+											height: 18,
+											borderRadius: '50%',
+											background: '#fff',
+										}}
+									/>
+								</span>
+							</div>
+						</div>
+					)}
+
+					{stage === 1 && (
+						<div
+							style={{
+								height: '100%',
+								padding: 18,
+								border: `1px solid ${colors.border}`,
+								borderRadius: 19,
+								background: '#fff',
+								...reveal(frame, stageStarts[1], 10),
+							}}
+						>
+							<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+								<Pill tone="orange" style={{ fontSize: 11 }}>Step 2</Pill>
+								<span style={{ color: colors.muted, fontSize: 10 }}>Select more than one</span>
+							</div>
+							<div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16 }}>
+								<MicrosoftLogo size={32} />
+								<div>
+									<strong style={{ display: 'block', fontSize: 15 }}>Product Manager</strong>
+									<span style={{ color: colors.muted, fontSize: 11 }}>Microsoft · R6565XX98</span>
+								</div>
+							</div>
+							<div style={{ display: 'grid', gap: 9, marginTop: 15 }}>
+								<ReferrerRow name="Aditi K." role="Product · Microsoft" initials="AK" color={colors.blue900} selected={firstSelected} />
+								<ReferrerRow name="Nikhil V." role="Platform · Microsoft" initials="NV" color={colors.orange} selected={secondSelected} />
+								<ReferrerRow name="Rhea S." role="Growth · Microsoft" initials="RS" color={colors.blue700} selected={false} />
+							</div>
+							<div style={{ display: 'flex', gap: 7, marginTop: 13, ...reveal(frame, 126, 6) }}>
+								<Pill tone="green" style={{ fontSize: 10, padding: '7px 9px' }}>Free request</Pill>
+								<Pill tone="orange" style={{ fontSize: 10, padding: '7px 9px' }}>Coffee optional</Pill>
+							</div>
+						</div>
+					)}
+
+					{stage === 2 && (
+						<div
+							style={{
+								height: '100%',
+								padding: 18,
+								border: `1px solid ${colors.border}`,
+								borderRadius: 19,
+								background: '#fff',
+								...reveal(frame, stageStarts[2], 10),
+							}}
+						>
+							<Pill tone="green" style={{ fontSize: 11 }}>Step 3</Pill>
+							<h3 style={{ margin: '14px 0 0', fontFamily: display, fontSize: 30, fontWeight: 500 }}>
+								Track every update
+							</h3>
+							<p style={{ margin: '8px 0 0', color: colors.muted, fontSize: 13, lineHeight: 1.5 }}>
+								Know when your request is seen, accepted, and referred.
+							</p>
+							<div style={{ display: 'grid', gap: 9, marginTop: 18 }}>
+								{['Sent', 'Viewed', 'Accepted', 'Referred'].map((label, index) => {
+									const complete = frame >= 154 + index * 11;
+									return (
+										<div
+											key={label}
+											style={{
+												display: 'grid',
+												gridTemplateColumns: '28px 1fr auto',
+												alignItems: 'center',
+												gap: 10,
+												padding: '10px 12px',
+												borderRadius: 13,
+												background: complete ? '#e4f0e7' : colors.blue50,
+											}}
+										>
+											<span
+												style={{
+													display: 'grid',
+													width: 26,
+													height: 26,
+													placeItems: 'center',
+													borderRadius: '50%',
+													background: complete ? colors.success : colors.blue200,
+													color: '#fff',
+													fontSize: 12,
+												}}
+											>
+												{complete ? '\u2713' : ''}
+											</span>
+											<strong style={{ fontSize: 13 }}>{label}</strong>
+											<span style={{ color: complete ? colors.success : colors.muted, fontSize: 10 }}>
+												{complete ? 'Complete' : 'Waiting'}
+											</span>
+										</div>
+									);
+								})}
+							</div>
+						</div>
+					)}
+				</div>
+			</Card>
+		</AbsoluteFill>
+	);
+};
+
+export const MobileAppreciationScene = () => {
+	const frame = useCurrentFrame();
+	const selected = frame >= 43;
+	const paid = frame >= 99;
+	const submitting = frame >= 145 && frame < 174;
+	const success = frame >= 174;
+
+	return (
+		<AbsoluteFill style={{ padding: 14, background: colors.blue100, fontFamily: font, color: colors.ink }}>
+			<Card style={{ width: '100%', height: '100%', padding: 18, overflow: 'hidden', borderRadius: 24 }}>
+				<div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10 }}>
+					<div>
+						<p
+							style={{
+								margin: 0,
+								color: colors.orange,
+								fontSize: 10,
+								fontWeight: 800,
+								letterSpacing: '.09em',
+								textTransform: 'uppercase',
+							}}
+						>
+							Referral request
+						</p>
+						<h3 style={{ margin: '7px 0 0', fontFamily: display, fontSize: 28, fontWeight: 500, lineHeight: 1.02 }}>
+							Add a thank-you?
+						</h3>
+					</div>
+					<Pill tone="blue" style={{ fontSize: 10, padding: '7px 9px' }}>Always optional</Pill>
+				</div>
+
+				<div style={{ display: 'grid', gap: 8, marginTop: 16, ...reveal(frame, 14, 7) }}>
+					{[
+						{ icon: '\u2615', label: 'Coffee', amount: '\u20B9100' },
+						{ icon: '\u{1F355}', label: 'Pizza', amount: '\u20B9500' },
+						{ icon: '+', label: 'Custom amount', amount: 'Choose' },
+					].map((option, index) => {
+						const active = index === 0 && selected;
+						return (
+							<div
+								key={option.label}
+								style={{
+									display: 'grid',
+									height: 50,
+									gridTemplateColumns: '34px 1fr auto',
+									alignItems: 'center',
+									gap: 9,
+									padding: '0 12px',
+									border: `${active ? 2 : 1}px solid ${active ? colors.orange : colors.border}`,
+									borderRadius: 15,
+									background: active ? colors.orangeSoft : '#fff',
+								}}
+							>
+								<span style={{ fontSize: 21, textAlign: 'center' }}>{option.icon}</span>
+								<strong style={{ fontSize: 13 }}>{option.label}</strong>
+								<span style={{ color: active ? colors.orange : colors.muted, fontSize: 11, fontWeight: 800 }}>
+									{option.amount}
+								</span>
+							</div>
+						);
+					})}
+				</div>
+
+				<div
+					style={{
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'space-between',
+						marginTop: 13,
+						padding: '11px 12px',
+						border: `1px solid ${colors.blue200}`,
+						borderRadius: 14,
+						background: colors.blue50,
+						...reveal(frame, 50, 6),
+					}}
+				>
+					<span style={{ color: colors.muted, fontSize: 11 }}>Your optional thank-you</span>
+					<strong style={{ color: colors.orange, fontSize: 13 }}>Coffee · {'\u20B9'}100</strong>
+				</div>
+
+				<div
+					style={{
+						display: 'flex',
+						height: 50,
+						alignItems: 'center',
+						justifyContent: 'center',
+						marginTop: 12,
+						borderRadius: 999,
+						background: success ? colors.success : paid ? colors.blue900 : colors.orange,
+						color: '#fff',
+						fontSize: 13,
+						fontWeight: 800,
+						boxShadow: success ? '0 14px 30px rgba(47,122,77,.22)' : '0 14px 30px rgba(196,58,0,.2)',
+						...pop(frame, 30),
+					}}
+				>
+					{success
+						? 'Referral request sent successfully'
+						: submitting
+							? 'Submitting referral request...'
+							: paid
+								? 'Submit referral request'
+								: 'Pay Now'}
+				</div>
+				<p
+					style={{
+						margin: '10px auto 0',
+						maxWidth: 310,
+						color: success ? colors.success : colors.muted,
+						fontSize: 10,
+						fontWeight: success ? 800 : 600,
+						lineHeight: 1.45,
+						textAlign: 'center',
+					}}
+				>
+					Referrers decide independently. Appreciation never guarantees a referral.
+				</p>
+			</Card>
+		</AbsoluteFill>
+	);
+};

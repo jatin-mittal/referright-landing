@@ -102,7 +102,7 @@ The same `Brand.astro` component appears in three contexts:
 2. **Docked logo:** only the logo moves into the fixed top-right cluster; the wordmark remains in its original hero structure.
 3. **Footer brand:** inverse treatment on the deep-blue footer.
 
-Do not move or duplicate the hero wordmark during docking. The logo must retain exactly the same rendered size and appearance before, during, and after its transition.
+Do not move or duplicate the hero wordmark during docking. Desktop keeps the same logo size throughout. On mobile, only the artwork scales down while the link retains a `45.6px` hit area.
 
 ## 4. Color system
 
@@ -200,17 +200,18 @@ The display, body, and mono variables currently resolve to the same font. Their 
 | Path-card H3 | `clamp(2.05rem, 3.35vw, 3rem)` | Display weight | Tight leading |
 | Closing H2 | `clamp(2.7rem, 4.5vw, 4.2rem)` | Display weight | Tight leading |
 | Beta metric | `clamp(4.8rem, 8vw, 7.4rem)` | Display emphasis | Compact |
-| Hero body | `1.12rem` desktop / `1.02rem` mobile | `600` | `1.66` |
+| Hero body | `1.12rem` desktop / `1rem` mobile | `600` | `1.66` desktop / `1.58` mobile |
 | Section body | About `0.98rem` | Normal/medium | `1.72` |
 | Buttons | `0.84rem` base | `700` | Compact |
-| Hero wordmark | `52px` desktop/mobile, `46px` at ≤340px | `900` | Louize, no underline |
-| Hero CTA | `1.913rem` desktop / `1.756rem` mobile | `900` | Remains in hero |
+| Hero wordmark | `52px` desktop / `clamp(46px, 13.3vw, 52px)` mobile / `44px` at ≤340px | `900` | Louize, no underline |
+| Hero CTA | `1.913rem` desktop / `1.68rem` mobile / `1.55rem` at ≤340px | `900` | Remains in hero |
 | Eyebrows/labels | `0.7rem–0.78rem` | `700` | Uppercase, `0.09em–0.15em` tracking |
 
 Mobile adjustments:
 
-- Hero H1 becomes `clamp(2.95rem, 13vw, 3.8rem)`.
-- Hero copy becomes `1.02rem`.
+- Hero H1 becomes `clamp(2.8rem, 12.6vw, 3.55rem)`, with `2.72rem` at ≤340px.
+- Hero copy becomes `1rem`; narrow phones use `0.94rem`.
+- Mobile section H2 uses `clamp(2.08rem, 9.2vw, 2.72rem)`.
 
 ### 5.3 Typography rules
 
@@ -252,9 +253,9 @@ Do not invent independent max-widths for ordinary sections. Use the shared shell
 ### 6.2 Section spacing
 
 - Standard major-section vertical padding: approximately `116px–120px`.
-- Mobile major-section vertical padding: `88px`.
+- Mobile major-section vertical padding: `72px`; narrow phones use `64px`.
 - Hero occupies at least `100svh`.
-- Hero content gap: approximately `46px` desktop and `38px` mobile.
+- Hero content gap: approximately `46px` desktop and `clamp(27px, 4.6svh, 38px)` mobile.
 - Hero brand and CTA are additionally separated from the content center by `45px` in opposite directions.
 
 Spacing rules:
@@ -431,7 +432,7 @@ The brand and CTA should feel like matching parts of one control system:
 
 Current headline:
 
-> The right Referral.  
+> The right Referral.
 > At the Right time.
 
 Rules:
@@ -505,13 +506,14 @@ Desktop base:
 
 Mobile base:
 
-- Logo: `45.6px`, matching its previous mobile size.
-- Hero wordmark: `52px`.
+- Logo link/hit area: `45.6px`.
+- Docked logo artwork: `82%` of its home artwork size while the `45.6px` link remains tappable.
+- Hero wordmark: `clamp(46px, 13.3vw, 52px)`.
 - Hero brand area: `min(340px, calc(100vw - 32px))`.
-- Hero brand lift: `110px`.
-- CTA: `1.756rem`, `210px × 68px`.
+- Hero brand lift: `clamp(78px, 13svh, 104px)`.
+- CTA: `1.68rem`, `210px × 62px`.
 
-Very narrow screens at `340px` reduce the wordmark to `46px`; the logo remains unchanged.
+Very narrow screens at `340px` reduce the wordmark to `44px` and the CTA to `1.55rem`, `188px × 62px`; the logo link remains unchanged.
 
 Related properties:
 
@@ -552,7 +554,7 @@ The component currently exposes `light` and `dark` theme classes without impleme
 
 ### 13.1 Canvas
 
-- Height `440px` desktop and `470px` mobile.
+- Height `590px` desktop, `570px` mobile, and `550px` at ≤340px.
 - Completely transparent background.
 - No outer border, radius treatment, dotted grid, or glow.
 - The pale-blue section background remains visible through the visualization.
@@ -580,21 +582,24 @@ Rules:
 ### 13.3 Company cards
 
 - Positioned absolutely using `--field-x`, `--field-y`, and `--field-delay`.
-- Fade and scale into position over about `480ms`.
+- Fade and scale into position over `1200ms`.
 - Float vertically by approximately `7px` over `5.4s`.
 - Use authentic company SVG marks and brand colors from Simple Icons.
 - Use transparent cards with no border or shadow so only the logo and company name remain visible.
 - Resting saturation `0.78`; hover saturation `1.2`.
 
-The default cycle is a `480ms` fade-in, `2600ms` fully visible gap, and `480ms` fade-out before the next randomized set. Desktop and mobile use separate bounded random ranges that preserve two companies per quadrant and keep the center caption clear.
+The cycle is a `1200ms` fade-in, `1500ms` fully visible gap, and `1200ms` fade-out before the next randomized set.
 
-Temporary review controls currently expose:
+Scale and positioning:
 
-- Shared fade-in/fade-out duration: `100–1800ms`.
-- Fully visible time gap between fades: `200–7000ms`.
-- Company item scale: `70–170%`.
+- Desktop item scale: `1.7`.
+- Mobile item scale: `1.3`.
+- Narrow-phone item scale at ≤340px: `1.24`.
+- Standard-mobile X ranges use `22–27%` on the left and `73–78%` on the right.
+- Narrow-mobile X ranges use `20–23%` on the left and `77–80%` on the right.
+- Y ranges create four staggered rows in each half while retaining exactly two companies per logical quadrant.
 
-The controls persist through `sessionStorage`. After final values are approved, lock them into CSS/JavaScript and remove the tuner markup, styles, listeners, and storage keys.
+The temporary tuning controls and `sessionStorage` settings have been removed.
 
 ### 13.4 Center caption
 
@@ -651,6 +656,8 @@ The accent drives the card edge and avatar treatment. Do not add more variants u
 
 Duplicate looping cards must use `aria-hidden="true"` and disappear under reduced motion.
 
+On mobile, the metric panel is `230px` minimum height. The testimonial stage is `178px` tall and uses two `83px` lanes. Cards are `min(310px, calc(100vw - 58px))` wide, allowing one readable card plus a controlled edge peek.
+
 ## 15. Candidate and referrer path cards
 
 Use a two-card equal-height grid.
@@ -679,6 +686,8 @@ Do not add decorative top-right icons or highlight pills to these cards. The ima
 
 Do not use red/green to distinguish candidate and referrer roles; orange/blue is the established pair.
 
+On mobile, cards stack with a `16px` gap, use a `324px` minimum height (`330px` at ≤340px), and retain at least a `44px` text-link target. Seeker imagery is cropped near `38%` and giver imagery near `64%` to protect copy and subjects.
+
 ## 16. Product-story frames and Remotion scenes
 
 ### 16.1 Frame treatment
@@ -693,13 +702,13 @@ All product-story frames use:
 
 Aspect ratios:
 
-| Scene | Desktop | Compact |
+| Scene | Desktop | Mobile |
 | --- | --- | --- |
-| Signal/Gmail | `1280 / 800` | `760 / 840` |
-| Connected journey | `1280 / 680` | `760 / 900` |
-| Appreciation | `900 / 640` | `760 / 700` |
+| Signal/Gmail | `1280 / 800` | `390 / 520` |
+| Connected journey | `1280 / 680` | `390 / 520` |
+| Appreciation | `900 / 640` | `390 / 480` |
 
-The compact breakpoint is `700px` in both CSS and `RemotionPlayer.tsx`. Keep both values synchronized.
+The mobile breakpoint is `700px` in both CSS and `RemotionPlayer.tsx`. Keep both values synchronized. Mobile scenes are explicit phone-first compositions, not scaled versions of the desktop scenes.
 
 ### 16.2 Playback behavior
 
@@ -740,6 +749,8 @@ Narrative:
 
 Keep the story specific enough to feel real but visually simplified enough to understand without interaction.
 
+The mobile scene moves from one full-width role alert into a readable email detail, match context, available referrers, and one clear action. Do not place clipped side cards beside the phone layout.
+
 ### 16.5 Connected referral journey
 
 Duration: `210` frames / `7s`.
@@ -751,6 +762,8 @@ Stages:
 3. Track referral.
 
 Use orange active badges and progress connectors. The sequence should communicate one connected journey, not three unrelated cards.
+
+The mobile scene shows one useful-size stage panel at a time beneath a persistent three-step rail. Do not stack miniature desktop panels into a tall canvas.
 
 ### 16.6 Optional appreciation
 
@@ -772,6 +785,8 @@ Button states:
 Always include the independence message:
 
 > Referrers decide independently. Appreciation never guarantees a referral.
+
+The mobile scene uses three compact vertical choice rows, a selected-appreciation summary, the same payment-to-submit state sequence, and the independence reassurance in a `390 × 480` canvas.
 
 ## 17. Appreciation section
 
@@ -865,9 +880,9 @@ This is the default for entrances, lifts, morphing controls, and polished state 
 | Logo scroll scrub | Entire remaining hero scroll | Move only the logo continuously to/from the far right |
 | CTA arrow nudge | `1.8s` loop | Signal forward action |
 | Scroll cue | `2s` loop | Indicate more content below |
-| Company fade/position | About `480ms` | Smooth company rotation |
+| Company fade/position | `1200ms` | Smooth company rotation |
 | Company float | `5.4s` loop | Add calm ambient motion |
-| Company set rotation | Every `3.6s` | Maintain variety and random placement |
+| Company set rotation | Every `3.9s` | Maintain variety and random placement |
 | Testimonial lanes | `25s` linear loop | Show community breadth |
 | Metric count | `1050ms` | Emphasize proof |
 | Closing field orbit | `18s` loop | Ambient depth |
@@ -891,7 +906,7 @@ This is the default for entrances, lifts, morphing controls, and polished state 
 | Breakpoint | Purpose |
 | --- | --- |
 | `1020px` | Tablet layout and intermediate grid changes |
-| `700px` | Mobile stacking, typography, hero, and compact Remotion scenes |
+| `700px` | Mobile stacking, typography, hero, and phone-first Remotion scenes |
 | `340px` | Very narrow dock and typography corrections |
 
 Do not add a new breakpoint for one component unless the existing three cannot solve the layout cleanly.
@@ -908,22 +923,22 @@ Do not add a new breakpoint for one component unless the existing three cannot s
 
 - Shell becomes `calc(100% - 32px)`.
 - Scroll padding becomes `76px`.
-- Section padding becomes `88px`.
+- Section padding becomes `72px`.
 - Hero heading uses mobile clamp.
 - Hero copy reduces slightly but remains readable.
 - Hero video is reframed and enlarged.
 - Scroll cue disappears.
 - Section introductions become left-aligned.
-- Company canvas becomes taller.
-- Company positions use the mobile coordinate set.
+- Company canvas becomes `570px` tall and uses scale `1.3`.
+- Company positions use collision-safe left/right mobile coordinate sets.
 - Multi-column cards stack.
-- Product stories use compact compositions.
+- Product stories use dedicated `390px` phone compositions.
 - Footer becomes centered and stacked.
 
 ### 21.4 Very narrow rules at `340px`
 
 - Reduce fixed-cluster right offset.
-- Protect wordmark and CTA font size.
+- Use `64px` section spacing, a `44px` wordmark, a smaller CTA, `550px` company field, and scale `1.24`.
 - Confirm no horizontal overflow at `320px`.
 
 ### 21.5 Required viewport QA
@@ -931,8 +946,11 @@ Do not add a new breakpoint for one component unless the existing three cannot s
 Every design change must be checked at:
 
 - `1440 × 1000`.
+- `430 × 932`.
 - `390 × 844`.
+- `360 × 800`.
 - `320 × 720`.
+- A short mobile landscape viewport, currently `667 × 375`.
 
 At each viewport verify:
 
@@ -997,7 +1015,7 @@ Under `prefers-reduced-motion: reduce`:
 ### 22.6 Interactive targets
 
 - Primary buttons are at least `50px` high.
-- Keep mobile links and buttons comfortably tappable.
+- Mobile links and buttons, including the visually scaled docked logo and footer links, retain at least a `44px × 44px` target.
 - Do not place overlapping invisible elements over interactive controls.
 
 ## 23. Content and UX writing

@@ -358,6 +358,7 @@ const testimonialBatches: Testimonial[][] = [
 		}
 
 		const brandLogo = document.querySelector('[data-brand-logo]');
+		const brandLogoImage = brandLogo?.querySelector('img');
 		const brandLogoHome = document.querySelector('[data-brand-logo-home]');
 		const brandHome = document.querySelector('[data-brand-home]');
 		const brandDock = document.querySelector('[data-brand-dock]');
@@ -375,6 +376,7 @@ const testimonialBatches: Testimonial[][] = [
 
 			const logoSize = brandLogoHome.getBoundingClientRect().width;
 			const dockTop = innerWidth <= 700 ? 12 : 16;
+			const dockScale = innerWidth <= 700 ? 0.82 : 1;
 			const homeDocumentTop = brandLogoHome.getBoundingClientRect().top + scrollY;
 			const heroDocumentBottom = (heroRoot?.getBoundingClientRect().bottom ?? innerHeight) + scrollY;
 			const startScroll = homeDocumentTop - dockTop;
@@ -384,6 +386,7 @@ const testimonialBatches: Testimonial[][] = [
 			if (progress <= 0.002) {
 				if (brandLogo.parentElement !== brandLogoHome) brandLogoHome.appendChild(brandLogo);
 				brandLogo.style.removeProperty('transform');
+				if (brandLogoImage instanceof HTMLImageElement) brandLogoImage.style.removeProperty('transform');
 				brandLogo.dataset.docked = 'false';
 				actionCluster.classList.remove('is-active');
 				return;
@@ -394,7 +397,11 @@ const testimonialBatches: Testimonial[][] = [
 			const dockRect = brandDock.getBoundingClientRect();
 			const homeLeft = brandLogoHome.getBoundingClientRect().left;
 			const translateX = (homeLeft - dockRect.left) * (1 - progress);
+			const scale = 1 - (1 - dockScale) * progress;
 			brandLogo.style.transform = `translate3d(${translateX}px, 0, 0)`;
+			if (brandLogoImage instanceof HTMLImageElement) {
+				brandLogoImage.style.transform = `scale(${0.92 * scale})`;
+			}
 			brandLogo.dataset.docked = progress >= 0.998 ? 'true' : 'transitioning';
 		};
 
@@ -475,10 +482,16 @@ const testimonialBatches: Testimonial[][] = [
 				[[66, 70], [66, 69]], [[82, 89], [86, 91]],
 			];
 			const mobileZones = [
-				[[31, 33], [7, 9]], [[31, 33], [27, 29]],
-				[[67, 69], [37, 39]], [[67, 69], [17, 19]],
-				[[31, 33], [91, 93]], [[31, 33], [71, 73]],
-				[[67, 69], [61, 63]], [[67, 69], [81, 83]],
+				[[22, 27], [8, 12]], [[22, 27], [27, 31]],
+				[[73, 78], [34, 38]], [[73, 78], [14, 18]],
+				[[22, 27], [88, 92]], [[22, 27], [69, 73]],
+				[[73, 78], [62, 66]], [[73, 78], [82, 86]],
+			];
+			const narrowMobileZones = [
+				[[20, 23], [8, 12]], [[20, 23], [27, 31]],
+				[[77, 80], [34, 38]], [[77, 80], [14, 18]],
+				[[20, 23], [88, 92]], [[20, 23], [69, 73]],
+				[[77, 80], [62, 66]], [[77, 80], [82, 86]],
 			];
 			let cycle = 0;
 			let timer = 0;
@@ -495,7 +508,7 @@ const testimonialBatches: Testimonial[][] = [
 				});
 
 				const mobile = innerWidth <= 700;
-				const zones = mobile ? mobileZones : desktopZones;
+				const zones = innerWidth <= 340 ? narrowMobileZones : mobile ? mobileZones : desktopZones;
 				const activate = () => {
 					orders[index]?.forEach((cardIndex, positionIndex) => {
 						const card = cards[cardIndex];

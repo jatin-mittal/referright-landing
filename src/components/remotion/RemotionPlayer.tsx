@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { Player, type PlayerRef } from '@remotion/player';
 import {
 	AppreciationScene,
-	CompactGmailReferralSequence,
-	CompactConnectedJourneyScene,
 	ConnectedJourneyScene,
 	GmailReferralSequence,
+	MobileAppreciationScene,
+	MobileJourneyScene,
+	MobileSignalScene,
 } from './RightReferScenes';
 
 export type RemotionVariant = 'signal' | 'journey' | 'appreciation';
@@ -18,32 +19,32 @@ interface Props {
 const scenes = {
 	signal: {
 		component: GmailReferralSequence,
-		compactComponent: CompactGmailReferralSequence,
+		compactComponent: MobileSignalScene,
 		durationInFrames: 240,
 		width: 1280,
 		height: 800,
-		compactWidth: 760,
-		compactHeight: 840,
+		compactWidth: 390,
+		compactHeight: 520,
 		label: 'Animated Gmail opportunity email showing a timely Microsoft role and referral path',
 	},
 	journey: {
 		component: ConnectedJourneyScene,
-		compactComponent: CompactConnectedJourneyScene,
+		compactComponent: MobileJourneyScene,
 		durationInFrames: 210,
 		width: 1280,
 		height: 680,
-		compactWidth: 760,
-		compactHeight: 900,
+		compactWidth: 390,
+		compactHeight: 520,
 		label: 'Animated three-step Microsoft subscription, referrer selection, and referral progress flow',
 	},
 	appreciation: {
 		component: AppreciationScene,
-		compactComponent: AppreciationScene,
+		compactComponent: MobileAppreciationScene,
 		durationInFrames: 210,
 		width: 900,
 		height: 640,
-		compactWidth: 760,
-		compactHeight: 700,
+		compactWidth: 390,
+		compactHeight: 480,
 		label: 'Animated optional appreciation and referral request flow',
 	},
 } as const;
