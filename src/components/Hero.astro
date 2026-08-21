@@ -524,7 +524,14 @@ import { TRUST_STRIP, signUpWith } from '../lib/content';
 
 	@media (min-width: 64rem) {
 		.hero {
-			padding-top: clamp(3.5rem, 6vw, 6rem);
+			/*
+			 * Everything the media panel has to share the first screen with:
+			 * the 4.5rem sticky header, this section's top padding, and a little
+			 * air beneath the frame so it does not sit flush on the fold line.
+			 */
+			--hero-fold-reserve: 13rem;
+
+			padding-top: clamp(3rem, 5vw, 4.5rem);
 		}
 
 		.hero-inner {
@@ -532,7 +539,21 @@ import { TRUST_STRIP, signUpWith } from '../lib/content';
 		}
 
 		.hero-frame {
+			/*
+			 * The proof card is absolutely positioned against the bottom of this
+			 * frame, so the frame's bottom edge IS the hero's trust payload.
+			 *
+			 * A 5/6 ratio alone is not safe: at 1440px the media column is about
+			 * 660px wide, which the ratio turns into roughly 790px of height —
+			 * taller than the space left under the header, so the card fell below
+			 * the fold. Capping the height against the viewport keeps the card on
+			 * screen at every desktop height; `object-fit: cover` on the film
+			 * absorbs the changed ratio without distorting anyone's hands.
+			 */
 			aspect-ratio: 5 / 6;
+			min-block-size: 22rem;
+			max-block-size: calc(100vh - var(--hero-fold-reserve));
+			max-block-size: calc(100svh - var(--hero-fold-reserve));
 		}
 
 		.hero-proof {

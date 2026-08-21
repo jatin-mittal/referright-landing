@@ -21,6 +21,11 @@ const socialImage = new URL('/og-image.png', canonicalUrl);
  * before hydration corrects it. Astro's `is:inline` keeps it out of the bundle
  * graph so it is not deferred.
  *
+ * Light is the product's default and the only first-visit theme. The OS
+ * `prefers-color-scheme` signal is deliberately NOT consulted here: this page is
+ * a first impression, and it should be the same first impression for everyone.
+ * Dark is opt-in via the toggle, and remembered from then on.
+ *
  * The enum values are interpolated from `constants.ts` rather than hardcoded, so
  * the inline script cannot drift from the typed source.
  */
@@ -28,7 +33,7 @@ const themePrepaint = `(function(){try{
 	var stored = localStorage.getItem(${JSON.stringify(THEME_STORAGE_KEY)});
 	var theme = (stored === ${JSON.stringify(ThemeMode.Dark)} || stored === ${JSON.stringify(ThemeMode.Light)})
 		? stored
-		: (window.matchMedia('(prefers-color-scheme: dark)').matches ? ${JSON.stringify(ThemeMode.Dark)} : ${JSON.stringify(ThemeMode.Light)});
+		: ${JSON.stringify(ThemeMode.Light)};
 	document.documentElement.dataset.theme = theme;
 	var meta = document.querySelector('meta[name="theme-color"]');
 	if (meta) meta.setAttribute('content', theme === ${JSON.stringify(ThemeMode.Dark)} ? '#050505' : '#FBF8F2');
