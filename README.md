@@ -22,7 +22,7 @@ The development server runs at `http://localhost:4321`.
 
 | Variable | Purpose | Default |
 | --- | --- | --- |
-| `SITE_URL` | Production landing-page origin used for canonical URLs and the sitemap | `https://referright.com` |
+| `SITE_URL` | Production landing-page origin used for canonical URLs and the sitemap | `https://www.rightrefer.com` |
 | `PUBLIC_APP_SIGNUP_URL` | Auth handoff used by all calls to action | `/signup` |
 | `PUBLIC_BETA_REFERRALS` | Successfully referred people shown in the beta social-proof metric | `48` |
 

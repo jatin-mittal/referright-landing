@@ -849,7 +849,7 @@ Supporting copy should explain that ideas, friction points, and honest experienc
 - Small `translateY(-2px)` hover lift.
 - Arrow follows the shared horizontal-nudge convention.
 - Primary label: **Write to Us**.
-- Show `hello@referright.com` as the supporting destination.
+- Show `hello@rightrefer.com` as the supporting destination.
 - Use a direct `mailto:` action rather than introducing a generic contact form.
 
 ## 19. Footer

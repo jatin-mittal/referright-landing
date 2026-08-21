@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = ({ site }) => {
-	const productionSite = site ?? new URL('https://referright.com');
+	const productionSite = site ?? new URL('https://www.rightrefer.com');
 	const sitemapUrl = new URL('/sitemap-index.xml', productionSite);
 
 	return new Response(

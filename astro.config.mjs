@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-	site: process.env.SITE_URL || 'https://referright.com',
+	site: process.env.SITE_URL || 'https://www.rightrefer.com',
 	output: 'static',
 	integrations: [react(), sitemap()],
 });
