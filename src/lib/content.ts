@@ -100,7 +100,7 @@ export const OFFERINGS: readonly Offering[] = [
 		eyebrow: 'If the role suits you',
 		title: 'Hear about the opening before it reaches the market.',
 		summary:
-			'When someone asks for a referral into a senior role, we quietly tell the people who could fill it themselves — peers at other companies, same function, comparable seniority. The opening reaches you as an opportunity, not as a favour to do.',
+			'When someone asks for a referral into a senior role, we quietly tell the people who could fill it themselves: peers at other companies, same function, comparable seniority. The opening reaches you as an opportunity, not as a favour to do.',
 		points: [
 			{
 				label: 'Matched on function and band',
@@ -159,7 +159,7 @@ export const LIFECYCLE: readonly LifecycleStep[] = [
 	{
 		stage: LifecycleStage.Confirmed,
 		index: '04',
-		title: 'You confirm — or dispute',
+		title: 'You confirm, or dispute',
 		detail: 'Check the proof. Confirm it, or raise a dispute and we review it.',
 		timing: `${POLICY.confirmationWindowHours}h to review`,
 	},
