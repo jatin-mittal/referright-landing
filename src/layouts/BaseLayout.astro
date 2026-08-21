@@ -10,6 +10,9 @@ interface Props {
 const { title, description } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 const socialImage = new URL('/og-image.png', canonicalUrl);
+const organizationUrl = new URL('/', canonicalUrl);
+const organizationId = new URL('/#organization', canonicalUrl);
+const organizationLogo = new URL('/rightrefer-logo.webp', canonicalUrl);
 ---
 
 <!doctype html>
@@ -19,6 +22,8 @@ const socialImage = new URL('/og-image.png', canonicalUrl);
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		<meta name="robots" content="index, follow" />
+		<meta name="googlebot" content="index, follow, max-image-preview:large" />
 		<meta name="theme-color" content="#0b2638" />
 		<meta name="color-scheme" content="light" />
 
@@ -47,10 +52,30 @@ const socialImage = new URL('/og-image.png', canonicalUrl);
 			type="application/ld+json"
 			set:html={JSON.stringify({
 				'@context': 'https://schema.org',
-				'@type': 'Organization',
-				name: 'RightRefer',
-				url: canonicalUrl.origin,
-				description,
+				'@graph': [
+					{
+						'@type': 'Organization',
+						'@id': organizationId.href,
+						name: 'RightRefer',
+						url: organizationUrl.href,
+						description,
+						logo: {
+							'@type': 'ImageObject',
+							url: organizationLogo.href,
+							width: 256,
+							height: 248,
+						},
+					},
+					{
+						'@type': 'WebSite',
+						'@id': new URL('/#website', canonicalUrl).href,
+						name: 'RightRefer',
+						url: organizationUrl.href,
+						publisher: {
+							'@id': organizationId.href,
+						},
+					},
+				],
 			})}
 		/>
 		<Analytics />
