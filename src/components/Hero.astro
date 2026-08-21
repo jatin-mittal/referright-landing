@@ -1,5 +1,5 @@
 ---
-import { OUTCOME_DISCLAIMER, POLICY, SectionId, SignUpIntent, TrackEvent } from '../lib/constants';
+import { POLICY, SectionId, SignUpIntent, TrackEvent } from '../lib/constants';
 import { TRUST_STRIP, signUpWith } from '../lib/content';
 import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 ---
@@ -36,8 +36,11 @@ import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 	<div class="shell hero-inner">
 		<div class="hero-copy">
 			<h1 class="display-1" id="hero-title">
-				Get referred by someone who <em>actually works there</em>.
+				Find your way in at the <em>right time</em>.
 			</h1>
+			<p class="lede hero-lede">
+				Ask for a referral, give one when you can, or hear about openings before they go public.
+			</p>
 
 			<div class="hero-actions">
 				<a
@@ -59,7 +62,6 @@ import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 				</a>
 			</div>
 
-			<p class="fine-print hero-disclaimer">{OUTCOME_DISCLAIMER}</p>
 		</div>
 
 		{/* The drawing earns attention; this rotating pair earns belief. Two cards
@@ -290,6 +292,10 @@ import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 		max-width: 32rem;
 	}
 
+	.hero-lede {
+		max-width: 29rem;
+	}
+
 	/*
 	 * The emphasis is the whole argument of the sentence, so it gets the brand
 	 * colour rather than an italic. Louize's italic is decorative; colour is
@@ -309,10 +315,6 @@ import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 		flex-wrap: wrap;
 		gap: 0.75rem;
 		margin-top: clamp(1.75rem, 3vw, 2.25rem);
-	}
-
-	.hero-disclaimer {
-		margin-top: 1.125rem;
 	}
 
 	/* ---- Proof card ---- */

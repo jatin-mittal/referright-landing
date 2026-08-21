@@ -163,14 +163,12 @@ export interface TrustStripItem {
 }
 
 /*
- * Four signals, chosen to answer the four questions a first-time visitor
- * actually has: is this person real, will anything actually happen, what if it
- * goes wrong, and who sees my search. Deliberately no commercial claim — the
- * hero is not the place to raise money.
+ * Three signals, chosen to answer the questions a first-time visitor actually
+ * has: is this person real, what if it goes wrong, and who sees my search.
+ * Deliberately no commercial claim — the hero is not the place to raise money.
  */
 export const TRUST_STRIP: readonly TrustStripItem[] = [
 	{ value: 'LinkedIn', label: 'Verified employment' },
-	{ value: 'Screenshot', label: 'Proof on every referral' },
 	{ value: `${POLICY.confirmationWindowHours}h`, label: 'To confirm or dispute' },
 	{ value: 'Private', label: 'Your search stays yours' },
 ] as const;
