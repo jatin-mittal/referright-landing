@@ -62,17 +62,29 @@ import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 			<p class="fine-print hero-disclaimer">{OUTCOME_DISCLAIMER}</p>
 		</div>
 
-		{/* The one piece of live product in the composition. The drawing earns
-		    attention; this earns belief. */}
-		<figure class="hero-proof">
-			<figcaption class="hero-proof-head">
-				<span class="hero-proof-status">Referral submitted</span>
-				<span class="mono hero-proof-time">{POLICY.confirmationWindowHours}h to confirm</span>
-			</figcaption>
-			<p class="hero-proof-role">Senior Software Engineer</p>
-			<p class="hero-proof-meta">Verified employee · screenshot attached</p>
-			<span class="hero-proof-bar" aria-hidden="true"><i></i></span>
-		</figure>
+		{/* The drawing earns attention; this rotating pair earns belief. Two cards
+		    stay visible while the third quietly pops in to replace one of them. */}
+		<div class="hero-proof-stack" aria-label="Recent referral examples">
+			<article class="hero-proof-card" data-proof-slot="0" data-proof-index="0">
+				<div class="hero-proof-head">
+					<span class="hero-proof-status">Referral submitted</span>
+					<span class="mono hero-proof-time">{POLICY.confirmationWindowHours}h to confirm</span>
+				</div>
+				<p class="hero-proof-role">Product Manager</p>
+				<p class="hero-proof-meta">Verified employee · screenshot attached</p>
+				<span class="hero-proof-bar" aria-hidden="true"><i style="--proof-progress: 78%"></i></span>
+			</article>
+
+			<article class="hero-proof-card" data-proof-slot="1" data-proof-index="1">
+				<div class="hero-proof-head">
+					<span class="hero-proof-status">Referral received</span>
+					<span class="mono hero-proof-time">{POLICY.confirmationWindowHours}h to confirm</span>
+				</div>
+				<p class="hero-proof-role">Software Engineering Intern</p>
+				<p class="hero-proof-meta">Employee referral · role match confirmed</p>
+				<span class="hero-proof-bar" aria-hidden="true"><i style="--proof-progress: 56%"></i></span>
+			</article>
+		</div>
 	</div>
 
 	{/* Four signals, set as one quiet line rather than four boxes. Boxes here
@@ -106,7 +118,8 @@ import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 	.hero {
 		position: relative;
 		overflow: hidden;
-		padding-top: clamp(2rem, 4vw, 3.25rem);
+		/* The header overlays this section, so keep hero content below it. */
+		padding-top: calc(4.5rem + clamp(2rem, 4vw, 3.25rem));
 		padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
 		isolation: isolate;
 	}
@@ -304,17 +317,35 @@ import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 
 	/* ---- Proof card ---- */
 
-	.hero-proof {
+	.hero-proof-stack {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.75rem;
+		width: min(42rem, 100%);
+		margin: 0;
+		pointer-events: none;
+	}
+
+	.hero-proof-card {
 		display: grid;
 		gap: 0.3125rem;
-		width: min(23rem, 100%);
 		margin: 0;
-		padding: 0.9375rem 1.0625rem 1.0625rem;
+		min-width: 0;
+		opacity: 0;
+		transform: translateY(-0.5rem) scale(0.985);
+		filter: blur(6px);
+		padding: 1rem 1.0625rem 1.0625rem;
 		border: 1px solid rgb(var(--color-border));
 		border-radius: var(--radius-2xl);
 		background: rgb(var(--color-surface) / 88%);
 		box-shadow: var(--shadow-panel);
 		backdrop-filter: blur(18px) saturate(1.3);
+		pointer-events: auto;
+		transition:
+			opacity 1000ms var(--ease-out),
+			transform 1000ms var(--ease-out),
+			filter 1000ms var(--ease-out);
+		visibility: hidden;
 	}
 
 	.hero-proof-head {
@@ -352,8 +383,8 @@ import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 
 	.hero-proof-role {
 		margin: 0.1875rem 0 0;
-		font-size: 1rem;
-		font-weight: 600;
+		font-size: 1.0625rem;
+		font-weight: 650;
 		letter-spacing: -0.015em;
 	}
 
@@ -375,7 +406,7 @@ import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 
 	.hero-proof-bar i {
 		display: block;
-		width: 72%;
+		width: var(--proof-progress, 72%);
 		height: 100%;
 		border-radius: inherit;
 		background: rgb(var(--color-success));
@@ -426,8 +457,11 @@ import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 			animation: light-on 900ms ease-out 1150ms both;
 		}
 
-		.hero-proof {
-			animation: proof-rise 700ms var(--ease-out) 1350ms both;
+		.hero-proof-stack.is-ready .hero-proof-card {
+			opacity: 1;
+			transform: none;
+			filter: blur(0);
+			visibility: visible;
 		}
 
 		@keyframes ink-wipe {
@@ -448,16 +482,6 @@ import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 			}
 		}
 
-		@keyframes proof-rise {
-			from {
-				opacity: 0;
-				transform: translateY(0.75rem);
-			}
-			to {
-				opacity: 1;
-				transform: none;
-			}
-		}
 	}
 
 	/* ---- Responsive ---- */
@@ -485,7 +509,7 @@ import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 			max-width: 30rem;
 		}
 
-		.hero-proof {
+		.hero-proof-stack {
 			margin-top: 0.5rem;
 		}
 	}
@@ -513,18 +537,165 @@ import { INK_DOORS_MASK } from '../lib/ink-doors-asset';
 			max-width: 34rem;
 		}
 
-		/* The card hangs off the lower-right of the drawing, near the open
-		   door it is describing. */
-		.hero-proof {
+		/* The two cards occupy quiet pockets around the drawing, never the door. */
+		.hero-proof-stack {
 			position: absolute;
+			inset: 0;
+			display: block;
+			width: auto;
+	}
+
+		.hero-proof-card {
+			position: absolute;
+			width: min(23rem, 100%);
+		}
+
+		/* The upper card sits in the quiet top-right area of the wall. */
+		.hero-proof-card[data-proof-slot='0'] {
+			top: clamp(0.75rem, 4%, 2.5rem);
+			right: 0;
+		}
+
+		/* The lower card sits in the highlighted bottom-right pocket. */
+		.hero-proof-card[data-proof-slot='1'] {
 			right: 0;
 			bottom: clamp(1rem, 4vh, 3rem);
 		}
 	}
 
 	@media (min-width: 90rem) {
-		.hero-proof {
+		.hero-proof-card[data-proof-slot='0'] {
 			right: 4%;
+		}
+
+		.hero-proof-card[data-proof-slot='1'] {
+			right: -2%;
+		}
+	}
+
+	@media (max-width: 47.999rem) {
+		.hero-proof-stack {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.hero-proof-stack.is-ready .hero-proof-card.is-exiting {
+			opacity: 0;
+			transform: translateY(0.5rem) scale(0.985);
+			filter: blur(6px);
+		}
+
+		.hero-proof-stack.is-ready .hero-proof-card.is-entering {
+			opacity: 0;
+			transform: translateY(-0.5rem) scale(0.985);
+			filter: blur(6px);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero-proof-stack.is-ready .hero-proof-card {
+			opacity: 1;
+			transform: none;
+			filter: none;
+			transition: none;
+			visibility: visible;
 		}
 	}
 </style>
+
+<script>
+	interface ProofCard {
+		role: string;
+		meta: string;
+		progress: string;
+	}
+
+	const proofCards: readonly ProofCard[] = [
+		{
+			role: 'Product Manager',
+			meta: 'Verified employee · screenshot attached',
+			progress: '78%',
+		},
+		{
+			role: 'Software Engineering Intern',
+			meta: 'Employee referral · role match confirmed',
+			progress: '56%',
+		},
+		{
+			role: 'UI/UX Designer',
+			meta: 'Verified employee · portfolio reviewed',
+			progress: '88%',
+		},
+	];
+
+	const proofStack = document.querySelector<HTMLElement>('.hero-proof-stack');
+	const proofArt = document.querySelector<HTMLElement>('.hero-art');
+	const proofSlots = Array.from(document.querySelectorAll<HTMLElement>('[data-proof-slot]'));
+	const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	if (proofStack && proofSlots.length === 2) {
+		let nextSlotIndex = 0;
+		let rotationStarted = false;
+
+		const scheduleNext = (): void => {
+			window.setTimeout(() => {
+				const visibleIndexes = new Set(
+					proofSlots.map((slot) => Number(slot.dataset.proofIndex)),
+				);
+				const nextIndex = proofCards.findIndex((_, index) => !visibleIndexes.has(index));
+				const slot = proofSlots[nextSlotIndex];
+				const nextCard = proofCards[nextIndex];
+
+				if (!slot || !nextCard) return;
+
+				nextSlotIndex = (nextSlotIndex + 1) % 2;
+				slot.classList.remove('is-entering');
+				slot.classList.add('is-exiting');
+
+				window.setTimeout(() => {
+					slot.classList.remove('is-exiting');
+					slot.dataset.proofIndex = String(nextIndex);
+					const role = slot.querySelector<HTMLElement>('.hero-proof-role');
+					const meta = slot.querySelector<HTMLElement>('.hero-proof-meta');
+					const progress = slot.querySelector<HTMLElement>('.hero-proof-bar i');
+					if (role) role.textContent = nextCard.role;
+					if (meta) meta.textContent = nextCard.meta;
+					progress?.style.setProperty('--proof-progress', nextCard.progress);
+
+					slot.classList.add('is-entering');
+					window.requestAnimationFrame(() => {
+						window.requestAnimationFrame(() => slot.classList.remove('is-entering'));
+					});
+				}, 1000);
+
+				// Start each new transition on a four-second rhythm.
+				scheduleNext();
+			}, 4000);
+		};
+
+		const revealCards = (): void => {
+			window.setTimeout(() => {
+				if (rotationStarted) return;
+				rotationStarted = true;
+				proofStack.classList.add('is-ready');
+				if (!reducedMotion) scheduleNext();
+			}, 1000);
+		};
+
+		if (reducedMotion || !proofArt) {
+			revealCards();
+		} else {
+			const fallback = window.setTimeout(revealCards, 1800);
+			proofArt.addEventListener(
+				'animationend',
+				(event) => {
+					if (event.animationName !== 'ink-wipe') return;
+					window.clearTimeout(fallback);
+					revealCards();
+				},
+				{ once: true },
+			);
+		}
+	}
+</script>
