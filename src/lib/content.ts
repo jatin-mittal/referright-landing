@@ -14,6 +14,9 @@ export const signUpWith = (intent: SignUpIntent): string =>
 export const SIGNUP_URL: string = SIGNUP_BASE;
 export const CONTACT_EMAIL: string = import.meta.env.PUBLIC_CONTACT_EMAIL || 'hello@rightrefer.com';
 
+/** Verified private-beta outcome shown in the landing-page proof module. */
+export const PRIVATE_BETA_REFERRAL_COUNT = 78;
+
 /* ------------------------------------------------------------------ */
 /* Offerings                                                           */
 /* ------------------------------------------------------------------ */
