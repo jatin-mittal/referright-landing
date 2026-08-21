@@ -169,6 +169,7 @@ export interface TrustStripItem {
  */
 export const TRUST_STRIP: readonly TrustStripItem[] = [
 	{ value: 'LinkedIn', label: 'Verified employment' },
-	{ value: `${POLICY.confirmationWindowHours}h`, label: 'To confirm or dispute' },
-	{ value: 'Private', label: 'Your search stays yours' },
+	{ value: 'Referrer Appreciation, Your Way', label: 'Add an optional thank-you amount.' },
+	{ value: '100% Free', label: 'No payment required' },
+	{ value: '2-Day Response', label: 'Get clarity, sooner. ' },
 ] as const;
