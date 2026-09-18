@@ -24,7 +24,6 @@ The development server runs at `http://localhost:4321`.
 
 | Variable | Purpose | Default |
 | --- | --- | --- |
-| `SITE_URL` | Production origin, used for canonical URLs and the sitemap | `https://www.rightrefer.com` |
 | `PUBLIC_APP_SIGNUP_URL` | Auth handoff used by every call to action | `https://app.rightrefer.com/` |
 | `PUBLIC_CONTACT_EMAIL` | Support address in the FAQ and the footer | `rightrefer.team@gmail.com` |
 | `PUBLIC_PRIVACY_URL` | Hosted privacy policy | unset — the footer link is not rendered |
@@ -33,6 +32,25 @@ The development server runs at `http://localhost:4321`.
 Every call to action points at `PUBLIC_APP_SIGNUP_URL` directly. `signUpWith`
 still takes a `SignUpIntent` for call-site clarity, but the intent is not
 appended to the URL.
+
+The public origin is fixed to `https://www.rightrefer.com` in
+`astro.config.mjs`. Canonical URLs, social metadata, structured-data URLs and
+the robots/sitemap output all derive from it. `SITE_URL` is intentionally not
+read: an app URL in the deployment environment previously made the landing
+page canonicalize to `https://app.rightrefer.com/`. The app handoff remains
+independently configurable through `PUBLIC_APP_SIGNUP_URL`.
+
+### Search indexing after deployment
+
+Deploy a fresh build; changing environment variables alone does not update
+this static site's metadata. Remove the obsolete `SITE_URL` deployment variable
+to avoid confusion. In Google Search Console, submit
+`https://www.rightrefer.com/sitemap-index.xml`, then inspect
+`https://www.rightrefer.com/`, run **Test live URL**, and request indexing.
+Restart validation for the affected report after the corrected build is live.
+The non-www domain should continue permanently redirecting to the www domain.
+Google decides whether and when to index; a successful deployment does not
+guarantee search placement or clear an existing validation report immediately.
 
 ## Analytics
 
