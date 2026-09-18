@@ -134,7 +134,8 @@ reverse the complete lockup to white. Favicons use a padded blue tile.
 Copy-ready SVG/PNG/WebP exports and the ZIP are in `public/brand_assets`,
 organized into `logos`, `symbols`, `icons`, `social`, and `downloads`.
 See [`docs/brand/README.md`](./docs/brand/README.md) for regeneration and usage.
-The hero headline is **The right referral. Your way in.**
+The hero headline is **Find the Right Referral. At the Right Time**, with
+**Right Referral.** in the theme's primary blue.
 
 **Louize sets figures old-style by default**, where the zero is x-height and the
 one is an unserifed stroke, so `01` reads as `OI`. `.numeral` therefore asks for
@@ -308,7 +309,7 @@ thank-you at the very end, after the referral had landed.
 
 **The thank-you is chosen on the request form, before anything is sent**
 (PRD §5.2 step 7, §0.11). It appears on the ASK card and nowhere else, with
-`Nothing` first and the same size as the amounts, because zero is a real option
+`None` first and the same size as the amounts, because zero is a real option
 in the product and has to look like one here.
 
 The section is a real `tablist`: one selected tab, roving tabindex so the group
@@ -316,6 +317,12 @@ is a single tab stop, arrow keys plus Home and End, and every panel in the DOM
 at all times so find-on-page reaches a hidden step and printing carries all
 three. With the script absent the first panel is visible and the section is
 still readable.
+
+Below 48rem, all three path tabs share one equal-width row with wrapping
+labels and at least 44px touch targets. The switch sticks below the site
+header only while its section is being read, with an opaque theme surface.
+Selecting a different path after scrolling into a panel brings the new steps
+below the switch. Desktop layout and the sliding-pill treatment are unchanged.
 
 Each panel is a numbered list on one side and `PathCard.astro` on the other:
 the request you can send, the request you can claim and what claiming it earns,
@@ -338,7 +345,7 @@ Louize is banned inside the product. A visitor who signs up should recognise
 this screen.
 
 **The thank-you is a row of tiles, and it goes away once the request is sent.**
-Emoji over amount over label, the chosen one filled, exactly as the product
+Amount over label, without emoji, and the chosen one filled, as the product
 builds it. It was a segmented track, which is the wrong control for three money
 labels: they cannot shrink, so the track either wrapped into something that no
 longer read as one switch or overflowed its own pill in the narrow column it

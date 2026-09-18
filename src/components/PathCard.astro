@@ -152,7 +152,7 @@ const OPENINGS: readonly Readonly<{
 					<div class="pc-side">
 						{/*
 						 * `AppreciationSection`, as the product builds it: a row
-						 * of preset tiles, emoji over amount over label, with
+						 * of preset tiles, amount over label, with
 						 * the chosen one filled. It was a segmented track here,
 						 * which is the wrong control for this — three money
 						 * labels cannot shrink to fit a narrow column, so the
@@ -166,17 +166,14 @@ const OPENINGS: readonly Readonly<{
 							</div>
 							<div class="pc-tiers">
 								<span class="pc-tier">
-									<i>&#128578;</i>
 									<b>&#8377;0</b>
-									<em>No tip</em>
+									<em>None</em>
 								</span>
 								<span class="pc-tier is-selected">
-									<i>&#9749;</i>
 									<b>&#8377;100</b>
 									<em>Coffee</em>
 								</span>
 								<span class="pc-tier">
-									<i>&#127860;</i>
 									<b>&#8377;500</b>
 									<em>Dinner</em>
 								</span>
@@ -306,10 +303,10 @@ const OPENINGS: readonly Readonly<{
 							</div>
 
 							<p class="pc-meta" data-when="open">
-								0&ndash;3 yrs experience &middot; Asked 18m ago
+								0 to 3 yrs experience &middot; Asked 18m ago
 							</p>
 							<p class="pc-meta" data-when="done" hidden>
-								0&ndash;3 yrs experience &middot; you own this request
+								0 to 3 yrs experience &middot; you own this request
 							</p>
 						</div>
 
@@ -957,8 +954,8 @@ const OPENINGS: readonly Readonly<{
 	}
 
 	/*
-	 * `AppreciationSection`: preset tiles, not a segmented track. Emoji over
-	 * amount over label, the chosen one filled. Three money labels on one line
+	 * `AppreciationSection`: preset tiles, not a segmented track. Amount over
+	 * label, the chosen one filled. Three money labels on one line
 	 * cannot shrink — the track they used to sit in either wrapped into
 	 * something that no longer read as one switch, or overflowed its own pill
 	 * in the narrow column this lives in.
@@ -984,12 +981,6 @@ const OPENINGS: readonly Readonly<{
 		border-radius: var(--radius-xl);
 		background: rgb(var(--color-surface));
 		text-align: center;
-	}
-
-	.pc-tier i {
-		font-size: 1rem;
-		font-style: normal;
-		line-height: 1.25rem;
 	}
 
 	.pc-tier b {

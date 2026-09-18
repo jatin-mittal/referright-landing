@@ -123,9 +123,8 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 		 *
 		 * Offsets are measured against the group's padding box, which is what
 		 * `offsetLeft` reports and what the pseudo-element covers, so the two
-		 * agree at any zoom or font size. Below the split the switch is a
-		 * horizontal scroller and the padding box is narrower than its own
-		 * content, so the CSS leaves the fill on the tab there instead.
+		 * agree at any zoom or font size. On mobile the switch uses three
+		 * equal columns with wrapping labels and keeps the fill on each tab.
 		 */
 		const place = (tab: HTMLButtonElement): void => {
 			group.style.setProperty('--ind-l', `${tab.offsetLeft}px`);
@@ -153,7 +152,21 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 				if (panel) panel.hidden = !active;
 			}
 			place(next);
-			if (moveFocus) next.focus();
+			const isMobile = window.matchMedia('(max-width: 47.999rem)').matches;
+			if (moveFocus) next.focus({ preventScroll: isMobile });
+
+			// A reader switching from deep in a mobile panel should see the
+			// new steps from the start, below the sticky switch and header.
+			if (isMobile) {
+				const panel = document.getElementById(next.getAttribute('aria-controls') ?? '');
+				const switchBottom = group.getBoundingClientRect().bottom;
+				if (panel && panel.getBoundingClientRect().top < switchBottom) {
+					window.scrollTo({
+						top: window.scrollY + panel.getBoundingClientRect().top - switchBottom - 16,
+						behavior: 'instant',
+					});
+				}
+			}
 		};
 
 		const activeTab = (): HTMLButtonElement =>
@@ -407,29 +420,36 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 
 	/* ---- Responsive ---- */
 
-	/*
-	 * Three pills do not fit one phone line, and wrapping them leaves a lone
-	 * tab on a second row inside a pill-shaped container, which reads as a
-	 * mistake. They scroll sideways instead, which is what a switch that is
-	 * wider than its screen is supposed to do.
-	 */
+	/* Keep every choice reachable while reading, below the 4.5rem site header.
+	   Sticky containment releases the switch when this section ends. */
 	@media (max-width: 47.999rem) {
 		.paths-switch {
+			position: sticky;
+			z-index: 20;
+			top: 5rem;
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
 			width: auto;
-			flex-wrap: nowrap;
-			overflow-x: auto;
-			scrollbar-width: none;
-			scroll-snap-type: x proximity;
-			-webkit-overflow-scrolling: touch;
+			gap: 0.25rem;
+			border-radius: var(--radius-lg);
+			background: rgb(var(--color-surface));
+			box-shadow: var(--shadow-panel);
 		}
 
-		.paths-switch::-webkit-scrollbar {
-			display: none;
+		:global(.js) .paths-switch.reveal {
+			opacity: 1;
+			transform: none;
 		}
 
 		.paths-tab {
-			flex: 0 0 auto;
-			scroll-snap-align: center;
+			min-width: 0;
+			min-height: 3.5rem;
+			padding: 0.5rem 0.25rem;
+			border-radius: var(--radius-sm);
+			font-size: 0.8125rem;
+			line-height: 1.35;
+			white-space: normal;
+			overflow-wrap: anywhere;
 		}
 	}
 
@@ -438,8 +458,7 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 	 * painted on the group and clipped to the selected tab, so what moves is a
 	 * single shape rather than one background fading out under another.
 	 *
-	 * Only above the scroller breakpoint: below it the switch is wider than its
-	 * own padding box, which is the box this fill is measured in, and the tab
+	 * Only above the mobile breakpoint: below it each equal-width tab
 	 * keeps its own background instead. The `is-ready` class is set by the
 	 * script after the first measurement, so a page without it still shows a
 	 * filled selected tab.
