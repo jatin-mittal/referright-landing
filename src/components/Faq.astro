@@ -24,7 +24,7 @@ const slugFor = (question: string): string =>
  *
  * The APG accordion pattern also wants `role="region"` on each panel, which is
  * deliberately omitted: it warns against landmark proliferation past roughly
- * six simultaneously-open panels, and there are nine here.
+ * six simultaneously-open panels, and there are twelve here.
  *
  * Three choices worth recording, because each had a plausible opposite:
  *
@@ -34,7 +34,7 @@ const slugFor = (question: string): string =>
  *   side by side — and the two most-compared answers here ("is it free" and
  *   "does it guarantee an interview") are exactly the pair someone wants open
  *   together.
- * - The first item IS open. Nine collapsed rows read as a nav list rather than
+ * - The first item IS open. An all-collapsed list reads as navigation rather than
  *   answers, and an all-closed accordion hides the fact that it opens at all.
  *   The open row is the money question, which is also the one this page has
  *   otherwise been careful not to raise.
@@ -47,8 +47,8 @@ const slugFor = (question: string): string =>
 			<div class="faq-sticky">
 				<SectionIntro
 					eyebrow="Questions"
-					title="The things people ask first."
-					copy="Short answers, including the one about money."
+					title="Good questions. Clear answers."
+					copy="The essentials on referrals, appreciation and what happens next."
 					headingId="faq-title"
 					align="left"
 					class="reveal faq-head"
@@ -98,7 +98,7 @@ const slugFor = (question: string): string =>
 	 *    collapsed answer.
 	 * 2. Printing. A closed <details> prints nothing, and no stylesheet can set
 	 *    the `open` attribute — so open everything before print and restore
-	 *    afterwards, or a printed page silently loses eight of nine answers.
+	 *    afterwards, or a printed page silently loses the collapsed answers.
 	 */
 	const openFromHash = (): void => {
 		if (!location.hash) return;

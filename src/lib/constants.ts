@@ -102,12 +102,10 @@ export enum LifecycleStage {
  * application does not keep.
  */
 export const POLICY = {
-	/** Hours a referrer has to act before the claim expires back to the pool. */
+	/** Request-level deadline from activation; claiming does not restart it. */
 	claimWindowHours: 48,
-	/** Hours a seeker has to confirm or dispute after proof is submitted. */
+	/** Hours a seeker has to dispute a reported referral submission. */
 	confirmationWindowHours: 24,
-	/** How often LinkedIn-backed employment is re-verified. */
-	employmentRecheckDays: 10,
 	/** Withdrawal windows, as day-of-month. */
 	withdrawalDays: [15, 30] as const,
 	/** Currency shown on the landing page. India-only at launch. */
