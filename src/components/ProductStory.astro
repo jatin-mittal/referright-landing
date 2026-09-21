@@ -1,5 +1,6 @@
 ---
 import PathCard from './PathCard.astro';
+import '../styles/path-motion.css';
 import { OfferingKind, SectionId, TrackEvent } from '../lib/constants';
 import { PRODUCT_PATHS, PRODUCT_PROOF } from '../lib/content';
 
@@ -28,8 +29,8 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 		<div class="paths-head reveal">
 			<p class="eyebrow">How it works</p>
 			<h2 class="display-2" id="paths-title">Three ways to use one network.</h2>
+			<p class="paths-intro">Your next move, a helping hand, or a role worth exploring. Start here.</p>
 		</div>
-
 		<div class="paths-switch reveal" role="tablist" aria-label="What you want to do" data-paths>
 			{
 				PRODUCT_PATHS.map((path, index) => (
@@ -42,7 +43,7 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 						aria-selected={index === 0 ? 'true' : 'false'}
 						tabindex={index === 0 ? 0 : -1}
 					>
-						{path.tab}
+						<span class="paths-tab-label">{path.tab}</span>
 					</button>
 				))
 			}
@@ -59,10 +60,8 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 				>
 					<div class="paths-grid">
 						<div class="paths-copy">
-							{/* No heading here. The selected tab already names the path, and a
-							    second line of display type 200px under the section heading is
-							    the section saying its own name twice. */}
 							<h3 class="paths-title">{path.title}</h3>
+							<p class="paths-summary">{path.summary}</p>
 
 							<ol class="paths-steps">
 								{path.steps.map((step) => (
@@ -84,6 +83,7 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 									<path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" />
 								</svg>
 							</a>
+							<p class="paths-note">{path.note}</p>
 						</div>
 
 						<div class="paths-visual">
@@ -100,12 +100,20 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 	</div>
 </section>
 
+<noscript>
+	<style is:inline>
+		.paths .paths-switch { display: none; }
+		.paths .paths-panel[hidden] { display: block; }
+		.paths .paths-panel { margin-top: 2.5rem; }
+		.paths .paths-visual { display: none; }
+	</style>
+</noscript>
+
 <script>
 	/*
 	 * Tab behaviour the markup cannot express: one selected tab, roving
 	 * tabindex so the group is a single stop, and arrow keys within it. With
-	 * this script absent every panel is still in the DOM and the first is
-	 * visible, so the section never becomes unreadable.
+	 * JavaScript absent, the noscript fallback presents all three paths.
 	 */
 	const group = document.querySelector<HTMLElement>('[data-paths]');
 
@@ -155,18 +163,7 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 			const isMobile = window.matchMedia('(max-width: 47.999rem)').matches;
 			if (moveFocus) next.focus({ preventScroll: isMobile });
 
-			// A reader switching from deep in a mobile panel should see the
-			// new steps from the start, below the sticky switch and header.
-			if (isMobile) {
-				const panel = document.getElementById(next.getAttribute('aria-controls') ?? '');
-				const switchBottom = group.getBoundingClientRect().bottom;
-				if (panel && panel.getBoundingClientRect().top < switchBottom) {
-					window.scrollTo({
-						top: window.scrollY + panel.getBoundingClientRect().top - switchBottom - 16,
-						behavior: 'instant',
-					});
-				}
-			}
+			if (isMobile) next.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 		};
 
 		const activeTab = (): HTMLButtonElement =>
@@ -196,6 +193,7 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 		 * painted in that state.
 		 */
 		const section = group.closest<HTMLElement>('section');
+		group.setAttribute('aria-orientation', 'horizontal');
 		const panels = tabs
 			.map((tab) => document.getElementById(tab.getAttribute('aria-controls') ?? ''))
 			.filter((panel): panel is HTMLElement => panel !== null);
@@ -277,6 +275,12 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 		max-width: 40rem;
 	}
 
+	.paths-intro {
+		color: rgb(var(--color-muted));
+		margin: 1rem 0 0;
+		max-width: 42ch;
+	}
+
 	/* ---- The switch ---- */
 
 	.paths-switch {
@@ -296,6 +300,10 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 
 	.paths-tab {
 		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.625rem;
 		z-index: 1;
 		min-height: 2.75rem;
 		padding-inline: 1.125rem;
@@ -340,17 +348,17 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 		align-items: center;
 	}
 
-	/* Kept in the markup for screen readers and for the document outline, which
-	   would otherwise jump from the section heading straight to a list. */
 	.paths-title {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: clamp(1.75rem, 3vw, 2.25rem);
+		font-weight: 400;
+		line-height: 1.15;
+		letter-spacing: -0.025em;
 	}
 
+	.paths-summary { max-width: 43ch; margin: 0.875rem 0 1.75rem; color: rgb(var(--color-muted)); font-size: 0.9375rem; }
+	.paths-note { max-width: 48ch; margin: 0.875rem 0 0; color: rgb(var(--color-muted)); font-size: 0.75rem; line-height: 1.6; }
 	/* ---- Steps ---- */
 
 	.paths-steps {
@@ -420,37 +428,50 @@ const TRACK_BY_KIND: Readonly<Record<OfferingKind, TrackEvent>> = {
 
 	/* ---- Responsive ---- */
 
-	/* Keep every choice reachable while reading, below the 4.5rem site header.
-	   Sticky containment releases the switch when this section ends. */
+	/* A horizontal rail keeps each choice comfortably sized on phones. */
 	@media (max-width: 47.999rem) {
 		.paths-switch {
 			position: sticky;
-			z-index: 20;
-			top: 5rem;
-			display: grid;
-			grid-template-columns: repeat(3, minmax(0, 1fr));
-			width: auto;
-			gap: 0.25rem;
-			border-radius: var(--radius-lg);
-			background: rgb(var(--color-surface));
-			box-shadow: var(--shadow-panel);
-		}
-
-		:global(.js) .paths-switch.reveal {
-			opacity: 1;
-			transform: none;
+			z-index: 25;
+			top: 4.75rem;
+			display: flex;
+			width: 100%;
+			max-width: 100%;
+			gap: 0;
+			padding: 0;
+			overflow: visible;
+			border: 0;
+			border-bottom: 1px solid rgb(var(--color-border));
+			border-radius: 0;
+			background: rgb(var(--color-canvas) / 94%);
+			box-shadow: none;
+			backdrop-filter: blur(14px);
+			scrollbar-width: none;
 		}
 
 		.paths-tab {
+			flex: 1 1 0;
 			min-width: 0;
 			min-height: 3.5rem;
-			padding: 0.5rem 0.25rem;
-			border-radius: var(--radius-sm);
-			font-size: 0.8125rem;
+			padding: 0.75rem 0.875rem 0.625rem;
+			border: 0;
+			border-bottom: 3px solid transparent;
+			border-radius: 0;
+			background: transparent;
+			font-size: 0.875rem;
 			line-height: 1.35;
 			white-space: normal;
-			overflow-wrap: anywhere;
+			text-wrap: balance;
 		}
+
+		.paths-tab.is-active {
+			border-bottom-color: rgb(var(--accent));
+			background: transparent;
+			color: rgb(var(--accent-ink));
+		}
+		.paths-tab-label { display: block; }
+		.paths-cta { width: 100%; }
+
 	}
 
 	/*

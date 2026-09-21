@@ -66,6 +66,36 @@ deploying; the `/_vercel/insights/*` routes are provided by Vercel, so a local
 | `npm run dev` | Start the local development server |
 | `npm run build` | Generate the production site in `dist/` |
 | `npm run preview` | Preview the production build |
+| `npm run check` | Check Astro and TypeScript |
+| `npm test` | Run responsive and interaction checks in Chromium |
+
+Before the first browser test run, install its browser with
+`npx playwright install chromium`. Tests start their own server on port 4322.
+
+## Mobile paths and demo motion
+
+Below 768px, the three path choices are icon-free underline tabs that remain
+sticky below the site header while the section is being read. They have no
+horizontal scrollbar, so every path stays one tap away without returning to
+the top. Larger screens keep the compact horizontal pill switch.
+
+Only buttons inside the interactive product-demo windows receive an automatic
+glow pulse. The path tabs and real calls to action do not animate. The glow
+respects reduced motion. Demo actions are keyboard-accessible, labelled as
+examples and resettable; they never create requests or make payments.
+
+### Product copy
+
+The three paths and FAQs use the unified product PRD from
+`C:\Project\JobMadeEasy\docs\rightrefer-unified-technical-prd.md`, particularly
+sections 0.5, 0.11–0.12, 0.23–0.24, 0.33 and 6.1.1–6.1.2.
+LinkedIn sign-in is not employment verification. Appreciation is optional
+and chosen before sending. The 48-hour window is a referral deadline, not a
+guaranteed response. Reported submission starts a 24-hour dispute window.
+The displayed FAQs and FAQ structured data share one content array.
+The hero trust strip keeps the owner's supplied wording; its employment and
+response claims are not established by the PRD and need reconciliation before
+launch.
 
 ## Page structure
 
@@ -118,6 +148,6 @@ Five blocks, and adding a sixth is a design decision, not a routine one. See
 - [ ] **Keep `POLICY` in step with the product.** Every deadline in page copy
       interpolates it, so a policy change in the application is a change here in
       the same pull request.
-- [ ] **The peer-signal examples name real employers.** They describe a role and
-      never a person, and they claim only that a referral path exists — confirm
-      that still matches what the product checks before launch.
+- [ ] **The openings examples name real employers.** They are explicitly
+      illustrative roles, not live listings or a promise that a referral is
+      available. Keep that label if the examples change.

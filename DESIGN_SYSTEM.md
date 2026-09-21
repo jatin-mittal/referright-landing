@@ -156,7 +156,7 @@ number in Louize must do the same.
 | `CompanyField.astro` | Company logo marquee. Belongs to the hero block, not to a section of its own. Pauses offscreen and under the pointer. |
 | `ProductStory.astro` + `PathCard.astro` | The three things the product does, as a switch. See §10. |
 | `BetaProof.astro` + `TestimonialStage.astro` | Private-beta count and the quote marquee. |
-| `Faq.astro` | Nine questions as native `<details>`. See §15. |
+| `Faq.astro` | Twelve questions as native `<details>`. See §15. |
 | `ClosingSection.astro` | The bookend, the primary call to action, and the footer. |
 
 Section CSS lives in each component's scoped `<style>`. `global.css` holds only
@@ -228,15 +228,19 @@ own short sentence, or one that could have been cut.
 fee table. Amounts, fees, payout schedules and refund mechanics belong inside
 the product, after someone has decided to take part.
 
-1. **No pricing section.** No fee breakdown, no worked receipt, no percentage,
-   no payout schedule, no withdrawal language anywhere in page copy.
-2. **The hero raises no commercial claim** beyond stating that asking is free.
-   Its trust strip answers "is this person real", "what does this cost me" and
-   "how long will this take". Note that `100% Free` is a commercial claim and
-   is there deliberately; if the model changes, that line changes first.
-3. **One honest sentence, late in the page.** `Appreciation.astro` says a
-   thank-you is optional, never required to ask, and never changes whether you
-   get referred. That is the entire commercial surface.
+1. **No pricing section.** Keep detailed fee breakdowns and payout schedules
+   in the application. The FAQ may explain that fees apply and payouts use UPI.
+2. **The hero trust strip retains the owner's requested wording:** LinkedIn /
+   Verified employment; Referrer Appreciation, Your Way / Add an optional
+   thank-you amount.; 100% Free / No payment required; 2-Day Response /
+   Get clarity, sooner. It uses two columns on phones and four on desktop.
+   Each item has a vertical line to the left and its description below the
+   title. No boxes, fills, rounded containers or cell dividers on mobile.
+   The employment and response claims remain a copy exception to the product
+   rules below and need reconciliation before launch.
+3. **Appreciation is optional, not a promise.** It is chosen before sending
+   and paid upfront if selected. Never describe it as a payment after success
+   or promise that it improves the outcome.
 4. **The request card may show example amounts**, because that is where the
    product asks for them. Nowhere else. `Nothing` is the first of the three
    tiles at exactly the same size: zero is always allowed, and a card where the
@@ -253,8 +257,9 @@ the product, after someone has decided to take part.
 
 1. `OUTCOME_DISCLAIMER` — *"A referral is an introduction, never a guaranteed
    outcome."* — next to every primary call to action.
-2. **"Employer verified" is banned.** The product verifies *employment via
-   LinkedIn*, a different and weaker claim.
+2. **LinkedIn sign-in is not employment verification.** Company and career
+   details are self-confirmed. An email-verification badge verifies only an
+   email address. Do not claim verified employment or employer approval.
 3. No guaranteed-outcome language anywhere.
 4. Peer-signal copy states that peers see **the opening**, never the identity of
    the person who asked. `PEER_SIGNALS` therefore carries a role, an employer, a
@@ -297,8 +302,8 @@ Two variants:
 ## 10. Three paths, one switch
 
 `ProductStory.astro` is how the product explains itself, and it explains all
-three of the things the product does: ask for a referral, give one, hear about
-roles early.
+three of the things the product does: find a referral, refer someone, and
+explore job openings.
 
 **Parallel choices want a switch, not a scroll.** Two earlier versions got this
 wrong in opposite directions. The first gave each path its own section, which
@@ -315,20 +320,19 @@ in the product and has to look like one here.
 The section is a real `tablist`: one selected tab, roving tabindex so the group
 is a single tab stop, arrow keys plus Home and End, and every panel in the DOM
 at all times so find-on-page reaches a hidden step and printing carries all
-three. With the script absent the first panel is visible and the section is
-still readable.
+three. With JavaScript disabled, all three sets of instructions are visible
+and the inactive demo controls and preview chooser are hidden.
 
-Below 48rem, all three path tabs share one equal-width row with wrapping
-labels and at least 44px touch targets. The switch sticks below the site
-header only while its section is being read, with an opaque theme surface.
-Selecting a different path after scrolling into a panel brings the new steps
-below the switch. Desktop layout and the sliding-pill treatment are unchanged.
+Below 48rem, the three choices are icon-free sticky underline tabs below the
+site header. They use no horizontal scrollbar, keep at least a 44px target and
+remain available while the section is being read. Left/Right plus Home/End
+continue to work on the tablist. Desktop keeps the compact sliding pill.
 
 Each panel is a numbered list on one side and `PathCard.astro` on the other:
 the request you can send, the request you can claim and what claiming it earns,
-and the feed of openings that arrive before the roles are public. Below 64rem
-the card moves above the call to action, so the order is pick a path, see the
-thing, read how it goes.
+and an illustrative openings feed. Each path has a visible heading, a short
+summary, four steps, a call to action and a policy note. Below 64rem the copy
+and call to action appear before the demo.
 
 **The card is the application, in a window.** `.glass` is the window: a
 maximised desktop frame whose only visible chrome is a toolbar — three lights in
@@ -369,35 +373,22 @@ where a portrait card would appear. The feed drops its third opening below 34rem
 of card for the same reason: the window is sized to the tallest panel, so a row
 it cannot afford would stretch the other two paths with it.
 
-**Two of the three cards work.** `Send request` and `Claim request` are real
-buttons, and pressing one confirms itself with a drawn check before — 640ms
-later, deliberately — the card moves to the state the application would move it
-to: request raised, or complete, with the stage bar full, the deadline pill
-gone, the rail repainted in the success family and the product's own closing
-sentence. Both states ship in the markup with one of them `hidden`, so nothing
-is assembled from strings at runtime and a card without the script is simply the
-state it starts in. Every row in the feed can be asked about, and confirms only
-itself: asking about one opening does not change what the other two are.
+**All three cards are interactive examples, not live requests.** `Send request`
+demonstrates a request being raised; `Claim request` demonstrates acceptance,
+not a completed referral. Feed buttons acknowledge a draft preview, without
+sending anything. Completed actions disable themselves; Reset restores each
+card. The visible demo label states that nothing real is sent.
 
-**A card that can be pressed has to say so, in four layers.** At rest, on one
-4.6s cadence starting 3.2s in: a ring leaves the action, and light crosses it —
-the same sheen `.button-primary` uses on hover, here on a timer, since nobody
-hovers something they have not realised is a control. On hover: the button
-lifts a pixel, deepens to `--color-primary-hover`, its arrow leans two pixels
-right, and the ring stops, its job done. On press: it scales to 0.98. The hints
-are staggered a third of a second down the feed so three rows do not flash
-together, and every one of them is inside `prefers-reduced-motion:
-no-preference`. A hidden panel is `display: none`, so the delay restarts when its
-tab is chosen, which is exactly when the offer is worth making. The sheen is
-clipped by its own frame rather than by the button, because the ring has to
-escape those same bounds and one element cannot both clip its children and let a
-pseudo-element out.
+**Glow identifies demo controls only.** `path-motion.css` applies one soft
+pulse to buttons inside the application-style windows. It does not animate the
+path tabs or the real calls to action. Feed rows are staggered so their pulses
+do not peak together. Reduced motion disables the pulse while retaining clear
+borders, colour, pointer and keyboard-focus cues.
 
-**The controls are not tabbable, and the card stays `aria-hidden`.** Everything
-they demonstrate is already stated in the numbered list beside them, so a reader
-who cannot see the card is told it once rather than twice, and the switch above
-stays a single tab stop. `tabindex="-1"` is what keeps a focusable control out of
-an `aria-hidden` subtree.
+**Demo controls are keyboard-accessible.** They are not inside `aria-hidden`
+content. Each card has a labelled group, real buttons and a live status for
+the result. Feed actions identify the role and company in their accessible
+names.
 
 **The window is one size for all three paths.** Three panels of three different
 lengths used to resize the card as you switched tabs, which shoves the page
@@ -426,16 +417,16 @@ do, and the accent is left to say what state you are in. It is also the only
 pairing that holds its contrast in both themes, which an accent fill under
 `--color-primary-ink` does not. The PEER card is the exception that proves it:
 its openings are a list where every item carries the same two actions, so the
-blue is the row-level small variant and `View details` beside it is bordered.
+blue is the row-level small variant, still at least 44px high. Decorative
+labels must not masquerade as clickable secondary buttons.
 
 **The selected pill is one object that slides.** From 48rem up it is painted on
 the switch and clipped to the selected tab with `clip-path`, so what moves is a
 single shape rather than one background fading out under another — and clip-path
 is on the short list of properties this page animates, which a transitioned
 width is not. The script measures against the group's padding box and adds
-`is-ready`; below 48rem the switch is a horizontal scroller wider than that box,
-so the fill stays on the tab itself, which is also what a page without the
-script gets.
+`is-ready`; below 48rem the fill stays on each tab rather than using the
+measured desktop indicator.
 
 **A sticky element is never a grid item.** Measured in Chromium: a sticky grid
 item that may stretch over its (very tall) grid area is pushed down by its own
@@ -549,7 +540,7 @@ Native `<details>`/`<summary>`. No framework, and deliberately no
 disclosure and expose the open state, so hand-wiring ARIA duplicates it. The APG
 accordion pattern also wants `role="region"` per panel — omitted on purpose,
 since it warns against landmark proliferation past ~6 simultaneously-open
-panels and there are nine here.
+panels and there are twelve here.
 
 Native buys three things a `display: none` accordion cannot do at all:
 find-on-page reaches text inside a **closed** item and opens it, fragment
@@ -565,7 +556,7 @@ Three choices with plausible opposites, recorded so they don't get "fixed":
   opening one answer closes another. It keeps the section short, but it stops a
   reader holding two answers side by side — and "is it free" and "does it
   guarantee an interview" are exactly the pair people compare.
-- **The first item ships `open`.** Nine collapsed rows read as a nav list, and
+- **The first item ships `open`.** An entirely collapsed list reads as navigation, and
   an all-closed accordion hides that it opens at all.
 - **A chevron, not a plus.** In tested signifiers a caret reliably communicates
   "expands in place"; a plus performs no better than no icon at all.

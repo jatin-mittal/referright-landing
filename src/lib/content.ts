@@ -38,7 +38,7 @@ export const PRIVATE_BETA_REFERRAL_COUNT = 78;
  *
  * The three offerings used to each get a full chapter: an eyebrow, a
  * sentence-length title, a summary paragraph, and three bullets that mostly
- * restated the title in longer words. That is now a triptych — one verified
+ * restated the title in longer words. That is now a triptych — one professional
  * network, three roles radiating from it — so each offering only needs a
  * short label, one line under ten words, and its existing call to action.
  */
@@ -56,7 +56,7 @@ export const OFFERINGS: readonly Offering[] = [
 	{
 		kind: OfferingKind.AskForReferral,
 		title: 'Ask for a referral',
-		line: 'A verified employee there sees your request.',
+		line: 'Reach people inside the company you want to join.',
 		ctaLabel: 'Ask for a referral',
 		ctaHref: signUpWith(SignUpIntent.Seeker),
 		accent: Accent.Primary,
@@ -64,7 +64,7 @@ export const OFFERINGS: readonly Offering[] = [
 	{
 		kind: OfferingKind.GiveReferral,
 		title: 'Give a referral',
-		line: 'See requests, claim one, submit it with proof.',
+		line: 'Choose a candidate. Make an introduction that matters.',
 		ctaLabel: 'Start referring',
 		ctaHref: signUpWith(SignUpIntent.Giver),
 		accent: Accent.Success,
@@ -72,7 +72,7 @@ export const OFFERINGS: readonly Offering[] = [
 	{
 		kind: OfferingKind.PeerSignal,
 		title: 'Hear about openings',
-		line: 'Senior roles reach you before they are posted.',
+		line: 'Discover relevant roles and find a way in.',
 		ctaLabel: 'Get peer openings',
 		ctaHref: signUpWith(SignUpIntent.Peer),
 		accent: Accent.Reward,
@@ -94,7 +94,10 @@ export interface ProductPath {
 	readonly kind: OfferingKind;
 	/** Short label for the switch. Two or three words. */
 	readonly tab: string;
+	readonly hint: string;
 	readonly title: string;
+	readonly summary: string;
+	readonly note: string;
 	readonly steps: readonly PathStep[];
 	readonly ctaLabel: string;
 	readonly ctaHref: string;
@@ -117,86 +120,100 @@ export interface ProductPath {
 export const PRODUCT_PATHS: readonly ProductPath[] = [
 	{
 		kind: OfferingKind.AskForReferral,
-		tab: 'Ask for a referral',
-		title: 'Ask someone on the inside.',
+		tab: 'Find a referral',
+		hint: 'Your next move',
+		title: 'The right role. A real introduction.',
+		summary: 'Skip the cold messages. Put your request in front of people at the company you want to join.',
+		note: OUTCOME_DISCLAIMER,
 		accent: Accent.Primary,
 		ctaLabel: 'Ask for a referral',
 		ctaHref: signUpWith(SignUpIntent.Seeker),
 		steps: [
 			{
 				index: '01',
-				title: 'Name the role',
-				detail: 'The company and the job you want, with your resume attached.',
+				title: 'Bring the role you want',
+				detail: 'Choose the company, add the job link and attach your resume.',
 			},
 			{
 				index: '02',
-				title: 'Choose who sees it',
-				detail: 'Employees there whose jobs are verified through LinkedIn, and nobody else.',
+				title: 'Choose your insiders',
+				detail: 'Pick people yourself or use top-ranked matches, up to 25 per request.',
 			},
 			{
 				index: '03',
-				title: 'Add a thank-you, or do not',
-				detail: 'You set an optional amount here, before you send. Zero is always allowed.',
+				title: 'Keep it free. Or say thanks.',
+				detail: 'Choose zero or add optional appreciation before sending; any payment happens upfront.',
 			},
 			{
 				index: '04',
-				title: 'Get proof, or get refunded',
-				detail: `A timestamped screenshot, and ${POLICY.confirmationWindowHours} hours to dispute it.`,
+				title: 'Follow every step',
+				detail: `Track the ${POLICY.claimWindowHours}-hour referral window, then get ${POLICY.confirmationWindowHours} hours to dispute a reported submission.`,
 			},
 		],
 	},
 	{
 		kind: OfferingKind.GiveReferral,
-		tab: 'Give a referral',
-		title: 'Refer someone you can vouch for.',
+		tab: 'Refer someone',
+		hint: 'Open a door',
+		title: 'One introduction. A new possibility.',
+		summary: 'Help a candidate take their next step, on your terms and within your company policy.',
+		note: 'Accept only requests you can act on. Claiming does not restart the referral deadline.',
 		accent: Accent.Success,
 		ctaLabel: 'Start referring',
 		ctaHref: signUpWith(SignUpIntent.Giver),
 		steps: [
 			{
 				index: '01',
-				title: 'See who is asking',
-				detail: 'Requests from people at companies where your job is verified.',
+				title: 'Make yourself discoverable',
+				detail: 'Add your current company and role, then opt in to receiving referral requests.',
 			},
 			{
 				index: '02',
-				title: 'Claim one',
-				detail: 'It becomes yours alone, and nobody else can act on it.',
+				title: 'Choose who you can help',
+				detail: 'Review requests sent to you. Accept one to take it on, or decline if it is not a fit.',
 			},
 			{
 				index: '03',
-				title: 'Submit it with proof',
-				detail: 'Refer them inside your own system and attach the screenshot.',
+				title: 'Refer through your company',
+				detail: 'Use your internal referral process before the deadline, then mark the referral as sent.',
 			},
 			{
 				index: '04',
-				title: 'Get thanked',
-				detail: 'Whatever they chose to add is yours once the referral is confirmed.',
+				title: 'Receive optional appreciation',
+				detail: `Eligible earnings clear after the ${POLICY.confirmationWindowHours}-hour dispute window, unless disputed; fees and payout details are shown in the app.`,
 			},
 		],
 	},
 	{
 		kind: OfferingKind.PeerSignal,
-		tab: 'Hear about openings',
-		title: 'Hear about roles first.',
+		tab: 'Explore jobs',
+		hint: 'Stay in the loop',
+		title: 'Less searching. More possibilities.',
+		summary: 'Browse openings, follow companies and hear about roles relevant to your experience.',
+		note: 'Opening alerts share role details, not another candidate\u2019s identity or resume.',
 		accent: Accent.Progress,
-		ctaLabel: 'Get peer openings',
+		ctaLabel: 'Explore openings',
 		ctaHref: signUpWith(SignUpIntent.Peer),
 		steps: [
 			{
 				index: '01',
-				title: 'Follow the companies you want',
-				detail: 'Tell us where you would like to work, and how often to write.',
+				title: 'Find your kind of role',
+				detail: 'Explore the openings board and check the original job description for the full picture.',
 			},
 			{
 				index: '02',
-				title: 'Roles reach you early',
-				detail: 'Senior roles often get filled before they are ever posted.',
+				title: 'Follow companies you like',
+				detail: 'Turn on company alerts to hear about relevant referral activity.',
 			},
 			{
 				index: '03',
-				title: 'Ask in one step',
-				detail: 'The request opens already filled in. You review it and send.',
+				title: 'Set your own pace',
+				detail: 'Choose daily, weekly or highly relevant opening alerts to suit your search.',
+			},
+			{
+				index: '04',
+				title: 'Turn a role into a request',
+				detail: 'Open a prefilled referral draft, review the details and choose who to ask before sending.',
 			},
 		],
 	},
@@ -214,8 +231,8 @@ export const PRODUCT_PATHS: readonly ProductPath[] = [
  * story rather than opening a new section about it.
  */
 export const PRODUCT_PROOF: readonly string[] = [
-	'LinkedIn-verified employment',
-	'Timestamped proof, shown to you',
+	'LinkedIn sign-in',
+	'Track your referral request',
 	`${POLICY.confirmationWindowHours}h to dispute, decided by a person`,
 	'Free to ask',
 ] as const;
@@ -229,20 +246,11 @@ export interface TrustStripItem {
 	readonly label: string;
 }
 
-/*
- * Four signals, chosen to answer the questions a first-time visitor actually
- * has: is this person real, what does it cost me, and how long will it take.
- *
- * Note that `100% Free` is a commercial claim, which DESIGN_SYSTEM.md §7 rule 2
- * says the hero does not make. It is here deliberately and the rule has not
- * been re-litigated; if the pricing model ever changes, this line is the first
- * thing that has to change with it.
- */
 export const TRUST_STRIP: readonly TrustStripItem[] = [
 	{ value: 'LinkedIn', label: 'Verified employment' },
 	{ value: 'Referrer Appreciation, Your Way', label: 'Add an optional thank-you amount.' },
 	{ value: '100% Free', label: 'No payment required' },
-	{ value: '2-Day Response', label: 'Get clarity, sooner. ' },
+	{ value: '2-Day Response', label: 'Get clarity, sooner.' },
 ] as const;
 
 /* ------------------------------------------------------------------ */
@@ -256,65 +264,62 @@ export interface FaqItem {
 	readonly answer: string;
 }
 
-/*
- * Nine questions, in the order a real visitor arrives at them: what this costs
- * and who sees my request, then what happens if it goes wrong, then the two
- * questions a prospective referrer asks, then peer openings.
- *
- * Two rules govern this copy.
- *
- * 1. COMMERCIAL RESTRAINT (DESIGN_SYSTEM.md §7). "Is it free" is the single
- *    most common question a first-time visitor has, and refusing to answer it
- *    reads as evasion — so it IS answered here, in plain words. What it must
- *    never carry is a number: no amount, no fee, no percentage, no payout
- *    schedule. Those belong inside the product, after someone has decided to
- *    take part.
- * 2. HONESTY (§8). Every window below interpolates POLICY rather than naming a
- *    literal, so this section cannot promise a deadline the product does not
- *    keep. "Employment verified through LinkedIn" is the accurate claim;
- *    "employer verified" is banned because it says something stronger than the
- *    product actually checks.
- */
+// Product contract: PRD §§0.5, 0.11–0.12, 0.23–0.24, 0.33 and 6.1.1–6.1.2.
 export const FAQ_ITEMS: readonly FaqItem[] = [
 	{
 		question: 'Is it free to ask for a referral?',
 		answer:
-			'Yes. Asking costs nothing and nothing is owed upfront. If a referral lands you can send a small thank-you afterwards, which is always optional and never changes whether you get referred.',
+			'Yes. Choose zero appreciation and send your request without paying. If you want to add a thank-you, choose the amount before sending and pay upfront. It is optional and never guarantees a referral, interview or job.',
 	},
 	{
 		question: 'Who actually sees my request?',
 		answer:
-			'Only people whose employment at that company is verified through LinkedIn. Your request is never published publicly and never sent to recruiters.',
+			'Your request goes to the insiders selected for it, not a public feed. Pick people yourself or let RightRefer select top-ranked matches, up to 25. Only one insider can accept the request at a time; the accepting insider can access your full resume.',
 	},
 	{
-		question: 'What happens if nobody picks up my request?',
-		answer: `It closes after ${POLICY.claimWindowHours} hours and tells you plainly that nobody picked it up, rather than sitting open. You are free to send it again.`,
+		question: `What does the ${POLICY.claimWindowHours}-hour window mean?`,
+		answer: `The referral deadline is ${POLICY.claimWindowHours} hours from request activation. Accepting a request does not restart it. If no referral is submitted in time, the request closes and any paid appreciation is refunded in full. It can close sooner if everyone declines. This is not a promise of a response or interview.`,
 	},
 	{
-		question: 'How do I know the referral was actually submitted?',
+		question: 'How will I know my referral was sent?',
 		answer:
-			'The referrer submits it inside their company\u2019s own system and attaches a timestamped screenshot. You see that proof.',
+			'The insider refers you through their company\u2019s process and marks it as sent in RightRefer. You receive an update and can track the request in the app. Evidence may be required by the request\u2019s review policy or if you raise a dispute; a screenshot is not required for every submission.',
 	},
 	{
-		question: 'What if the proof looks wrong?',
-		answer: `You have ${POLICY.confirmationWindowHours} hours to raise a dispute. A person reads it and decides. If it is overturned, you are refunded.`,
+		question: 'What if the referral was not actually sent?',
+		answer: `Raise a dispute within ${POLICY.confirmationWindowHours} hours of the reported submission. The referrer is asked for evidence and a person reviews the case. If your dispute is upheld, any paid appreciation is refunded. Track refund progress in the app; bank processing is not instant.`,
+	},
+	{
+		question: 'Can I withdraw my request?',
+		answer:
+			'Yes, while it is still a draft, awaiting payment or open for an insider to accept. Once someone accepts, you cannot withdraw it. They can release it, and the original referral deadline still applies.',
 	},
 	{
 		question: 'Does a referral guarantee an interview?',
-		answer: `No. ${OUTCOME_DISCLAIMER} It puts you in front of a real person while the role is still open. The hiring decision stays entirely theirs.`,
+		answer: `No. ${OUTCOME_DISCLAIMER} A referrer can submit your profile, but the employer decides who gets an interview or offer. Adding appreciation does not change that.`,
 	},
 	{
-		question: 'How do you know a referrer really works there?',
-		answer: `They sign in with LinkedIn and their employment is re-checked every ${POLICY.employmentRecheckDays} days. This is employment verified through LinkedIn, not approval from their employer.`,
+		question: 'Does LinkedIn sign-in verify employment?',
+		answer: 'No. LinkedIn sign-in authenticates an account; it does not verify a person\u2019s company, title or employment history. Members provide and confirm their own career details. An \u201cEmail verified\u201d badge refers only to the email address, not employment.',
 	},
 	{
-		question: 'If I am a referrer, do I have to refer everyone who asks?',
+		question: 'Can I ask for referrals and give them too?',
 		answer:
-			'No. You see the role and the person\u2019s background first, then decide. Nothing is auto-assigned and passing costs you nothing.',
+			'Yes. Working members can do both from one account after adding their company and career details. Receiving requests is opt-in, and you choose which to accept. Decline requests that are not a fit and always follow your employer\u2019s referral policy.',
 	},
 	{
-		question: 'What are peer openings?',
+		question: 'How does referrer appreciation work?',
 		answer:
-			'Senior roles are often filled before they are ever posted. Peer openings tell you a relevant role exists while that window is open. You are shown the role, never who asked.',
+			`Appreciation is an optional thank-you chosen by the seeker before sending. The referrer\u2019s eligible share clears after the ${POLICY.confirmationWindowHours}-hour dispute window, unless a dispute is open. Platform fees and any applicable payment charges affect the share; the app shows the breakdown. Withdrawals use UPI, so add payout details before withdrawing.`,
+	},
+	{
+		question: 'What kinds of openings will I see?',
+		answer:
+			'The openings board brings together job details and referral activity. Check the linked job description, then open a prefilled referral draft for a role you like. Listings are not a promise of exclusive access, an unadvertised job or an available referrer.',
+	},
+	{
+		question: 'Can I control opening alerts?',
+		answer:
+			'Yes. Follow companies and choose daily, weekly or highly relevant alerts in Opening alerts. These updates share role details, not another candidate\u2019s identity or resume. Essential updates about your own requests, payments and disputes stay separate.',
 	},
 ] as const;

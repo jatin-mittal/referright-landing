@@ -25,10 +25,7 @@ import { OfferingKind, POLICY } from '../lib/constants';
  * columns and the action bar runs along the floor. A portrait card beside a
  * column of text read as a phone, which is the one shape this product is not.
  *
- * The card stays `aria-hidden`, and its controls are deliberately not tabbable.
- * Everything they demonstrate is already stated in the numbered list beside
- * them, so a reader who cannot see the card is told the same thing once rather
- * than twice, and the switch above stays a single tab stop.
+ * These are labelled, keyboard-accessible demonstrations, never live requests.
  */
 interface Props {
 	readonly kind: OfferingKind;
@@ -64,25 +61,29 @@ const OPENINGS: readonly Readonly<{
 	{
 		role: 'Staff Data Engineer',
 		company: 'Stripe',
-		meta: 'Bengaluru · Not posted publicly yet',
+		meta: 'Bengaluru · Data engineering',
 		age: '18m',
 	},
 	{
 		role: 'Senior Product Manager',
 		company: 'Atlassian',
-		meta: 'Bengaluru · Two referral paths open',
+		meta: 'Bengaluru · Product management',
 		age: '2h',
 	},
 	{
 		role: 'Backend Engineer II',
 		company: 'Razorpay',
-		meta: 'Remote, India · Team is hiring two',
+		meta: 'Remote, India · Engineering',
 		age: '5h',
 	},
 ];
 ---
 
-<div class="path-card glass" aria-hidden="true">
+<div class="path-card glass" role="group" aria-label="Interactive example, not a live request">
+	<div class="pc-preview-caption">
+		<span>Try the demo <span aria-hidden="true">&middot;</span> No real requests sent</span>
+		<button type="button" data-reset-demo>Reset</button>
+	</div>
 	{/*
 	 * Window chrome. Three lights in the semantic danger, warning and success
 	 * tokens rather than the desktop's own reds and greens, so the frame reads
@@ -130,11 +131,10 @@ const OPENINGS: readonly Readonly<{
 							</h4>
 
 							<p class="pc-next" data-when="open">
-								Your resume goes only to verified employees there.
+								Choose who receives your request.
 							</p>
 							<p class="pc-next" data-when="done" hidden>
-								Sent. You will hear back inside the {POLICY.claimWindowHours}-hour claim
-								window.
+								Example sent. The {POLICY.claimWindowHours}-hour referral window has started.
 							</p>
 
 							<dl class="pc-defs">
@@ -144,7 +144,7 @@ const OPENINGS: readonly Readonly<{
 								</div>
 								<div>
 									<dt>Who sees it</dt>
-									<dd>3 verified employees</dd>
+									<dd>3 selected insiders</dd>
 								</div>
 							</dl>
 						</div>
@@ -165,11 +165,11 @@ const OPENINGS: readonly Readonly<{
 								<span class="pc-chip pc-chip-reward">Optional</span>
 							</div>
 							<div class="pc-tiers">
-								<span class="pc-tier">
+								<span class="pc-tier is-selected">
 									<b>&#8377;0</b>
 									<em>None</em>
 								</span>
-								<span class="pc-tier is-selected">
+								<span class="pc-tier">
 									<b>&#8377;100</b>
 									<em>Coffee</em>
 								</span>
@@ -204,7 +204,6 @@ const OPENINGS: readonly Readonly<{
 							<button
 								class="pc-action"
 								type="button"
-								tabindex="-1"
 								data-demo-action
 								data-done="Request raised"
 							>
@@ -215,15 +214,15 @@ const OPENINGS: readonly Readonly<{
 									<path d="m4.5 10.5 3.75 3.75L15.5 7" />
 								</svg>
 								<span data-demo-label>Send request</span>
-								<svg class="pc-arrow" viewBox="0 0 16 16">
+								<svg class="pc-arrow motion-arrow" viewBox="0 0 16 16" aria-hidden="true">
 									<path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" />
 								</svg>
 							</button>
 							<span class="pc-note" data-when="open">
-								Held until proof lands
+								Zero selected. No payment needed.
 							</span>
 							<span class="pc-note" data-when="done" hidden>
-								Nothing leaves your account until you confirm
+								Track the request in your dashboard
 							</span>
 						</footer>
 					</div>
@@ -238,7 +237,7 @@ const OPENINGS: readonly Readonly<{
 								Someone is asking
 							</span>
 							<span class="pc-badge pc-badge-done" data-when="done" hidden>
-								Complete
+								Claimed
 							</span>
 
 							{/*
@@ -271,8 +270,7 @@ const OPENINGS: readonly Readonly<{
 								Neha is asking for a referral.
 							</p>
 							<p class="pc-next" data-when="done" hidden>
-								The referral was submitted. Neha has {POLICY.confirmationWindowHours} hours
-								to confirm or dispute it.
+								Example accepted. Next, refer Neha through your company and mark it as sent.
 							</p>
 
 							<div class="pc-stage">
@@ -280,13 +278,13 @@ const OPENINGS: readonly Readonly<{
 									1/4
 								</span>
 								<span class="pc-stage-count" data-when="done" hidden>
-									4/4
+									2/4
 								</span>
 								<span class="pc-stage-label" data-when="open">
 									Requested
 								</span>
 								<span class="pc-stage-label" data-when="done" hidden>
-									Complete
+									Accepted by you
 								</span>
 								<span class="pc-stage-track" data-when="open">
 									<i class="is-on" />
@@ -294,9 +292,9 @@ const OPENINGS: readonly Readonly<{
 									<i />
 									<i />
 								</span>
-								<span class="pc-stage-track pc-stage-track-full" data-when="done" hidden>
-									<i />
-									<i />
+								<span class="pc-stage-track" data-when="done" hidden>
+									<i class="is-on" />
+									<i class="is-on" />
 									<i />
 									<i />
 								</span>
@@ -315,15 +313,15 @@ const OPENINGS: readonly Readonly<{
 							    figure at hero size, because it is the one number
 							    this side of the request is about. */}
 							<section class="pc-earn">
-								<p class="pc-earn-label">You earn</p>
+								<p class="pc-earn-label">Optional appreciation</p>
 								<p class="pc-earn-value">
-									&#8377;100 <span>appreciation</span>
+									&#8377;100 <span>before fees</span>
 								</p>
 								<p class="pc-earn-note" data-when="open">
-									Paid once Neha confirms
+									Your share is shown before you accept
 								</p>
 								<p class="pc-earn-note" data-when="done" hidden>
-									Clears after the dispute window
+									Submit first; earnings clear after the dispute window if uncontested
 								</p>
 							</section>
 						</div>
@@ -332,9 +330,8 @@ const OPENINGS: readonly Readonly<{
 							<button
 								class="pc-action"
 								type="button"
-								tabindex="-1"
 								data-demo-action
-								data-done="Referral submitted"
+								data-done="Request claimed"
 							>
 								<span class="pc-sheen">
 									<i />
@@ -343,11 +340,11 @@ const OPENINGS: readonly Readonly<{
 									<path d="m4.5 10.5 3.75 3.75L15.5 7" />
 								</svg>
 								<span data-demo-label>Claim request</span>
-								<svg class="pc-arrow" viewBox="0 0 16 16">
+								<svg class="pc-arrow motion-arrow" viewBox="0 0 16 16" aria-hidden="true">
 									<path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" />
 								</svg>
 							</button>
-							<span class="pc-action-quiet">View profile</span>
+							<span class="pc-note">Accept only if you can refer</span>
 						</footer>
 					</div>
 				)
@@ -363,8 +360,8 @@ const OPENINGS: readonly Readonly<{
 						</span>
 
 						<header class="pc-head">
-							<span class="pc-badge">New openings</span>
-							<span class="pc-chip">Updated 18m ago</span>
+							<span class="pc-badge">Example openings</span>
+							<span class="pc-chip">Illustrative roles</span>
 						</header>
 
 						<ul class="pc-list">
@@ -382,9 +379,9 @@ const OPENINGS: readonly Readonly<{
 											<button
 												class="pc-action pc-action-sm"
 												type="button"
-												tabindex="-1"
 												data-demo-row
-												data-done="Request opened"
+												data-done="Draft previewed"
+												aria-label={`Preview a referral draft for ${opening.role} at ${opening.company}`}
 											>
 												<span class="pc-sheen">
 													<i />
@@ -393,8 +390,10 @@ const OPENINGS: readonly Readonly<{
 													<path d="m4.5 10.5 3.75 3.75L15.5 7" />
 												</svg>
 												<span data-demo-label>Ask for a referral</span>
+												<svg class="pc-arrow motion-arrow" viewBox="0 0 16 16" aria-hidden="true">
+													<path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" />
+												</svg>
 											</button>
-											<span class="pc-action-quiet">View details</span>
 										</div>
 									</div>
 								</li>
@@ -402,13 +401,14 @@ const OPENINGS: readonly Readonly<{
 						</ul>
 
 						<footer class="pc-foot">
-							<span class="pc-note">Each one opens a request already filled in</span>
+							<span class="pc-note">In the app: review a prefilled draft before you send</span>
 						</footer>
 					</div>
 				)
 			}
 		</article>
 	</div>
+	<p class="pc-demo-status" role="status" data-demo-status></p>
 </div>
 
 <script>
@@ -504,8 +504,7 @@ const OPENINGS: readonly Readonly<{
 	/*
 	 * Pressing the action does what the application does: the button confirms
 	 * itself with a check, and a moment later the card is in its next state —
-	 * the request raised, or the referral complete with the stage bar full and
-	 * the closing sentence the product writes. Both states ship in the markup
+	 * the request raised, or the claim accepted. Both states ship in the markup
 	 * and one of them is hidden, so nothing is assembled from strings here and
 	 * a card without this script is simply the state it starts in.
 	 *
@@ -513,22 +512,27 @@ const OPENINGS: readonly Readonly<{
 	 * second: doing both in the same frame reads as a page swap rather than as
 	 * something the press caused.
 	 */
-	const confirm = (button: HTMLElement): void => {
+	const confirm = (button: HTMLButtonElement): void => {
 		button.classList.add('is-done');
+		button.disabled = true;
 		const label = button.querySelector<HTMLElement>('[data-demo-label]');
 		const done = button.getAttribute('data-done');
 		if (label && done) label.textContent = done;
+		const status = button.closest('.path-card')?.querySelector('[data-demo-status]');
+		if (status) status.textContent = `${done}. Demo only; nothing was sent.`;
 	};
 
 	for (const card of document.querySelectorAll<HTMLElement>('[data-demo-card]')) {
-		const action = card.querySelector<HTMLElement>('[data-demo-action]');
-		if (!action) continue;
+		const buttons = Array.from(card.querySelectorAll<HTMLButtonElement>('[data-demo-action], [data-demo-row]'));
+		const labels = buttons.map((button) => button.querySelector('[data-demo-label]')?.textContent ?? '');
+		let timer = 0;
+		const action = card.querySelector<HTMLButtonElement>('[data-demo-action]');
 
-		action.addEventListener(
+		action?.addEventListener(
 			'click',
 			() => {
 				confirm(action);
-				window.setTimeout(() => {
+				timer = window.setTimeout(() => {
 					card.classList.add('is-done');
 					for (const node of card.querySelectorAll<HTMLElement>('[data-when="open"]')) {
 						node.hidden = true;
@@ -538,14 +542,28 @@ const OPENINGS: readonly Readonly<{
 					}
 				}, 640);
 			},
-			{ once: true },
 		);
-	}
 
-	// A row in the feed confirms itself and nothing else: asking about one
-	// opening does not change what the other three are.
-	for (const row of document.querySelectorAll<HTMLElement>('[data-demo-row]')) {
-		row.addEventListener('click', () => confirm(row), { once: true });
+		for (const row of card.querySelectorAll<HTMLButtonElement>('[data-demo-row]')) {
+			row.addEventListener('click', () => confirm(row));
+		}
+
+		card.closest('.path-card')?.querySelector('[data-reset-demo]')?.addEventListener('click', () => {
+			clearTimeout(timer);
+			card.classList.remove('is-done');
+			buttons.forEach((button, index) => {
+				button.classList.remove('is-done');
+				button.disabled = false;
+				const label = button.querySelector('[data-demo-label]');
+				if (label) label.textContent = labels[index];
+			});
+			for (const node of card.querySelectorAll<HTMLElement>('[data-when]')) {
+				node.hidden = node.dataset.when === 'done';
+			}
+			const status = card.closest('.path-card')?.querySelector('[data-demo-status]');
+			if (status) status.textContent = 'Demo reset. Nothing was sent.';
+			card.closest('.paths')?.dispatchEvent(new CustomEvent('rightrefer:path-selected'));
+		});
 	}
 </script>
 
@@ -575,6 +593,35 @@ const OPENINGS: readonly Readonly<{
 		min-height: var(--path-card-min, auto);
 		flex-direction: column;
 		border-radius: var(--radius-lg);
+	}
+
+	.pc-preview-caption {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		padding: 0.25rem 0.875rem;
+		border-bottom: 1px solid rgb(var(--color-border));
+		background: rgb(var(--color-surface));
+		color: rgb(var(--color-muted));
+		font-size: 0.6875rem;
+	}
+	.pc-preview-caption button {
+		min-height: 2.75rem;
+		padding: 0 0.375rem;
+		border: 0;
+		background: none;
+		color: rgb(var(--color-primary-strong));
+		font-size: 0.75rem;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	.pc-demo-status {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
 	}
 
 	.pc-chrome {
@@ -1273,7 +1320,7 @@ const OPENINGS: readonly Readonly<{
 	/* The row-level variant, for a list where every item carries the same pair
 	   of actions and none of them is the screen's one decision. */
 	.pc-action-sm {
-		min-height: 2.125rem;
+		min-height: 2.75rem;
 		padding-inline: 0.875rem;
 		box-shadow: none;
 		font-size: 0.75rem;
@@ -1447,72 +1494,6 @@ const OPENINGS: readonly Readonly<{
 			}
 			to {
 				clip-path: inset(0 0 0 0);
-			}
-		}
-
-		/*
-		 * The hint.
-		 *
-		 * A card that can be pressed has to say so, and a static card beside a
-		 * paragraph is not read as a control. Twice over, on one cadence: a
-		 * ring leaves the button, and light crosses it. Late enough not to
-		 * compete with the reveal, brief enough to be an invitation rather than
-		 * an alarm. A panel that is not on screen is `display: none`, so the
-		 * delay restarts when its tab is chosen, which is exactly when the
-		 * offer is worth making.
-		 */
-		.pc-action::after {
-			position: absolute;
-			inset: -1px;
-			border: 1px solid rgb(var(--color-primary) / 60%);
-			border-radius: var(--radius-pill);
-			animation: pc-hint 4600ms var(--ease-out) 3200ms infinite;
-			content: '';
-			opacity: 0;
-			pointer-events: none;
-		}
-
-		.pc-sheen i {
-			animation: pc-sweep 4600ms var(--ease-out) 3200ms infinite;
-		}
-
-		.pc-action:hover::after,
-		.pc-action.is-done::after {
-			animation: none;
-		}
-
-		/* Three rings leaving three rows at the same instant is a flashing list.
-		   Down the list instead, a third of a second apart. */
-		.pc-open:nth-child(2) .pc-action::after,
-		.pc-open:nth-child(2) .pc-sheen i {
-			animation-delay: 3560ms;
-		}
-
-		.pc-open:nth-child(3) .pc-action::after,
-		.pc-open:nth-child(3) .pc-sheen i {
-			animation-delay: 3920ms;
-		}
-
-		@keyframes pc-hint {
-			0% {
-				opacity: 0.7;
-				transform: scale(1);
-			}
-			26%,
-			100% {
-				opacity: 0;
-				transform: scale(1.11);
-			}
-		}
-
-		/* One crossing, then off the edge until the next cadence. */
-		@keyframes pc-sweep {
-			0% {
-				transform: translateX(-130%);
-			}
-			16%,
-			100% {
-				transform: translateX(130%);
 			}
 		}
 
