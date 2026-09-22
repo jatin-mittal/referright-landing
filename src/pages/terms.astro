@@ -1,0 +1,140 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { CONTACT_EMAIL } from '../lib/content';
+
+const effectiveDate = '22 September 2026';
+---
+
+<LegalLayout
+	title="Terms of Service"
+	description="The terms that apply when you access or use RightRefer."
+	effectiveDate={effectiveDate}
+>
+	<p>
+		These Terms of Service govern your use of RightRefer, a service registered under Tournahub
+		Solutions Private Limited. By accessing or using RightRefer, you agree to these terms and our
+		<a href="/privacy/">Privacy Policy</a>.
+	</p>
+
+	<h2>Eligibility and accounts</h2>
+	<p>
+		You must be legally able to enter a binding contract where you live. You must provide accurate
+		information, keep your account secure and promptly update information that changes. You are
+		responsible for activity on your account and must tell us if you suspect unauthorised use.
+	</p>
+	<p>
+		Signing in through Google, LinkedIn or another provider authenticates the account. It does not
+		verify a member's employer, title, employment history or authority to make a referral.
+	</p>
+
+	<h2>What RightRefer provides</h2>
+	<p>
+		RightRefer helps members request professional referrals, choose whether to refer candidates,
+		and discover job openings. A referral is an introduction, not a guarantee of an interview,
+		offer or other outcome. Employers make their own hiring decisions.
+	</p>
+	<p>
+		Referrers must follow their employer's referral, confidentiality and conflict-of-interest
+		policies. RightRefer does not authorise anyone to act against an employer's rules.
+	</p>
+
+	<h2>Your responsibilities</h2>
+	<p>You agree that you will not:</p>
+	<ul>
+		<li>Provide false, misleading or unauthorised profile, employment or referral information.</li>
+		<li>Upload a resume or other content unless you have the right to share it.</li>
+		<li>Impersonate another person or create accounts for deceptive purposes.</li>
+		<li>Harass users, send spam, scrape the service or misuse another person's information.</li>
+		<li>Bypass security, interfere with the service or use automated access without permission.</li>
+		<li>Use RightRefer for unlawful, discriminatory, fraudulent or abusive activity.</li>
+	</ul>
+
+	<h2>Requests, referrals and disputes</h2>
+	<p>
+		You decide what information to include in a request and whom to ask. A referrer decides whether
+		to accept a request and whether they can make a referral. Referral deadlines, confirmation
+		windows and dispute steps shown in the application apply to each request.
+	</p>
+	<p>
+		We may request information or evidence needed to review a dispute. You agree to provide honest
+		and relevant information. RightRefer may resolve a dispute based on the available records and
+		the rules shown in the application.
+	</p>
+
+	<h2>Optional appreciation, refunds and payouts</h2>
+	<p>
+		A referral request can be free. A seeker may choose optional appreciation before sending a
+		request. Appreciation does not buy a job outcome and does not require a referrer to break an
+		employer's rules.
+	</p>
+	<p>
+		The application shows applicable amounts, platform fees, payment charges, refund conditions,
+		payout eligibility and processing status. Payment and payout services may also be subject to a
+		provider's terms. Banks and payment providers can take additional time to complete a refund or
+		payout.
+	</p>
+
+	<h2>Your content and licence</h2>
+	<p>
+		You keep ownership of content you provide. You give RightRefer a limited, non-exclusive licence
+		to host, process, copy and share that content only as needed to operate, secure and improve the
+		service. For example, we may share request details with selected insiders and a full resume
+		with the insider who accepts the request.
+	</p>
+	<p>
+		You may not upload content that infringes another person's rights, violates law or contains
+		malicious code.
+	</p>
+
+	<h2>Third-party services and job information</h2>
+	<p>
+		RightRefer may link to employers, job listings, sign-in providers, payment providers and other
+		third-party services. We do not control their services, content, availability or privacy
+		practices. Review their terms before using them. Job information can change, so check the
+		original listing before acting.
+	</p>
+
+	<h2>Suspension and termination</h2>
+	<p>
+		You may stop using RightRefer at any time. We may restrict, suspend or terminate access when
+		reasonably necessary to protect users or the service, investigate suspected abuse, comply with
+		law, or enforce these terms. Provisions that by their nature should continue after termination
+		will remain in effect.
+	</p>
+
+	<h2>Service availability and disclaimers</h2>
+	<p>
+		We work to keep RightRefer useful and available, but the service is provided on an “as is” and
+		“as available” basis to the extent permitted by law. We do not guarantee uninterrupted access,
+		the accuracy of third-party job information, a successful referral, an interview or
+		employment.
+	</p>
+
+	<h2>Limitation of liability</h2>
+	<p>
+		To the extent permitted by law, RightRefer and Tournahub Solutions Private Limited will not be
+		liable for indirect, incidental, special, consequential or punitive damages, or for lost
+		profits, opportunities, data or goodwill arising from use of the service. Nothing in these
+		terms excludes liability that cannot legally be excluded.
+	</p>
+
+	<h2>Changes to the service or terms</h2>
+	<p>
+		We may change the service and update these terms. We will post revised terms here, update the
+		effective date and provide additional notice when required by law. Continued use after the
+		updated terms take effect means you accept them.
+	</p>
+
+	<h2>Governing law</h2>
+	<p>
+		These terms are governed by the laws of India, without regard to conflict-of-law rules. Courts
+		with competent jurisdiction in India will have jurisdiction, except where applicable consumer
+		law provides otherwise.
+	</p>
+
+	<h2>Contact us</h2>
+	<p>
+		Questions about these terms can be sent to
+		<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+	</p>
+</LegalLayout>

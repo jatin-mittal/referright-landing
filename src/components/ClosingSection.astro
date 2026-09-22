@@ -32,9 +32,9 @@ const productLinks = [
 ] as const;
 
 const policyLinks = [
-	PRIVACY_URL ? { label: 'Privacy', href: PRIVACY_URL } : null,
-	TERMS_URL ? { label: 'Terms', href: TERMS_URL } : null,
-].filter((link): link is { label: string; href: string } => link !== null);
+	{ label: 'Privacy', href: PRIVACY_URL },
+	{ label: 'Terms', href: TERMS_URL },
+] as const;
 ---
 
 <section class="closing" id={SectionId.Contact} aria-labelledby="closing-title" data-closing>

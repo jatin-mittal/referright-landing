@@ -1,0 +1,175 @@
+---
+import Brand from '../components/Brand.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { CONTACT_EMAIL, PRIVACY_URL, TERMS_URL } from '../lib/content';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	effectiveDate: string;
+}
+
+const { title, description, effectiveDate } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<BaseLayout title={`${title} | RightRefer`} description={description}>
+	<header class="legal-header">
+		<div class="shell legal-header-inner">
+			<Brand href="/" label="RightRefer home" size="sm" />
+			<a class="back-link" href="/">Back to home</a>
+		</div>
+	</header>
+
+	<main id="main-content" class="legal-main">
+		<article class="shell legal-document">
+			<header class="legal-title">
+				<p class="eyebrow">Legal</p>
+				<h1 class="display-2">{title}</h1>
+				<p class="effective-date">Effective date: {effectiveDate}</p>
+			</header>
+
+			<div class="legal-copy">
+				<slot />
+			</div>
+		</article>
+	</main>
+
+	<footer class="legal-footer">
+		<div class="shell legal-footer-inner">
+			<p>© {year} RightRefer. Registered under Tournahub Solutions Private Limited.</p>
+			<nav aria-label="Legal and support">
+				<a href={PRIVACY_URL}>Privacy</a>
+				<a href={TERMS_URL}>Terms</a>
+				<a href={`mailto:${CONTACT_EMAIL}`}>Contact</a>
+			</nav>
+			<ThemeToggle />
+		</div>
+	</footer>
+</BaseLayout>
+
+<style>
+	.legal-header {
+		border-bottom: 1px solid rgb(var(--color-border) / 75%);
+		background: rgb(var(--color-canvas) / 92%);
+	}
+
+	.legal-header-inner {
+		display: flex;
+		min-height: 4.5rem;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.back-link,
+	.legal-footer a {
+		color: rgb(var(--color-primary-strong));
+		font-size: 0.9375rem;
+		font-weight: 600;
+		text-decoration: underline;
+		text-decoration-color: rgb(var(--color-primary) / 35%);
+		text-underline-offset: 0.2em;
+	}
+
+	.legal-main {
+		overflow: visible;
+	}
+
+	.legal-document {
+		max-width: 52rem;
+		padding-block: clamp(3.5rem, 8vw, 6.5rem);
+	}
+
+	.legal-title {
+		padding-bottom: 2rem;
+		border-bottom: 1px solid rgb(var(--color-border));
+	}
+
+	.effective-date {
+		margin: 1rem 0 0;
+		color: rgb(var(--color-muted));
+		font-size: 0.9375rem;
+	}
+
+	.legal-copy {
+		padding-top: 1.5rem;
+		color: rgb(var(--color-muted));
+	}
+
+	.legal-copy :global(h2) {
+		margin: 2.5rem 0 0.75rem;
+		color: rgb(var(--color-ink));
+		font-family: var(--font-display);
+		font-size: clamp(1.4rem, 3vw, 1.8rem);
+		font-weight: 400;
+		letter-spacing: -0.025em;
+		line-height: 1.2;
+	}
+
+	.legal-copy :global(h3) {
+		margin: 1.5rem 0 0.5rem;
+		color: rgb(var(--color-ink));
+		font-size: 1rem;
+	}
+
+	.legal-copy :global(p),
+	.legal-copy :global(ul) {
+		margin: 0.75rem 0;
+	}
+
+	.legal-copy :global(ul) {
+		padding-left: 1.35rem;
+	}
+
+	.legal-copy :global(li + li) {
+		margin-top: 0.5rem;
+	}
+
+	.legal-copy :global(a) {
+		color: rgb(var(--color-primary-strong));
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	.legal-copy :global(strong) {
+		color: rgb(var(--color-ink));
+	}
+
+	.legal-footer {
+		border-top: 1px solid rgb(var(--color-border));
+	}
+
+	.legal-footer-inner {
+		display: flex;
+		min-height: 5rem;
+		align-items: center;
+		gap: 1.25rem;
+		padding-block: 1rem;
+	}
+
+	.legal-footer p {
+		margin: 0 auto 0 0;
+		color: rgb(var(--color-muted));
+		font-size: 0.8125rem;
+	}
+
+	.legal-footer nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+
+	@media (max-width: 42rem) {
+		.legal-footer-inner {
+			align-items: flex-start;
+			flex-wrap: wrap;
+		}
+
+		.legal-footer p {
+			flex-basis: 100%;
+		}
+	}
+</style>

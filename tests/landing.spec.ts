@@ -133,6 +133,34 @@ test('FAQ text and structured data agree', async ({ page }) => {
 	}
 });
 
+test('footer links to the public legal pages', async ({ page }) => {
+	await page.goto('/');
+	await expect(page.getByRole('link', { name: 'Privacy', exact: true })).toHaveAttribute('href', '/privacy/');
+	await expect(page.getByRole('link', { name: 'Terms', exact: true })).toHaveAttribute('href', '/terms/');
+});
+
+for (const legalPage of [
+	{
+		path: '/privacy/',
+		title: 'Privacy Policy',
+		canonical: 'https://www.rightrefer.com/privacy/',
+	},
+	{
+		path: '/terms/',
+		title: 'Terms of Service',
+		canonical: 'https://www.rightrefer.com/terms/',
+	},
+] as const) {
+	test(`${legalPage.title} is public and has page-specific metadata`, async ({ page }) => {
+		await page.goto(legalPage.path);
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText(legalPage.title);
+		await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', legalPage.canonical);
+
+		const structured = await page.locator('script[type="application/ld+json"]').allTextContents();
+		expect(structured.map((value) => JSON.parse(value)['@type'])).not.toContain('FAQPage');
+	});
+}
+
 test('all three paths stay readable with JavaScript disabled', async ({ browser }) => {
 	const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
 	const page = await context.newPage();

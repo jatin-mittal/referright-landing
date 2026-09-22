@@ -1,0 +1,142 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { CONTACT_EMAIL } from '../lib/content';
+
+const effectiveDate = '22 September 2026';
+---
+
+<LegalLayout
+	title="Privacy Policy"
+	description="How RightRefer collects, uses, shares and protects personal information, including information received through Google Sign-In."
+	effectiveDate={effectiveDate}
+>
+	<p>
+		This Privacy Policy explains how RightRefer, registered under Tournahub Solutions Private
+		Limited, collects, uses, shares and protects personal information when you use our website,
+		application and related services.
+	</p>
+
+	<h2>Information we collect</h2>
+	<h3>Account and sign-in information</h3>
+	<p>
+		When you create an account or sign in through a provider such as Google or LinkedIn, we may
+		receive information that the provider makes available with your permission. This can include
+		your name, email address, profile picture and provider account identifier. The provider's
+		consent screen shows the information requested before you continue.
+	</p>
+
+	<h3>Profile and service information</h3>
+	<p>
+		We collect information you add while using RightRefer, such as your company, role, career
+		details, job preferences, alert preferences, referral requests, job links, resume, selected
+		referrers, referral status, support messages and information provided for a dispute.
+	</p>
+
+	<h3>Payments and payouts</h3>
+	<p>
+		If you use optional appreciation, refund or payout features, we and our payment providers
+		process the information needed to complete and record the transaction. Payment providers may
+		collect payment-card, bank-account or UPI details under their own privacy policies. We may
+		receive transaction references, status and related records.
+	</p>
+
+	<h3>Technical and usage information</h3>
+	<p>
+		We may collect device, browser, IP address, log, security and usage information. We also use
+		cookies or local storage where needed for sign-in, security, preferences and site operation.
+	</p>
+
+	<h2>How we use information</h2>
+	<ul>
+		<li>Provide, operate and improve RightRefer.</li>
+		<li>Authenticate accounts and keep them secure.</li>
+		<li>Match and deliver referral requests to the people selected for them.</li>
+		<li>Show request status and send service, security and support communications.</li>
+		<li>Process optional appreciation, refunds, payouts and disputes.</li>
+		<li>Prevent fraud, abuse and violations of our Terms of Service.</li>
+		<li>Meet legal, accounting and regulatory obligations.</li>
+	</ul>
+
+	<h2>Google user data</h2>
+	<p>
+		When you choose Google Sign-In, RightRefer uses the Google account information you authorize
+		only to authenticate you, create or link your account, show your account identity, secure the
+		service and provide support. We do not sell Google user data or use it for advertising.
+	</p>
+	<p>
+		Our use and transfer of information received from Google APIs follows the
+		<a href="https://developers.google.com/terms/api-services-user-data-policy">
+			Google API Services User Data Policy
+		</a>, including its Limited Use requirements.
+	</p>
+
+	<h2>How we share information</h2>
+	<p>We share personal information only as needed for the following purposes:</p>
+	<ul>
+		<li>
+			<strong>Other members:</strong> Referral request details go to the insiders selected for
+			the request. Only the insider who accepts can access the full resume.
+		</li>
+		<li>
+			<strong>Service providers:</strong> Vendors may process data for hosting, authentication,
+			analytics, communications, payments, security and customer support under instructions from
+			us.
+		</li>
+		<li>
+			<strong>Legal and safety reasons:</strong> We may disclose information when required by
+			law or when reasonably needed to protect users, RightRefer or others.
+		</li>
+		<li>
+			<strong>Business changes:</strong> Information may be transferred as part of a merger,
+			financing, acquisition, reorganisation or sale of assets, subject to applicable law.
+		</li>
+	</ul>
+	<p>We do not sell personal information.</p>
+
+	<h2>Data retention and deletion</h2>
+	<p>
+		We keep personal information for as long as your account is active and as needed to provide
+		the service. We may keep some records longer when required for security, fraud prevention,
+		disputes, payments, tax, accounting or legal compliance.
+	</p>
+	<p>
+		You can request account and personal-data deletion by emailing
+		<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> from the email address connected to
+		your account. We may need to verify your identity. Deleting your RightRefer account does not
+		delete information held independently by Google or another sign-in provider.
+	</p>
+
+	<h2>Your choices</h2>
+	<p>
+		You can review or update information available in your account, change optional alert
+		preferences and disconnect RightRefer from your Google Account settings. You may also contact
+		us to request access, correction or deletion of personal information, subject to applicable
+		law.
+	</p>
+
+	<h2>Security</h2>
+	<p>
+		We use reasonable administrative, technical and organisational measures to protect personal
+		information. No online service can guarantee complete security, so protect your credentials
+		and contact us if you believe your account has been misused.
+	</p>
+
+	<h2>Children</h2>
+	<p>
+		RightRefer is not directed to children who are too young to enter a binding contract in their
+		location. Do not use the service if you do not meet that age requirement.
+	</p>
+
+	<h2>Changes to this policy</h2>
+	<p>
+		We may update this policy when the service or legal requirements change. We will post the
+		updated version here and change the effective date. We will provide additional notice when
+		required by law.
+	</p>
+
+	<h2>Contact us</h2>
+	<p>
+		For privacy questions or requests, email
+		<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+	</p>
+</LegalLayout>

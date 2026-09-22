@@ -15,16 +15,8 @@ export const SIGNUP_URL: string = SIGNUP_BASE;
 export const CONTACT_EMAIL: string =
 	import.meta.env.PUBLIC_CONTACT_EMAIL || 'rightrefer.team@gmail.com';
 
-/**
- * Policy pages, rendered in the footer only once they exist.
- *
- * The README lists hosted privacy and terms pages as a launch blocker. The
- * footer has the slots; a link appears the moment its URL is configured, and
- * until then nothing is shown — a dead link to a policy is worse than no link,
- * because it looks like the policy exists.
- */
-export const PRIVACY_URL: string | undefined = import.meta.env.PUBLIC_PRIVACY_URL || undefined;
-export const TERMS_URL: string | undefined = import.meta.env.PUBLIC_TERMS_URL || undefined;
+export const PRIVACY_URL = '/privacy/' as const;
+export const TERMS_URL = '/terms/' as const;
 
 /** Verified private-beta outcome shown in the landing-page proof module. */
 export const PRIVATE_BETA_REFERRAL_COUNT = 78;
