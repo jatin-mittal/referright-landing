@@ -26,8 +26,6 @@ The development server runs at `http://localhost:4321`.
 | --- | --- | --- |
 | `PUBLIC_APP_SIGNUP_URL` | Auth handoff used by every call to action | `https://app.rightrefer.com/` |
 | `PUBLIC_CONTACT_EMAIL` | Support address in the FAQ and the footer | `rightrefer.team@gmail.com` |
-| `PUBLIC_PRIVACY_URL` | Hosted privacy policy | unset — the footer link is not rendered |
-| `PUBLIC_TERMS_URL` | Hosted terms | unset — the footer link is not rendered |
 
 Every call to action points at `PUBLIC_APP_SIGNUP_URL` directly. `signUpWith`
 still takes a `SignUpIntent` for call-site clarity, but the intent is not
@@ -39,6 +37,10 @@ the robots/sitemap output all derive from it. `SITE_URL` is intentionally not
 read: an app URL in the deployment environment previously made the landing
 page canonicalize to `https://app.rightrefer.com/`. The app handoff remains
 independently configurable through `PUBLIC_APP_SIGNUP_URL`.
+
+The public legal pages are available at
+`https://www.rightrefer.com/privacy/` and
+`https://www.rightrefer.com/terms/`.
 
 ### Search indexing after deployment
 
@@ -138,9 +140,6 @@ Five blocks, and adding a sixth is a design decision, not a routine one. See
       quotes before a public launch.
 - [ ] **The private-beta figure must be verified.**
       `PRIVATE_BETA_REFERRAL_COUNT` in `src/lib/content.ts` is currently `78`.
-- [ ] **Set `PUBLIC_PRIVACY_URL` and `PUBLIC_TERMS_URL`.** The footer renders
-      each link only once its URL exists, so an unset value shows nothing rather
-      than a link to a page that is not there.
 - [ ] **Confirm Louize's production embedding rights**, file provenance and any
       required attribution. If they cannot be confirmed, the fallback is a
       licensed editorial serif chosen before release, with the semantic font
