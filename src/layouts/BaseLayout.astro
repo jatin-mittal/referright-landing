@@ -9,9 +9,15 @@ interface Props {
 	title: string;
 	description: string;
 	includeFaqStructuredData?: boolean;
+	googleSiteVerification?: string;
 }
 
-const { title, description, includeFaqStructuredData = false } = Astro.props;
+const {
+	title,
+	description,
+	includeFaqStructuredData = false,
+	googleSiteVerification,
+} = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 const socialImage = new URL('/og-image.png', canonicalUrl);
 
@@ -61,6 +67,7 @@ const themePrepaint = `(function(){try{
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<meta name="theme-color" content="#FBF8F2" />
+		{googleSiteVerification && <meta name="google-site-verification" content={googleSiteVerification} />}
 
 		<script is:inline set:html={themePrepaint} />
 
