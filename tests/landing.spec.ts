@@ -139,6 +139,14 @@ test('footer links to the public legal pages', async ({ page }) => {
 	await expect(page.getByRole('link', { name: 'Terms', exact: true })).toHaveAttribute('href', '/terms/');
 });
 
+test('homepage includes the Google site verification token', async ({ page }) => {
+	await page.goto('/');
+	await expect(page.locator('meta[name="google-site-verification"]')).toHaveAttribute(
+		'content',
+		'j6O-5YpIJmfBldKGkepKWvJ69ZZlmqWrElZFDFaBpww',
+	);
+});
+
 for (const legalPage of [
 	{
 		path: '/privacy/',
