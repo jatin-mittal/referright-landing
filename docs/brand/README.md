@@ -50,6 +50,7 @@ The two accents are a logo-only exception for this user-requested redesign. They
 - `public/brand_assets/icons/rightrefer-app-icon.svg`: blue app tile with white symbol.
 - Each brand SVG has matching PNG and lossless WebP exports. Full lockups are 2048px wide; symbols and app icons are 1024 × 1024px. Backgrounds are transparent outside the artwork.
 - `public/rightrefer-logo.svg`, `.png`, `.webp`: compatibility exports of the colored symbol.
+- `public/logo.svg`: square SVG Tiny PS symbol on white for the public BIMI logo URL; the regular logo SVG is not a BIMI replacement.
 - `public/favicon.svg`, `favicon.png`, `apple-touch-icon.png`: small icon assets.
 - `public/og-image.svg`, `.png`: 1200 × 630 social preview.
 - `docs/brand/rightrefer-identity.svg`, `.png`: presentation board of actual assets.
