@@ -42,6 +42,17 @@ The public legal pages are available at
 `https://www.rightrefer.com/privacy/` and
 `https://www.rightrefer.com/terms/`.
 
+### BIMI logo
+
+After deployment, use `https://www.rightrefer.com/logo.svg` as the public
+HTTPS logo URL. This square SVG Tiny PS asset uses the RightRefer symbol on a
+solid white background and needs no login. Use the `www` URL in the BIMI
+record: `https://rightrefer.com/logo.svg` redirects to `www`, while the `www`
+URL serves the file directly. Check that the deployed `www` URL returns
+HTTP 200 with `Content-Type: image/svg+xml` before publishing a BIMI record.
+Hosting the logo alone does not configure BIMI email authentication or
+guarantee that mail clients will show it.
+
 ### Search indexing after deployment
 
 Deploy a fresh build; changing environment variables alone does not update
