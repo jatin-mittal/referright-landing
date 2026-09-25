@@ -6,6 +6,7 @@ export interface Testimonial {
 	readonly company?: string;
 	readonly companyLogoUrl?: string;
 	readonly companyLogoDarkUrl?: string;
+	readonly companyLogoIsWordmark?: boolean;
 	readonly review: string;
 	readonly accent?: string;
 	readonly photoUrl?: string;
@@ -51,17 +52,25 @@ const initialsFor = (name: string): string =>
 										<small class="quote-company-line">
 											{testimonial.companyLogoUrl && (
 												<img
-													class:list={['quote-company-logo', testimonial.companyLogoDarkUrl && 'is-light']}
+													class:list={['quote-company-logo', testimonial.companyLogoDarkUrl && 'is-light', testimonial.companyLogoIsWordmark && 'is-wordmark']}
 													src={testimonial.companyLogoUrl}
-													alt=""
-													width="16"
-													height="16"
+													alt={testimonial.companyLogoIsWordmark ? testimonial.company : ''}
+													width={testimonial.companyLogoIsWordmark ? 108 : 16}
+													height={testimonial.companyLogoIsWordmark ? 23 : 16}
 												/>
 											)}
 											{testimonial.companyLogoDarkUrl && (
-												<img class="quote-company-logo is-dark" src={testimonial.companyLogoDarkUrl} alt="" width="16" height="16" />
+												<img
+													class:list={['quote-company-logo', 'is-dark', testimonial.companyLogoIsWordmark && 'is-wordmark']}
+													src={testimonial.companyLogoDarkUrl}
+													alt={testimonial.companyLogoIsWordmark ? testimonial.company : ''}
+													width={testimonial.companyLogoIsWordmark ? 108 : 16}
+													height={testimonial.companyLogoIsWordmark ? 23 : 16}
+												/>
 											)}
-											<span class="quote-company" title={testimonial.company}>{testimonial.company}</span>
+											{(!testimonial.companyLogoIsWordmark || !testimonial.companyLogoUrl) && (
+												<span class="quote-company" title={testimonial.company}>{testimonial.company}</span>
+											)}
 										</small>
 									)}
 								</span>
@@ -230,6 +239,11 @@ const initialsFor = (name: string): string =>
 	.quote-company-logo[src$='ukg.svg'],
 	.quote-company-logo[src$='ukg-dark.svg'] {
 		width: 2rem;
+	}
+
+	.quote-company-logo.is-wordmark {
+		width: 6.75rem;
+		height: 1.45rem;
 	}
 
 	.quote-company-logo.is-dark,

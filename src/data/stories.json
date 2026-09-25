@@ -5,6 +5,8 @@
             "title": "Software Engineer - 2",
             "company": "Microsoft",
             "companyLogoUrl": "/company-logos/microsoft.svg",
+            "companyLogoDarkUrl": "/company-logos/microsoft-dark.svg",
+            "companyLogoIsWordmark": true,
             "photoUrl": "https://media.licdn.com/dms/image/v2/D5603AQGvu_r32IqDFA/profile-displayphoto-scale_100_100/B56Z0mUK8dJMAc-/0/1774464316829?e=1792022400&v=beta&t=bxRKDma9hpocnFAzzbfPDi_gkdaHJc0NCoHVxHodiAA",
             "linkedinUrl": "https://www.linkedin.com/in/jatin-mittal-864305199/",
             "review": "Good idea. When someone has just lost a job, even reaching out can feel hard. A clear way to ask for help could make a real difference."
@@ -41,6 +43,8 @@
             "title": "Software Engineer - 2",
             "company": "Microsoft",
             "companyLogoUrl": "/company-logos/microsoft.svg",
+            "companyLogoDarkUrl": "/company-logos/microsoft-dark.svg",
+            "companyLogoIsWordmark": true,
             "photoUrl": "https://media.licdn.com/dms/image/v2/D5603AQEe-yx1cfV6pA/profile-displayphoto-scale_100_100/B56ZreN9pKLMAc-/0/1764664799819?e=1791417600&v=beta&t=OLoLz5HYGE8WYr3E_tFdrB0i4V9GBc3cuWbdnsu_I54",
             "review": "I appreciate the idea of being able to track a request. Not knowing whether anyone has seen it is the hardest part of asking."
         },

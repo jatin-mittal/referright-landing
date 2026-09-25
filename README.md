@@ -93,7 +93,9 @@ Each card has a `name` and an approved `review`. Optional fields are `title`, `c
 logo files are in `public/company-logos/`; store their public path in
 `companyLogoUrl`. If the mark needs a different version on a dark background,
 set `companyLogoDarkUrl` to its local dark-mode file; otherwise the same mark
-is used in both themes. Without a photo, a card shows initials; the official blue
+is used in both themes. For a full logo with a company name in the artwork,
+set `companyLogoIsWordmark` to `true` so the card does not repeat the name.
+Without a photo, a card shows initials; the official blue
 LinkedIn icon appears only with a profile URL. External photo URLs may expire,
 so use a stable public image when publishing a review. Keep only public,
 display-ready information in this file.
@@ -138,7 +140,7 @@ Five blocks, and adding a sixth is a design decision, not a routine one. See
 `DESIGN_SYSTEM.md` §14.
 
 1. `Hero.astro` plus the company marquee, as one opening block.
-2. `BetaProof.astro`, the private-beta count and the quote marquee. Proof comes
+2. `StoriesProof.astro`, the early-release count and the quote marquee. Proof comes
    before mechanism.
 3. `ProductStory.astro`, all three things the product does, as a switch.
 4. `Faq.astro`.
@@ -161,18 +163,16 @@ Five blocks, and adding a sixth is a design decision, not a routine one. See
 - **Two typefaces.** Louize is self-hosted from `public/Louize.woff2` and used
   for display type and the outlined logo; Inter is loaded from Google Fonts
   for UI and body text.
-- **Company logos** are rendered from the CC0-licensed Simple Icons package at
-  build time. They remain the property of their respective owners and do not
-  imply affiliation. Microsoft's four squares are drawn inline, because their
-  brand guidelines forbid recolouring the mark to a single colour.
+- **Company logos** in the company marquee are rendered from the CC0-licensed
+  Simple Icons package at build time. Review-card logos are stored in
+  `public/company-logos/`, including the full Microsoft logo with its four
+  colored squares and wordmark. The marks remain the property of their
+  respective owners and do not imply affiliation.
 
 ## Launch checklist
 
-- [ ] **Testimonial copy is prototype content.** `testimonialBatches` in
-      `src/pages/index.astro` must be replaced with verified, consented customer
-      quotes before a public launch.
-- [ ] **The private-beta figure must be verified.**
-      `PRIVATE_BETA_REFERRAL_COUNT` in `src/lib/content.ts` is currently `78`.
+- [ ] **Verify the early-release count** in `src/data/stories.json` before
+      publication; `referralCount` is currently `78`.
 - [ ] **Confirm Louize's production embedding rights**, file provenance and any
       required attribution. If they cannot be confirmed, the fallback is a
       licensed editorial serif chosen before release, with the semantic font

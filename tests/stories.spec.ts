@@ -7,6 +7,7 @@ interface Story {
 	company?: string;
 	companyLogoUrl?: string;
 	companyLogoDarkUrl?: string;
+	companyLogoIsWordmark?: boolean;
 	review: string;
 	photoUrl?: string;
 	linkedinUrl?: string;
@@ -51,7 +52,12 @@ test('stories show the approved reviews and supplied profiles', async ({ page })
 		const card = cards.nth(index);
 		await expect(card.locator('.quote-identity strong')).toHaveText(entry.name);
 		if (entry.title) await expect(card.locator('.quote-title')).toHaveText(entry.title);
-		if (entry.company) await expect(card.locator('.quote-company')).toHaveText(entry.company);
+		if (entry.companyLogoIsWordmark && entry.company) {
+			await expect(card.locator('.quote-company')).toHaveCount(0);
+			await expect(card.locator('.quote-company-logo:not(.is-dark)')).toHaveAttribute('alt', entry.company);
+		} else if (entry.company) {
+			await expect(card.locator('.quote-company')).toHaveText(entry.company);
+		}
 		if (entry.companyLogoUrl) {
 			const companyLogo = card.locator('.quote-company-logo:not(.is-dark)');
 			await expect(companyLogo).toHaveAttribute('src', entry.companyLogoUrl);
@@ -62,7 +68,7 @@ test('stories show the approved reviews and supplied profiles', async ({ page })
 	}
 	await expect(section.locator('.stories-proof-note')).toHaveCount(0);
 	for (const entry of entries) {
-		expect(Object.keys(entry).every((key) => ['name', 'title', 'company', 'companyLogoUrl', 'companyLogoDarkUrl', 'photoUrl', 'linkedinUrl', 'review'].includes(key))).toBe(true);
+		expect(Object.keys(entry).every((key) => ['name', 'title', 'company', 'companyLogoUrl', 'companyLogoDarkUrl', 'companyLogoIsWordmark', 'photoUrl', 'linkedinUrl', 'review'].includes(key))).toBe(true);
 	}
 });
 
@@ -92,21 +98,33 @@ test('company marks switch to legible variants with the theme', async ({ page, r
 			await expect(logos.first()).toBeVisible();
 		}
 	}
-	expect(await (await request.get('/company-logos/microsoft.svg')).text()).not.toContain('#f3f3f3');
+	const lightMark = await (await request.get('/company-logos/microsoft.svg')).text();
+	const darkMark = await (await request.get('/company-logos/microsoft-dark.svg')).text();
+	for (const mark of [lightMark, darkMark]) {
+		expect(mark).toContain('viewBox="0 0 337.6 72"');
+		expect(mark.match(/<rect\b/g)).toHaveLength(4);
+		expect(mark.match(/<path\b/g)).toHaveLength(1);
+	}
+	expect(lightMark).toContain('fill="#737373"');
+	expect(darkMark).toContain('fill="#c5c5c5"');
 
 	await page.setViewportSize({ width: 390, height: 844 });
-	for (const index of [0, 4]) {
-		const card = cards.nth(index);
-		const company = card.locator('.quote-company');
-		const logo = card.locator('.quote-company-logo:not(.is-dark)');
-		await expect(company).toHaveText('Microsoft');
-		expect(await company.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
-		expect(await logo.evaluate((image) => {
-			if (!image.parentElement) return false;
-			const row = image.parentElement.getBoundingClientRect();
-			const bounds = image.getBoundingClientRect();
-			return bounds.left >= row.left && bounds.right <= row.right;
-		})).toBe(true);
+	for (const theme of ['dark', 'light']) {
+		for (const index of [0, 4]) {
+			const card = cards.nth(index);
+			const logo = card.locator(`.quote-company-logo${theme === 'dark' ? '.is-dark' : ':not(.is-dark)'}`);
+			await expect(logo).toBeVisible();
+			await expect(logo).toHaveAttribute('alt', 'Microsoft');
+			const dimensions = await logo.evaluate((image: HTMLImageElement) => {
+				const row = image.parentElement!.getBoundingClientRect();
+				const bounds = image.getBoundingClientRect();
+				return { complete: image.complete, naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight,
+					width: bounds.width, left: bounds.left - row.left, right: row.right - bounds.right };
+			});
+			expect(dimensions.complete && dimensions.naturalWidth === 338 && dimensions.naturalHeight === 72
+				&& dimensions.width >= 100 && dimensions.left >= 0 && dimensions.right >= 0).toBe(true);
+		}
+		if (theme === 'dark') await page.locator('[data-theme-toggle]').click();
 	}
 });
 
