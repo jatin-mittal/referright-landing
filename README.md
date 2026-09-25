@@ -85,6 +85,28 @@ deploying; the `/_vercel/insights/*` routes are provided by Vercel, so a local
 Before the first browser test run, install its browser with
 `npx playwright install chromium`. Tests start their own server on port 4322.
 
+## Community feedback
+
+Edit `src/data/stories.json` to update the referral count and review cards.
+Each card has a `name` and an approved `review`. Optional fields are `title`, `company`,
+`companyLogoUrl`, `role`, `accent`, `photoUrl` and `linkedinUrl`. Local company
+logo files are in `public/company-logos/`; store their public path in
+`companyLogoUrl`. If the mark needs a different version on a dark background,
+set `companyLogoDarkUrl` to its local dark-mode file; otherwise the same mark
+is used in both themes. Without a photo, a card shows initials; the official blue
+LinkedIn icon appears only with a profile URL. External photo URLs may expire,
+so use a stable public image when publishing a review. Keep only public,
+display-ready information in this file.
+
+The seven profiles and their companies were supplied for display. Titles
+are shown where supplied; the missing job title is not guessed. The current
+review wording was approved for publication by the people shown, as confirmed
+by the site owner. Add new cards only with approved review text. The 78+
+number comes from `referralCount` in the same file.
+
+This is a static Astro site: JSON edits appear after a new build and
+deployment, without changing the components.
+
 ## Mobile paths and demo motion
 
 Below 768px, the three path choices are icon-free underline tabs that remain

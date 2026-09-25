@@ -1,38 +1,38 @@
 ---
 import SectionIntro from './SectionIntro.astro';
 import TestimonialStage, { type Testimonial } from './TestimonialStage.astro';
-import { PRIVATE_BETA_REFERRAL_COUNT } from '../lib/content';
 import { SectionId } from '../lib/constants';
 
 interface Props {
 	readonly batches: readonly (readonly Testimonial[])[];
+	readonly referralCount: number;
 }
 
-const { batches } = Astro.props;
+const { batches, referralCount } = Astro.props;
 ---
 
-<section class="section beta-proof stories" id={SectionId.Stories} aria-labelledby="stories-title">
+<section class="section stories-proof stories" id={SectionId.Stories} aria-labelledby="stories-title">
 	<div class="shell">
 		<SectionIntro
-			eyebrow="From the private beta"
+			eyebrow="Real people, real feedback"
 			title="What people told us."
-			copy="Feedback from seekers and referrers who used RightRefer during the beta."
+			copy="What our early community thinks about making referrals easier."
 			headingId="stories-title"
 			align="center"
 			class="reveal"
 		/>
 
-		<div class="beta-proof-layout">
-			<aside class="beta-proof-stat reveal" aria-label="Private beta referral result">
-				<div class="beta-proof-rings" aria-hidden="true"></div>
-				<p class="beta-proof-label">Private beta snapshot</p>
-				<p class="beta-proof-count">
-			<span data-count-to={PRIVATE_BETA_REFERRAL_COUNT}>{PRIVATE_BETA_REFERRAL_COUNT}</span>+
-		</p>
-				<p class="beta-proof-caption">people successfully referred during the beta</p>
+		<div class="stories-proof-layout">
+			<aside class="stories-proof-stat reveal" aria-label="Early release referral result">
+				<div class="stories-proof-rings" aria-hidden="true"></div>
+				<p class="stories-proof-label">Early release snapshot</p>
+				<p class="stories-proof-count">
+					<span data-count-to={referralCount}>{referralCount}</span>+
+				</p>
+				<p class="stories-proof-caption">people successfully referred during the early release</p>
 			</aside>
 
-			<div class="beta-proof-testimonials reveal" aria-label="Private beta testimonials">
+			<div class="stories-proof-testimonials reveal" aria-label="Community feedback">
 				<TestimonialStage batches={batches} />
 			</div>
 		</div>
@@ -49,11 +49,11 @@ const { batches } = Astro.props;
 </script>
 
 <style>
-	.beta-proof {
+	.stories-proof {
 		border-top: 1px solid rgb(var(--color-border));
 	}
 
-	.beta-proof-layout {
+	.stories-proof-layout {
 		display: grid;
 		grid-template-columns: minmax(15rem, 19rem) minmax(0, 1fr);
 		gap: clamp(2rem, 5vw, 5rem);
@@ -61,7 +61,7 @@ const { batches } = Astro.props;
 		margin-top: clamp(2.5rem, 5vw, 3.5rem);
 	}
 
-	.beta-proof-stat {
+	.stories-proof-stat {
 		position: relative;
 		isolation: isolate;
 		display: flex;
@@ -77,7 +77,7 @@ const { batches } = Astro.props;
 		color: rgb(var(--color-brand-panel-ink));
 	}
 
-	.beta-proof-rings {
+	.stories-proof-rings {
 		position: absolute;
 		z-index: -1;
 		top: 50%;
@@ -93,7 +93,7 @@ const { batches } = Astro.props;
 		transform: translate(-50%, -50%);
 	}
 
-	.beta-proof-label {
+	.stories-proof-label {
 		margin: 0;
 		color: rgb(var(--color-brand-panel-ink));
 		font-family: var(--font-mono);
@@ -103,7 +103,7 @@ const { batches } = Astro.props;
 		text-transform: uppercase;
 	}
 
-	.beta-proof-count {
+	.stories-proof-count {
 		margin: 0.625rem 0 0;
 		font-family: var(--font-display);
 		font-variant-numeric: lining-nums tabular-nums;
@@ -113,7 +113,7 @@ const { batches } = Astro.props;
 		line-height: 0.85;
 	}
 
-	.beta-proof-caption {
+	.stories-proof-caption {
 		max-width: 12rem;
 		margin: 1.25rem 0 0;
 		color: rgb(var(--color-brand-panel-ink) / 74%);
@@ -121,23 +121,23 @@ const { batches } = Astro.props;
 		line-height: 1.5;
 	}
 
-	.beta-proof-testimonials {
+	.stories-proof-testimonials {
 		min-width: 0;
 	}
 
 	@media (max-width: 63.999rem) {
-		.beta-proof-layout {
+		.stories-proof-layout {
 			grid-template-columns: 1fr;
 			gap: 2rem;
 		}
 
-		.beta-proof-stat {
+		.stories-proof-stat {
 			min-height: 15rem;
 			max-width: 32rem;
 			margin-inline: auto;
 		}
 
-		.beta-proof-count {
+		.stories-proof-count {
 			font-size: clamp(4.5rem, 18vw, 6rem);
 		}
 	}
