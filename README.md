@@ -161,18 +161,16 @@ Five blocks, and adding a sixth is a design decision, not a routine one. See
 - **Two typefaces.** Louize is self-hosted from `public/Louize.woff2` and used
   for display type and the outlined logo; Inter is loaded from Google Fonts
   for UI and body text.
-- **Company logos** are rendered from the CC0-licensed Simple Icons package at
-  build time. They remain the property of their respective owners and do not
-  imply affiliation. Microsoft's four squares are drawn inline, because their
-  brand guidelines forbid recolouring the mark to a single colour.
+- **Company logos** in the company marquee use the Simple Icons package.
+  Review-card logos are stored in `public/company-logos/`. The Microsoft
+  review cards use only the four-square mark beside the company name. These
+  marks remain the property of their respective owners and do not imply
+  affiliation.
 
 ## Launch checklist
 
-- [ ] **Testimonial copy is prototype content.** `testimonialBatches` in
-      `src/pages/index.astro` must be replaced with verified, consented customer
-      quotes before a public launch.
-- [ ] **The private-beta figure must be verified.**
-      `PRIVATE_BETA_REFERRAL_COUNT` in `src/lib/content.ts` is currently `78`.
+- [ ] **Verify the early-release count** in `src/data/stories.json` before
+      publication; `referralCount` is currently `78`.
 - [ ] **Confirm Louize's production embedding rights**, file provenance and any
       required attribution. If they cannot be confirmed, the fallback is a
       licensed editorial serif chosen before release, with the semantic font

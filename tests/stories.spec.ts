@@ -92,7 +92,12 @@ test('company marks switch to legible variants with the theme', async ({ page, r
 			await expect(logos.first()).toBeVisible();
 		}
 	}
-	expect(await (await request.get('/company-logos/microsoft.svg')).text()).not.toContain('#f3f3f3');
+	const microsoftLogo = await (await request.get('/company-logos/microsoft.svg')).text();
+	expect(microsoftLogo).toContain('viewBox="0 0 23 23"');
+	expect(microsoftLogo).toContain('d="M1 12h10v10H1z"');
+	expect(microsoftLogo.match(/<path\b/g)).toHaveLength(4);
+	expect(microsoftLogo).not.toContain('<rect');
+	expect(microsoftLogo).not.toContain('#f3f3f3');
 
 	await page.setViewportSize({ width: 390, height: 844 });
 	for (const index of [0, 4]) {
@@ -100,6 +105,11 @@ test('company marks switch to legible variants with the theme', async ({ page, r
 		const company = card.locator('.quote-company');
 		const logo = card.locator('.quote-company-logo:not(.is-dark)');
 		await expect(company).toHaveText('Microsoft');
+		await expect(card.locator('.quote-company-logo')).toHaveCount(1);
+		await expect(logo).toBeVisible();
+		expect(await logo.evaluate((image: HTMLImageElement) =>
+			image.complete && image.naturalWidth === 23 && image.naturalHeight === 23
+		)).toBe(true);
 		expect(await company.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
 		expect(await logo.evaluate((image) => {
 			if (!image.parentElement) return false;
@@ -107,6 +117,13 @@ test('company marks switch to legible variants with the theme', async ({ page, r
 			const bounds = image.getBoundingClientRect();
 			return bounds.left >= row.left && bounds.right <= row.right;
 		})).toBe(true);
+	}
+	await page.locator('[data-theme-toggle]').click();
+	await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+	for (const index of [0, 4]) {
+		const card = cards.nth(index);
+		await expect(card.locator('.quote-company-logo')).toBeVisible();
+		await expect(card.locator('.quote-company')).toHaveText('Microsoft');
 	}
 });
 
