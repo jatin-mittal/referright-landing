@@ -18,9 +18,6 @@ export const CONTACT_EMAIL: string =
 export const PRIVACY_URL = '/privacy/' as const;
 export const TERMS_URL = '/terms/' as const;
 
-/** Verified private-beta outcome shown in the landing-page proof module. */
-export const PRIVATE_BETA_REFERRAL_COUNT = 78;
-
 /* ------------------------------------------------------------------ */
 /* Offerings                                                           */
 /* ------------------------------------------------------------------ */

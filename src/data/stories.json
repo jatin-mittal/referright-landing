@@ -1,0 +1,64 @@
+{
+    "referralCount": 78,
+    "reviews": [{
+            "name": "JATIN MITTAL",
+            "title": "Software Engineer - 2",
+            "company": "Microsoft",
+            "companyLogoUrl": "/company-logos/microsoft.svg",
+            "photoUrl": "https://media.licdn.com/dms/image/v2/D5603AQGvu_r32IqDFA/profile-displayphoto-scale_100_100/B56Z0mUK8dJMAc-/0/1774464316829?e=1792022400&v=beta&t=bxRKDma9hpocnFAzzbfPDi_gkdaHJc0NCoHVxHodiAA",
+            "linkedinUrl": "https://www.linkedin.com/in/jatin-mittal-864305199/",
+            "review": "Good idea. When someone has just lost a job, even reaching out can feel hard. A clear way to ask for help could make a real difference."
+        },
+        {
+            "name": "Anurag Singh",
+            "title": "Software Engineer",
+            "company": "Deutsche Telekom Digital Labs",
+            "companyLogoUrl": "/company-logos/deutsche-telekom.png",
+            "photoUrl": "https://media.licdn.com/dms/image/v2/D5603AQEitxH30QF7FQ/profile-displayphoto-scale_100_100/B56Z8j_3PyIMAY-/0/1783015372426?e=1791417600&v=beta&t=fSDh-bSPqWE6A8LMe1Lq9ZAEuVEe1Bcnr--JsGDJiTY",
+            "linkedinUrl": "https://www.linkedin.com/in/anurag-singh-2171ba191/",
+            "review": "I like that this gives people a better way to ask for a referral. You can share the job you want instead of sending the same message to everyone."
+        },
+        {
+            "name": "Gayatri Batta",
+            "title": "Gen AI Engineer",
+            "company": "Deloitte",
+            "companyLogoUrl": "/company-logos/deloitte.png",
+            "companyLogoDarkUrl": "/company-logos/deloitte-dark.png",
+            "photoUrl": "https://media.licdn.com/dms/image/v2/D5603AQFRUE9L2WrNnQ/profile-displayphoto-scale_200_200/B56Z7N3LLrG4Ag-/0/1781570257673?e=1791417600&v=beta&t=TDkm8KMln-D0mwyghhLb6jgv7bNDLsKSeLXqjODX0_4",
+            "review": "This feels useful for both sides. If I know which job someone wants and why, I can decide whether I'm the right person to help."
+        },
+        {
+            "name": "Anuj Sharma",
+            "title": "SDE-2",
+            "company": "UKG",
+            "companyLogoUrl": "/company-logos/ukg.svg",
+            "companyLogoDarkUrl": "/company-logos/ukg-dark.svg",
+            "photoUrl": "https://media.licdn.com/dms/image/v2/D5603AQENx0DVMh4XJQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1731039462986?e=1792022400&v=beta&t=uQXqvS53C1YbAsozSkmpWBTPjYyptDg0UcD1-_PVmBY",
+            "review": "Good initiative, especially for people affected by the layoffs. It helps to know where to start when you're looking for your next role."
+        },
+        {
+            "name": "Nitesh A",
+            "title": "Software Engineer - 2",
+            "company": "Microsoft",
+            "companyLogoUrl": "/company-logos/microsoft.svg",
+            "photoUrl": "https://media.licdn.com/dms/image/v2/D5603AQEe-yx1cfV6pA/profile-displayphoto-scale_100_100/B56ZreN9pKLMAc-/0/1764664799819?e=1791417600&v=beta&t=OLoLz5HYGE8WYr3E_tFdrB0i4V9GBc3cuWbdnsu_I54",
+            "review": "I appreciate the idea of being able to track a request. Not knowing whether anyone has seen it is the hardest part of asking."
+        },
+        {
+            "name": "VIPIN SINGH",
+            "company": "FleetxAI",
+            "companyLogoUrl": "/company-logos/fleetx.png",
+            "companyLogoDarkUrl": "/company-logos/fleetx-dark.png",
+            "photoUrl": "https://media.licdn.com/dms/image/v2/D5603AQF7B-9SDoBnmw/profile-displayphoto-shrink_100_100/B56ZOZxdV2GoAc-/0/1733451701253?e=1791417600&v=beta&t=1YKSGyO7MYB5QOuk0ai2gM8fgIFY-YtxgU8ZjPzjHY0",
+            "review": "Helping someone find the right person for a referral is a good start. A simple request with the job details makes it easier to help."
+        },
+        {
+            "name": "Aditya Dubey",
+            "title": "Business Associate",
+            "company": "Swiggy",
+            "companyLogoUrl": "/company-logos/swiggy.svg",
+            "photoUrl": "https://media.licdn.com/dms/image/v2/D5603AQErPiY8FWjUhQ/profile-displayphoto-shrink_100_100/B56Zbs7Cq8HgAU-/0/1747731623409?e=1792022400&v=beta&t=RbKinc7XMvun4BmABfm_3plsdv6Fs6horne5JM-cYDc",
+            "review": "Looking for a business analytics role can be a lot of work. A simple way to share my background and the job I want would make asking for a referral easier."
+        }
+    ]
+}
