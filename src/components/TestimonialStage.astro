@@ -44,9 +44,11 @@ const initialsFor = (name: string): string =>
 								)}
 								<span class="quote-identity">
 									<strong>{testimonial.name}</strong>
-									{(testimonial.title || testimonial.company || testimonial.role) && (
-										<small class="quote-meta">
-											{(testimonial.title || testimonial.role) && <span class="quote-title">{testimonial.title ?? testimonial.role}{testimonial.company && ' · '}</span>}
+									{(testimonial.title || testimonial.role) && (
+										<small class="quote-title">{testimonial.title ?? testimonial.role}</small>
+									)}
+									{testimonial.company && (
+										<small class="quote-company-line">
 											{testimonial.companyLogoUrl && (
 												<img
 													class:list={['quote-company-logo', testimonial.companyLogoDarkUrl && 'is-light']}
@@ -59,7 +61,7 @@ const initialsFor = (name: string): string =>
 											{testimonial.companyLogoDarkUrl && (
 												<img class="quote-company-logo is-dark" src={testimonial.companyLogoDarkUrl} alt="" width="16" height="16" />
 											)}
-											{testimonial.company && <span class="quote-company" title={testimonial.company}>{testimonial.company}</span>}
+											<span class="quote-company" title={testimonial.company}>{testimonial.company}</span>
 										</small>
 									)}
 								</span>
@@ -199,7 +201,15 @@ const initialsFor = (name: string): string =>
 		font-weight: 600;
 	}
 
-	.quote-meta {
+	.quote-title {
+		overflow: hidden;
+		color: rgb(var(--color-muted));
+		font-size: 0.75rem;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.quote-company-line {
 		display: flex;
 		align-items: center;
 		gap: 0.25rem;
@@ -210,8 +220,8 @@ const initialsFor = (name: string): string =>
 	}
 
 	.quote-company-logo {
-		width: 1rem;
-		height: 1rem;
+		width: 1.125rem;
+		height: 1.125rem;
 		flex: 0 0 auto;
 		border-radius: 0.125rem;
 		object-fit: contain;

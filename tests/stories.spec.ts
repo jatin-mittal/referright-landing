@@ -50,9 +50,8 @@ test('stories show the approved reviews and supplied profiles', async ({ page })
 		const entry = entries[index];
 		const card = cards.nth(index);
 		await expect(card.locator('.quote-identity strong')).toHaveText(entry.name);
-		await expect(card.locator('.quote-identity small')).toHaveText(
-			[entry.title, entry.company].filter(Boolean).join(' · '),
-		);
+		if (entry.title) await expect(card.locator('.quote-title')).toHaveText(entry.title);
+		if (entry.company) await expect(card.locator('.quote-company')).toHaveText(entry.company);
 		if (entry.companyLogoUrl) {
 			const companyLogo = card.locator('.quote-company-logo:not(.is-dark)');
 			await expect(companyLogo).toHaveAttribute('src', entry.companyLogoUrl);
@@ -94,6 +93,21 @@ test('company marks switch to legible variants with the theme', async ({ page, r
 		}
 	}
 	expect(await (await request.get('/company-logos/microsoft.svg')).text()).not.toContain('#f3f3f3');
+
+	await page.setViewportSize({ width: 390, height: 844 });
+	for (const index of [0, 4]) {
+		const card = cards.nth(index);
+		const company = card.locator('.quote-company');
+		const logo = card.locator('.quote-company-logo:not(.is-dark)');
+		await expect(company).toHaveText('Microsoft');
+		expect(await company.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+		expect(await logo.evaluate((image) => {
+			if (!image.parentElement) return false;
+			const row = image.parentElement.getBoundingClientRect();
+			const bounds = image.getBoundingClientRect();
+			return bounds.left >= row.left && bounds.right <= row.right;
+		})).toBe(true);
+	}
 });
 
 test('profile links use the official blue mark and photos come from JSON', async ({ page, request }) => {
